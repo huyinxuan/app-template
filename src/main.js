@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import router from './router';
+import store from './vuex/store';
 
 
 
@@ -17,8 +17,6 @@ import "@/assets/css/font_html.css";
 // 导入vant css(由于采用配置主题方式，这里需要导入vant less 主题文件,如果不需要自定义主题注释下面代码，然后解除config/cdn.js 中vant主题样式的注释)
 import "vant/lib/index.less";
 
-// 路由权限拦截
-import "./router/permission";
 
 // 初始化svg图标
 import "./icons/index";

@@ -27,7 +27,7 @@ let isProd = process.env.NODE_ENV == "production" ? true : false;
 
 const config = {
   // eslint检测 默认是开启的
-  lintOnSave: true,
+  lintOnSave: false,
   // 资源全局路径前缀
   publicPath: configEnv.publicPath,
   //静态资源目录(js,css,img,fonts)这些文件都可以写里面

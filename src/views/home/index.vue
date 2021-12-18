@@ -88,10 +88,6 @@
 <script >
 // @ is an alias to /src
 import VueDraggable from "vuedraggable";
-import { formatArrToFormData } from "@/utils";
-import $store from "@/store/index";
-import $router from "@/router/index";
-import $api from "@/api/index";
 
 export default {
   name: "home",
@@ -120,23 +116,12 @@ export default {
       console.log(this.myArray);
     },
     handleLogOut() {
-      $store.dispatch("user/logout");
-      $router.replace("/login");
+      // $store.dispatch("user/logout");
+      this.$router.replace("/login");
     },
     async uploadImage() {
-      const formData = new FormData();
-      formData.append("id", "8888");
-      const fileArr = this.fileList.map((item) => item.file);
-      // 此方法会改变原数组,console.log(formData)是看不到效果的必须在请求体里面才能看到
-      formatArrToFormData(formData, "images", fileArr);
-      const result = await $api.test.uploadImage(formData);
-      console.log(result);
     },
     blockloadingTest() {
-      this.blockLoading = true;
-      setTimeout(() => {
-        this.blockLoading = false;
-      }, 3000);
     },
   },
 };
