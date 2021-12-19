@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from './router';
 import store from './vuex/store';
 
-
+import "@/assets/css/common.scss";
 
 // 初始化样式
 import "@/assets/css/reset.css";

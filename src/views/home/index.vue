@@ -1,148 +1,74 @@
 <template>
   <div class="home">
-    <block-loading :loading="blockLoading">
-      <h2 class="title">🔥vue-vant-base🔥</h2>
-      <p style="text-align: center">vue+vant 移动端快速开发架构(Vue2.0)</p>
-      <div>
-        <img src="@/assets/images/logo.png" width="150" height="150" alt />
+    <div class="title">首页</div>
+    <div class="home-box">
+    <div class="home-cont" :style="{background:item.bgColor}" v-for="(item, index) in menuTree" :key="index" @click="goTo(item)">
+      <div class="home-icon">
+        <img :src="require('../../assets/images/'+ item.icon)" />
       </div>
-      <m-panel title="块级加载组件">
-        <van-row type="flex" justify="center">
-          <van-button @click="blockloadingTest">点击测试</van-button>
-        </van-row>
-      </m-panel>
-      <m-panel title="图标">
-        <van-row type="flex" justify="center" :gutter="2">
-          <van-col>
-            <van-icon size="30" name="chat-o" />
-          </van-col>
-          <van-col>
-            <van-icon
-              size="30"
-              name="https://b.yzcdn.cn/vant/icon-demo-1126.png"
-            />
-          </van-col>
-        </van-row>
-      </m-panel>
-      <m-panel title="拖拽">
-        <draggable
-          tag="van-grid"
-          :list="myArray"
-          @end="onEndCallback"
-          :disabled="false"
-          :component-data="{
-            props: { 'column-num': 3 },
-          }"
-        >
-          <van-grid-item
-            v-for="item in myArray"
-            :key="item.id"
-            icon="photo-o"
-            :text="item.name"
-          ></van-grid-item>
-        </draggable>
-      </m-panel>
-      <m-panel title="主题颜色">
-        <van-row type="flex" justify="center">
-          <van-button style="margin: 10px">默认样式</van-button>
-        </van-row>
-      </m-panel>
-      <m-panel title="svg">
-        <van-row type="flex" justify="center" style="font-size: 30px">
-          svg:
-          <svg-icon iconClass="404"></svg-icon>
-        </van-row>
-      </m-panel>
-      <m-panel title="scss全局变量颜色">
-        <div class="theme">scss全局变量颜色</div>
-      </m-panel>
-      <m-panel title="图片上传">
-        <van-row type="flex" justify="center" align="center">
-          <van-uploader v-model="fileList" multiple></van-uploader>
-          <van-button @click="uploadImage">上传</van-button>
-        </van-row>
-      </m-panel>
-      <m-panel title="其他测试">
-        <div style="text-align: center; line-height: 1.5em">
-          <div>
-            <!-- <router-link :to="{ name: 'WxTest' }">测试jssdk</router-link> -->
-          </div>
-          <div>
-            <router-link
-              :to="{ path: '/article/list', query: { plan: 'private' } }"
-              >列表 demo</router-link
-            >
-          </div>
-          <div>
-            <router-link :to="{ name: 'map-demo' }">高德地图 demo</router-link>
-          </div>
-          <div>
-            <router-link :to="{ name: 'test-jssdk' }">jssdk demo</router-link>
-          </div>
-        </div>
-      </m-panel>
-    </block-loading>
+      <div class="home-title">{{item.name}}</div>
+    </div>
+    </div>
   </div>
 </template>
 
 <script >
-// @ is an alias to /src
-import VueDraggable from "vuedraggable";
-
 export default {
   name: "home",
-  components: {
-    draggable: VueDraggable,
-  },
   data() {
     return {
-      fileList: [],
-      value: 50,
-      time: 30 * 60 * 60 * 1000,
-      myArray: [
-        { name: "1号彩笔", id: 1 },
-        { name: "2号彩笔", id: 2 },
-        { name: "3号彩笔", id: 3 },
-        { name: "4号彩笔", id: 4 },
-        { name: "5号彩笔", id: 5 },
-        { name: "6号彩笔", id: 6 },
+      menuTree: [
+        {
+          name: "数据统计",
+          bgColor: "#aad562",
+          icon:'u14.png',
+          link:'/dataStatis'
+        },
+        {
+          name: "审核管理",
+          bgColor: "#f0a175",
+          icon: 'u35.png'
+        },
+        {
+          name: "企业加分",
+          bgColor: "#5bc0de",
+          icon:'u23.png'
+        },
+        {
+          name: "巡查上报",
+          bgColor: "#f7c65f",
+          icon:'u15.png'
+        },
+        { name: "违法处置", bgColor: "#ec6f5a",icon:'u27.png' },
       ],
-      blockLoading: false,
     };
   },
   methods: {
-    onEndCallback(evt) {
-      console.log(evt);
-      console.log(this.myArray);
-    },
-    handleLogOut() {
-      // $store.dispatch("user/logout");
-      this.$router.replace("/login");
-    },
-    async uploadImage() {
-    },
-    blockloadingTest() {
-    },
+    goTo(item){
+      item.link&&this.$router.push(item.link)
+    }
   },
 };
 </script>
 <style lang="scss" scoped>
+*{
+  box-sizing: border-box;
+}
 .home {
   line-height: 80px;
   text-align: center;
-  padding: 5px 10px;
+  background-color: #fff;
+  .title {
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+  }
 }
-.logo {
-  width: 200px;
-  height: 200px;
-}
-.theme {
-  text-align: center;
-  color: $common-color;
-  margin: 10px 0px;
-}
-.title {
-  font-size: 50px;
-  text-align: center;
+.home-box{
+  width: 100%;
+  background-color: #F8FAFD;
+  padding: 40px 5px;
 }
 </style>

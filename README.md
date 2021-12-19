@@ -1,7 +1,5 @@
 ## 基于 vue-cli4+vant 搭建 H5 通用架子(支持微信公众号)
 
-* 已经上传vue3.0+ts分支
-* 如果有优化建议和bug请提issue
 
 ### 功能介绍
 
@@ -19,8 +17,6 @@
 * 支持 svg 雪碧图
 * 本项目已经实现vant-ui自带组件库的自适应, 正常开发直接写750px的设计稿像素
 ### 代码风格
-
-[文档](https://gitee.com/null_639_5368/vue-vant-base/blob/master/code_style.md)
 
 ### 安装
 

@@ -35,7 +35,7 @@
     <van-button
       color="linear-gradient(to right, #4bb0ff, #6149f6)"
       size="large"
-      @click="loginMsg"
+      @click="loginOn"
       :loading="loading"
       >登录</van-button
     >
@@ -49,8 +49,8 @@ export default {
   data() {
     return {
       loginForm: {
-        username: "maybekakui",
-        password: "123456",
+        username: "admin",
+        password: "admin123",
       },
       ruleFormPhone: {
         //username和password默认为空
@@ -87,6 +87,29 @@ export default {
         );
       }
     },2000),
+    loginOn(){
+      
+      login(this.loginForm).then((res) => {
+          if (res.code == 200) {
+            //如果请求成功就让他2秒跳转路由
+            setTimeout(() => {
+              this.logining = false;
+              // 缓存token
+              localStorage.setItem("logintoken", res.data.token);
+              // 缓存用户个人信息
+              localStorage.setItem("userdata", JSON.stringify(res.data));
+              this.$store.commit("login", "true");
+              this.$router.push({ path: "/home" });
+            }, 1000);
+          } else {
+            this.$message.error(res.msg);
+            this.logining = false;
+            this.isSlider = false
+            this.$refs.slider.init()
+            return false;
+          }
+        })
+      },
     loginMsg() {
       loginSms(this.ruleFormPhone).then((res) => {
         if (res.code == 200) {

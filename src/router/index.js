@@ -7,7 +7,8 @@ import home from '@/views/home/index';
 /**
  * 基础菜单
  */
-
+ import dataStatis from '@/views/other/dataStatis';
+ 
 
 
 
@@ -18,6 +19,14 @@ Vue.use(Router);
 export default new Router({
     routes: [
         {
+            path: '/',
+            name: '',
+            component: login,
+            meta: {
+                requireAuth: false
+            }
+        },
+        {
             path: '/login',
             name: '登录',
             component: login,
@@ -25,10 +34,18 @@ export default new Router({
             meta: {
                 requireAuth: false
             }
-        },{
+        }, {
             path: '/home',
             name: '首页',
             component: home,
+            hidden: true,
+            meta: {
+                requireAuth: true
+            }
+        }, {
+            path: '/dataStatis',
+            name: '数据统计',
+            component: dataStatis,
             hidden: true,
             meta: {
                 requireAuth: true
