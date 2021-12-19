@@ -1,4 +1,5 @@
 
+
 import Router from 'vue-router';
 // 登录
 import login from '@/views/login';
@@ -9,7 +10,7 @@ import home from '@/views/home/index';
  */
 import dataStatis from '@/views/other/dataStatis';
 
-
+import inspection from './inspection';
 
 
 // 启用路由
@@ -40,11 +41,10 @@ export default new Router({
             path: '/home',
             name: '首页',
             component: home,
-            hidden: true,
-            meta: {
-                index: 2,
-                requireAuth: true
-            }
+         
+            children: [
+                ...inspection
+            ]
         }, {
             path: '/dataStatis',
             name: '数据统计',

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { loginreq, req  ,reput ,reget, delt} from './axiosFun';
+import {loginreq,req  ,reput ,reget,delt} from './axiosFun';
 
 //监督检查管理相关界面接口
 // 核准证查询
