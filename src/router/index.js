@@ -7,8 +7,8 @@ import home from '@/views/home/index';
 /**
  * 基础菜单
  */
- import dataStatis from '@/views/other/dataStatis';
- 
+import dataStatis from '@/views/other/dataStatis';
+
 
 
 
@@ -23,6 +23,7 @@ export default new Router({
             name: '',
             component: login,
             meta: {
+                index: 0,
                 requireAuth: false
             }
         },
@@ -32,6 +33,7 @@ export default new Router({
             component: login,
             hidden: true,
             meta: {
+                index: 1 ,
                 requireAuth: false
             }
         }, {
@@ -40,6 +42,7 @@ export default new Router({
             component: home,
             hidden: true,
             meta: {
+                index: 2,
                 requireAuth: true
             }
         }, {
@@ -48,6 +51,7 @@ export default new Router({
             component: dataStatis,
             hidden: true,
             meta: {
+                index: 3,
                 requireAuth: true
             }
         }
