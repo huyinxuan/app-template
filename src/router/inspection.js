@@ -1,14 +1,12 @@
 
-//违法处置（完成）
-import violation from '@/views/inspection/violationDetails';
-
-
+//违法处置详情（完成）
+import violationDetails from '@/views/inspection/violationDetails';
 
 export default [
     {
-        path: '/violation',
-        name: '违法处置',
-        component: violation,
+        path: '/violationDetails',
+        name: '违法处置详情',
+        component: violationDetails,
         meta: {
             index:34,
             requireAuth: true
