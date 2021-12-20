@@ -6,7 +6,7 @@
             left-arrow border fixed placeholder/>
             
         </div>
-        <div ref="main">
+        <div ref="main" class="mbox">
             <div ref="search" class="search">
                 <van-cell-group>
                     <van-field v-model="point.address" @input="inp" placeholder="请输入地址" />
@@ -24,8 +24,11 @@
                     :panel="false" :forceLocal="true" />
             </baidu-map>
             <div class="tools" ref="tools">
-                <van-button round block type="info" native-type="submit" @click="point.showMap=false">确定</van-button>
+                <div style="width:90%;margin-left:5%">
+                    <van-button  round block type="info"  native-type="submit" @click="point.showMap=false">确定</van-button>
+                </div>
             </div>
+          
         </div>
     </div>
   
@@ -90,7 +93,7 @@ export default {
             let toolsHeight = this.$refs.tools.offsetHeight;
             let maxHeight = window.document.body.offsetHeight;
             console.log(topHeight,searchHeight,toolsHeight);
-            this.mapHeight = maxHeight-toolsHeight-searchHeight-topHeight-4+'px';
+            this.mapHeight = maxHeight-toolsHeight-searchHeight-topHeight+'px';
         },
         handleSizeChange(val) {
             /**
@@ -177,16 +180,17 @@ export default {
 }
 .tools{
     position: fixed;
-    padding-top: 0.5vh;
-    width: 90%;
-    margin-left: 5%;
-    padding-bottom: 0.5vh;
+    width: 100%;
     background: #fff;
+    padding: 0.5vh;
 }
 .info{
     color: #464242;
     margin-top:1vh;
     height: 4vh;
     text-align: center;
+}
+.mbox{
+    background: #fff;
 }
 </style>
