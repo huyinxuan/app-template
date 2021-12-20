@@ -17,7 +17,6 @@ import zfsc from '@/views/sh/zfsc';
 
 import inspection from './inspection';
 import apanage from './apanage';
-import violationDetails from '@/views/inspection/violationDetails';
 
 
 // 启用路由
@@ -50,6 +49,14 @@ export default new Router({
             component: home,
             meta: {
                 index: 2 ,
+                requireAuth: false
+            }
+        }, {
+            path: '/dataStatis',
+            name: '首页',
+            component: dataStatis,
+            meta: {
+                index: 3 ,
                 requireAuth: false
             }
         },
