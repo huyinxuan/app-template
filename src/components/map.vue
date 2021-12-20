@@ -70,11 +70,12 @@ export default {
            mapHeight:0
         };
     },
-    mounted() {
+    created() {
         this.$nextTick(()=>{
             this.onsize();
+            window.onresize=this.onsize;
         })
-        window.onresize=this.onsize();
+        
     },
     methods: {
         mapReady({ map, BMap }) {
@@ -89,7 +90,7 @@ export default {
             let toolsHeight = this.$refs.tools.offsetHeight;
             let maxHeight = window.document.body.offsetHeight;
             console.log(topHeight,searchHeight,toolsHeight);
-            this.mapHeight = maxHeight-toolsHeight-searchHeight-topHeight+'px';
+            this.mapHeight = maxHeight-toolsHeight-searchHeight-topHeight-4+'px';
         },
         handleSizeChange(val) {
             /**
@@ -169,6 +170,7 @@ export default {
     top: 0px;
     width: 100%;
     z-index: 1;
+    background: #fff;
 }
 .search{
     position: relative;
@@ -179,6 +181,7 @@ export default {
     width: 90%;
     margin-left: 5%;
     padding-bottom: 0.5vh;
+    background: #fff;
 }
 .info{
     color: #464242;
