@@ -134,10 +134,10 @@ export default {
         },
         inp(){
           
-            clearTimeout(inp_time);
+            clearTimeout(this.inp_time);
             this.inp_time=setTimeout(()=>{
                 this.key=this.point.address;
-            },200)
+            },100)
         }
     },
 };

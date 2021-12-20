@@ -1,7 +1,8 @@
 <template>
   <div>
     <div>
-      <van-nav-bar  :title="title" left-arrow border fixed placeholder  @click-left="onClickLeft"/>
+      <van-nav-bar :title="title" left-arrow border fixed placeholder  @click-left="onClickLeft"/>
+      
     </div>
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
@@ -9,7 +10,7 @@
       <!-- <van-field v-model="text" label="事件类型：" /> -->
       <van-cell is-link title="事件类型" @click="show2 = true" />
       <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />     
-      <van-field v-model="text" label="违规地点：" />
+      <van-cell is-link @click="openMap" :value="point.address" title="违规地点：" />
       <van-field v-model="text" label="属地街道：" />
       <van-field v-model="text" label="运输单位：" />
 
@@ -23,12 +24,16 @@
         <van-button round block type="info" native-type="submit">提交</van-button>
       </div>
     </van-form>
+
+    <selectMap :center="'东营市'" v-model="point" v-show="point.showMap">
+    </selectMap>
+
       <!-- <van-button plain type="primary" size="large" @click="add()" icon="">保存</van-button> -->
   </div>
 </template>
 
 <script>
-
+import selectMap from '@/components/map'
 export default {
   data() {
     return {
@@ -38,12 +43,22 @@ export default {
       show2: false,
       show1: false,
       show: false,
-     title:"巡查上报",
-     uploader: [],
-     actions: [{ name: '选项一' }, { name: '选项二' }, { name: '选项三' }],
+      title:"巡查上报",
+      uploader: [],
+      actions: [{ name: '选项一' }, { name: '选项二' }, { name: '选项三' }],
+      showMap:false,
+      point:{
+        lat:-1,
+        lng:-1,
+        address:'',
+        showMap:false
+      }
+
     };
   },
-
+  components:{
+    selectMap
+  },
   methods: {
     // 事件类型下拉
     onSelect(item) {
@@ -56,10 +71,16 @@ export default {
       // 异步更新数据
       
     },
-     onClickLeft(){
+    //打开地图选择窗口
+    openMap(){
+     
+      this.point.showMap=true;
+      console.log(this.point);
+    },
+    onClickLeft(){
       this.$router.go(-1)
     },
-     formatDate(date) {
+      formatDate(date) {
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     },
     onConfirm(date) {
@@ -74,9 +95,6 @@ export default {
     onSubmit(values){
       console.log('submit', values);
     }
-  },
-  components:{
-    
   }
 };
 
