@@ -44,11 +44,13 @@ export default new Router({
             path: '/home',
             name: '首页',
             component: home,
-         
-            children: [
-                ...inspection
-            ]
-        }, {
+            meta: {
+                index: 2 ,
+                requireAuth: false
+            }
+        },
+        ...inspection,
+         {
             path: '/dataStatis',
             name: '数据统计',
             component: dataStatis,
@@ -73,7 +75,7 @@ export default new Router({
             component: hzbj,
             hidden: true,
             meta: {
-                index: 4,
+                index: 5,
                 requireAuth: true
             }
         }
