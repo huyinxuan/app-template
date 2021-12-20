@@ -12,6 +12,8 @@ import dataStatis from '@/views/other/dataStatis';
 
 import hezhun from '@/views/sh/hezhun';
 import hzbj from '@/views/sh/hzbj';
+import xcsb from '@/views/sh/xcsb';
+import zfsc from '@/views/sh/zfsc';
 
 import inspection from './inspection';
 
@@ -76,6 +78,24 @@ export default new Router({
             hidden: true,
             meta: {
                 index: 5,
+                requireAuth: true
+            }
+        },{
+            path: '/xcsb',
+            name: '巡查上报',
+            component: xcsb,
+            hidden: true,
+            meta: {
+                index: 6,
+                requireAuth: true
+            }
+        },{
+            path: '/zfsc',
+            name: '执法上传',
+            component: zfsc,
+            hidden: true,
+            meta: {
+                index: 7,
                 requireAuth: true
             }
         }

@@ -45,20 +45,29 @@ export default {
           bgColor: "#f0a175",
           icon: 'u35.png',
           titColor: '#f28e56',
-          link:'/hezhun'
+          link:''
         },
       
         {
           name: "企业加分",
           bgColor: "#5bc0de",
           icon:'u23.png',
-          titColor: '#39b3d7'
+          titColor: '#39b3d7',
+          link:'/zfsc'
+        },
+        {
+          name: "核准证管理",
+          bgColor: "#5bbcdb",
+          icon:'u21.png',
+          titColor: '#39b3d7',
+          link:'/hezhun'
         },
         {
           name: "巡查上报",
           bgColor: "#f7c65f",
           icon:'u15.png',
-          titColor: '#f6bb42'
+          titColor: '#f6bb42',
+          link:'/xcsb'
         },
         { 
           name: "违法处置", 
