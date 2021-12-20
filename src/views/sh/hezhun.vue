@@ -10,8 +10,14 @@
           />
       <van-loading v-if="condition" size="24px">加载中...</van-loading>
       <template v-else>
-        <van-search v-model="search" placeholder="请输入搜索关键词" />
-        <div v-for="item in list" :key="item" style="margin-top: 20px;">
+        <van-search
+            v-model="search"
+            shape="round"
+            background="#f2f2f2"
+            placeholder="请输入搜索关键词"
+          />
+          <div class="home-canvan">
+        <div v-for="item in list" :key="item" class="hezhun-cont">
             <van-row>
                <van-col span="24" ><span>东区审批建准字[2021]第12号</span></van-col>
             </van-row>
@@ -57,6 +63,7 @@
                 <van-button plain type="info" icon="photo-o">照片</van-button>
               </div>
           </div>
+          </div>
           <van-tabbar v-model="active" @click="add" placeholder fixed>
             <van-tabbar-item icon="home-o">添加</van-tabbar-item>
           </van-tabbar>
@@ -69,6 +76,7 @@
 export default {
   data() {
     return {
+      condition:true,
       search:'',
       list: [
         {name:"内容"},{name:"内容"},{name:"内容"}
@@ -77,7 +85,11 @@ export default {
       finished: false,
     };
   },
-
+  created(){
+    setTimeout(() => {
+      this.condition = false
+    }, 650);
+  },
   methods: {
     onClickLeft(){
       this.$router.go(-1)
@@ -97,7 +109,11 @@ export default {
 
 </script>
 
-<style>
+<style lang='scss' scoped>
+.van-loading{
+  text-align: center;
+  margin-top: 220px;
+}
 .van-col{
   font-size: 26px;
 }
@@ -105,5 +121,20 @@ export default {
   font-size: 36px;
   font-weight: 500;
 }
+.home{
+  background-color: #f7f7f7;
+}
+.home-canvan{
+  background-color: #f7f7f7;
+  margin: 20px 0;
+}
+.hezhun-cont{
+  background-color: #FFf;
+  width: 710px;
+  margin: auto;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  padding: 40px;
 
+}
 </style>
