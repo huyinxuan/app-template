@@ -44,8 +44,10 @@ export default {
           name: "审核管理",
           bgColor: "#f0a175",
           icon: 'u35.png',
-          titColor: '#f28e56'
+          titColor: '#f28e56',
+          link:'/hezhun'
         },
+      
         {
           name: "企业加分",
           bgColor: "#5bc0de",

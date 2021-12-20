@@ -10,6 +10,9 @@ import home from '@/views/home/index';
  */
 import dataStatis from '@/views/other/dataStatis';
 
+import hezhun from '@/views/sh/hezhun';
+import hzbj from '@/views/sh/hzbj';
+
 import inspection from './inspection';
 
 
@@ -52,6 +55,25 @@ export default new Router({
             hidden: true,
             meta: {
                 index: 3,
+                requireAuth: true
+            }
+        },
+        {
+            path: '/hezhun',
+            name: '核准证管理',
+            component: hezhun,
+            hidden: true,
+            meta: {
+                index: 4,
+                requireAuth: true
+            }
+        },{
+            path: '/hzbj',
+            name: '核准证编辑',
+            component: hzbj,
+            hidden: true,
+            meta: {
+                index: 4,
                 requireAuth: true
             }
         }

@@ -2,6 +2,18 @@
 // 商品管理
 import dataStatist from '@/views/process/dataStatistics';
 
+/**
+ * 审批局界面
+ */
+// // 核准证管理
+// import hezhun from '@/views/sh/hezhun';
+// // 审批局数据统计
+// import hezhun1 from '@/views/process/projectMuck';
+// // 巡查上报
+// import hezhun2 from '@/views/process/projectMuck';
+// // 企业加分--执法上报
+// import hezhun3 from '@/views/process/projectMuck';
+
 
 /**
  * 工程渣土全过程
@@ -70,6 +82,7 @@ export default[
       requireAuth: true
     }
   },
+   
   {
     path: '/process/dismantleRubbish',
     name: '拆除垃圾',
