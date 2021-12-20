@@ -15,7 +15,7 @@ import hzbj from '@/views/sh/hzbj';
 import xcsb from '@/views/sh/xcsb';
 import zfsc from '@/views/sh/zfsc';
 
-import inspection from './inspection';
+import violationDetails from '@/views/inspection/violationDetails';
 
 
 // 启用路由
@@ -51,11 +51,10 @@ export default new Router({
                 requireAuth: false
             }
         },
-        ...inspection,
          {
-            path: '/dataStatis',
+            path: '/violationDetails',
             name: '数据统计',
-            component: dataStatis,
+            component: violationDetails,
             hidden: true,
             meta: {
                 index: 3,
