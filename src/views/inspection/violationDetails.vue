@@ -1,78 +1,66 @@
 <template>
-  <div>
-    <van-sticky>
-      <div class="cl_head">
-        <van-row>
-          <van-col span="5" offset="1" class="cl_icon">
-            <van-icon name="arrow-left" color="#d8d8d8" size="20"
-          /></van-col>
-          <van-col span="10" offset="3" class="cl_title">{{ title }}</van-col>
-        </van-row>
-      </div>
-    </van-sticky>
-    <div class="cl_menu">
-      <!-- <van-row>
-        <van-col span="8">span: 8</van-col>
-        <van-col span="8">span: 8</van-col>
-        <van-col span="8">span: 8</van-col>
-      </van-row> -->
-
-      <div class="cl_line">
-        <span class="cl_row">1</span>
-        <span class="cl_row">2</span>
-        <span class="cl_row">3</span>
-      </div>
-    </div>
+  <div  class="home">
+        <van-nav-bar
+            title="数据统计"
+            left-arrow
+            border
+            fixed
+            placeholder 
+            @click-left="onClickLeft"
+          />
+      <van-loading v-if="condition" size="24px">加载中...</van-loading>
+      <template v-else>
+        <div class="van-box">
+          <van-grid :column-num="3">
+            <van-grid-item>
+              <p>违规日期</p>
+              <p>2010-10-10</p>
+            </van-grid-item>
+            <van-grid-item>
+              <p>违规日期</p>
+              <p>2010-10-10</p>
+            </van-grid-item>
+            <van-grid-item>
+              <p>违规日期</p>
+              <p>2010-10-10</p>
+            </van-grid-item>
+          </van-grid>
+        </div>
+      </template>
   </div>
 </template>
 
 <script>
+import dataStatis from '@/components/dataStatis'
 export default {
   data() {
     return {
-      value: 0,
-      title: "北二路路口",
-    };
+      active: 0,
+      condition:true
+    }
   },
-  methods: {},
-};
+  methods:{
+    onClickLeft(){
+      this.$router.go(-1)
+    }
+  },
+  created(){
+    setTimeout(() => {
+      this.condition = false
+    }, 650);
+  },
+  components:{
+    dataStatis
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-.cl_head {
-  height: 150px;
-  width: 100%;
-  line-height: 180px;
-  background-color: #ffff;
+.home{
+  background-color: #f7f7f7;
 }
-
-.cl_menu {
-  border-top: 1px #f2f2f2 solid;
-  height: 150px;
-  width: 100%;
-  background-color: #ffff;
-}
-
-.cl_line {
-  height: 70px;
-  line-height: 70px;
-  width: 100%;
-  border: 1px red solid;
-  padding: 0px;
-}
-
-.cl_row {
-  display: -webkit-box;
-  width: 10px;
-  height: 68px;
-  background-color: blue;
-}
-
-.cl_icon {
-  margin-top: 10px;
-}
-
-.cl_title {
-  font-size: 40px;
+.van-loading{
+  text-align: center;
+  margin-top: 220px;
 }
 </style>

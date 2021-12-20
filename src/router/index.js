@@ -55,16 +55,6 @@ export default new Router({
         },
         ...apanage,
         ...inspection,
-         {
-            path: '/violationDetails',
-            name: '数据统计',
-            component: violationDetails,
-            hidden: true,
-            meta: {
-                index: 3,
-                requireAuth: true
-            }
-        },
         {
             path: '/hezhun',
             name: '核准证管理',

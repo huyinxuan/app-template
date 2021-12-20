@@ -18,7 +18,6 @@
           />
         <van-tabs v-model="active" animated>
           <van-tab title="待处理">
-             
               <div class="van-box" v-for="(item, index) in 3" :key="index">
                   <van-row>
                         <van-col span="8">北二路路口</van-col>
