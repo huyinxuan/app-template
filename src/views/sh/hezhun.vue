@@ -64,8 +64,8 @@
               </div>
           </div>
           </div>
-          <van-tabbar v-model="active" @click="add" placeholder fixed>
-            <van-tabbar-item icon="home-o">添加</van-tabbar-item>
+          <van-tabbar v-model="active" placeholder fixed>
+            <van-tabbar-item icon="home-o"  @click="add">添加</van-tabbar-item>
           </van-tabbar>
       </template>
   </div>
