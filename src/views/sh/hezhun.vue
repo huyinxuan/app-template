@@ -1,28 +1,17 @@
 <template>
-  <div>
-    <div>
-        <!-- <van-list >
-            <van-cell v-for="item in list" :key="item"  >
-                <van-cell-group inset>
-                  <van-cell  value="东区审批建准字[2021]第12号" size="large" />
-                  <van-cell title="工程名称：" :value="item.name"  />
-                  <van-cell title="工程地址：" :value="item.name" />
-                  <van-cell title="建设单位：" :value="item.name" />
-                  <van-cell title="施工单位：" :value="item.name" />
-                  <van-cell title="运输单位：" :value="item.name" />
-                  <van-cell title="处置数量及方式：" :value="item.name" />
-                  <van-cell title="处置场所：" :value="item.name" />
-                  <van-cell title="证件有效期：" :value="item.name" />
-                  <van-cell title="办理日期：" :value="item.name" />
-                </van-cell-group>
-              <div>
-                <van-button plain type="info" icon="delete">删除</van-button>
-                <van-button plain type="info" icon="edit">编辑</van-button>
-                <van-button plain type="info" icon="photo-o">照片</van-button>
-              </div>
-            </van-cell>
-          </van-list> -->
-          <div v-for="item in list" :key="item" style="margin-top: 20px;">
+  <div  class="home">
+        <van-nav-bar
+            title="审核证管理"
+            left-arrow
+            border
+            fixed
+            placeholder 
+            @click-left="onClickLeft"
+          />
+      <van-loading v-if="condition" size="24px">加载中...</van-loading>
+      <template v-else>
+        <van-search v-model="search" placeholder="请输入搜索关键词" />
+        <div v-for="item in list" :key="item" style="margin-top: 20px;">
             <van-row>
                <van-col span="24" ><span>东区审批建准字[2021]第12号</span></van-col>
             </van-row>
@@ -68,10 +57,10 @@
                 <van-button plain type="info" icon="photo-o">照片</van-button>
               </div>
           </div>
-    </div>
-    <div>
-      <van-button plain type="primary" size="large" @click="add()" icon="records">添加</van-button>
-    </div>
+          <van-tabbar v-model="active" @click="add" placeholder fixed>
+            <van-tabbar-item icon="home-o">添加</van-tabbar-item>
+          </van-tabbar>
+      </template>
   </div>
 </template>
 
@@ -80,6 +69,7 @@
 export default {
   data() {
     return {
+      search:'',
       list: [
         {name:"内容"},{name:"内容"},{name:"内容"}
       ],
@@ -89,6 +79,9 @@ export default {
   },
 
   methods: {
+    onClickLeft(){
+      this.$router.go(-1)
+    },
     onLoad() {
       // 异步更新数据
       
