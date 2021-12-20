@@ -1,66 +1,194 @@
 <template>
-  <div  class="home">
-        <van-nav-bar
-            title="数据统计"
-            left-arrow
-            border
-            fixed
-            placeholder 
-            @click-left="onClickLeft"
-          />
-      <van-loading v-if="condition" size="24px">加载中...</van-loading>
-      <template v-else>
-        <div class="van-box">
-          <van-grid :column-num="3">
-            <van-grid-item>
-              <p>违规日期</p>
-              <p>2010-10-10</p>
-            </van-grid-item>
-            <van-grid-item>
-              <p>违规日期</p>
-              <p>2010-10-10</p>
-            </van-grid-item>
-            <van-grid-item>
-              <p>违规日期</p>
-              <p>2010-10-10</p>
-            </van-grid-item>
-          </van-grid>
+  <div class="home">
+    <van-nav-bar
+      title="违法处置详情"
+      left-arrow
+      border
+      fixed
+      placeholder
+      @click-left="onClickLeft"
+    />
+    <van-loading v-if="condition" size="24px">加载中...</van-loading>
+    <template v-else>
+      <div class="van-box">
+        <van-grid :column-num="3">
+          <van-grid-item>
+            <p>违规日期</p>
+            <p>2010-10-10</p>
+          </van-grid-item>
+          <van-grid-item>
+            <p>违规日期</p>
+            <p>2010-10-10</p>
+          </van-grid-item>
+          <van-grid-item>
+            <p>违规日期</p>
+            <p>2010-10-10</p>
+          </van-grid-item>
+        </van-grid>
+      </div>
+      <div class="cl_Map">地图模块</div>
+      <div class="cl_MapCk">
+        <van-row>
+          <van-col class="cl_mapFont" span="12"> 处理记录 </van-col>
+          <van-col class="cl_mapFont" span="12"> 信息详情 </van-col>
+        </van-row>
+      </div>
+      <div class="cl_Content">
+        <div class="cl_tiDate">03-02</div>
+        <div class="cl_ContentD">
+          <van-col class="cl_mapFont" span="2">图标</van-col>
+          <van-col class="cl_mapFontTable" span="22">
+            <div class="cl_contDt">摄像机北二路口</div>
+            <div class="cl_contDt">智能抓拍违法事件</div>
+            <div class="cl_contDtImg">
+              <span>图片1</span>
+              <span>图片2</span>
+            </div>
+            <div class="cl_contDt">2020-03-20</div>
+          </van-col>
         </div>
-      </template>
+      </div>
+      <div class="cl_MapCk">
+        <!-- <van-row>
+          <van-col class="cl_mapFont" span="12"> img1 </van-col>
+          <van-col class="cl_mapFont" span="12"> img2 </van-col>
+        </van-row> -->
+        <van-row>
+          <van-col class="cl_mapFont" span="12"> 事件申诉 </van-col>
+          <van-col class="cl_mapFont" span="12"> 违法处置 </van-col>
+        </van-row>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
-import dataStatis from '@/components/dataStatis'
+import dataStatis from "@/components/dataStatis";
 export default {
   data() {
     return {
       active: 0,
-      condition:true
-    }
+      condition: true,
+    };
   },
-  methods:{
-    onClickLeft(){
-      this.$router.go(-1)
-    }
+  methods: {
+    onClickLeft() {
+      this.$router.go(-1);
+    },
   },
-  created(){
+  created() {
     setTimeout(() => {
-      this.condition = false
+      this.condition = false;
     }, 650);
   },
-  components:{
-    dataStatis
-  }
-}
+  components: {
+    dataStatis,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.home{
+.cl_head {
+  height: 150px;
+  width: 100%;
+  line-height: 180px;
+  background-color: #ffff;
+}
+
+.cl_contDt{
+  line-height: 70px;
+}
+
+.cl_contDtImg{
+  height: 60px;
+  line-height: 30px;
+}
+
+.cl_Content {
+  margin-top: 30px;
+  height: 400px;
+  width: 100%;
+  padding: 20px;
+}
+
+.cl_tiDate {
+  margin-left: 40px;
+}
+
+.cl_ContentD {
+  border-radius: 5px;
+  height: 300px;
+  width: 100%;
+  line-height: 180px;
+  background-color: #ffff;
+  margin-top: 10px;
+}
+
+.cl_menu {
+  border-top: 1px #f2f2f2 solid;
+  height: 150px;
+  width: 100%;
+  background-color: #ffff;
+}
+
+.home {
   background-color: #f7f7f7;
 }
-.van-loading{
+.van-loading {
   text-align: center;
   margin-top: 220px;
+}
+
+.cl_Map {
+  margin-top: 50px;
+  height: 400px;
+  width: 100%;
+  background-color: #ffff;
+}
+
+.cl_MapCk {
+  margin-top: 30px;
+  height: 100px;
+  width: 100%;
+  background-color: #ffff;
+  line-height: 100px;
+}
+
+.cl_mapFont {
+  font-family: 微软雅黑, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  text-align: center;
+}
+
+.cl_mapFontTable {
+  font-family: 微软雅黑, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+}
+
+.cl_line {
+  height: 70px;
+  line-height: 70px;
+  width: 100%;
+  border: 1px red solid;
+  padding: 0px;
+}
+
+.cl_row {
+  display: -webkit-box;
+  width: 10px;
+  height: 68px;
+  background-color: blue;
+}
+
+.cl_icon {
+  margin-top: 10px;
+}
+
+.cl_title {
+  font-size: 40px;
 }
 </style>
