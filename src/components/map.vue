@@ -1,28 +1,31 @@
 <template>
     <div class="main">
-        <div>
+        <div ref="top">
             <van-nav-bar @click-left="point.showMap=false" 
             title="地址选择" 
             left-arrow border fixed placeholder/>
-            <div class="search">
+            
+        </div>
+        <div ref="main">
+            <div ref="search" class="search">
                 <van-cell-group>
                     <van-field v-model="point.address" @input="inp" placeholder="请输入地址" />
                 </van-cell-group>
             </div>
-        </div>
-        
-        <baidu-map  class="map" 
-        @ready="mapReady" 
-        :center="center" 
-        :zoom="15"
-        @click="clickEvent">
-            <bm-marker :position="{lng: this.point.lng, lat: this.point.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE" />
-            <bm-local-search  :location="'东营市'" :keyword="key" 
-                :auto-viewport="true"
-                :panel="false" :forceLocal="true" />
-        </baidu-map>
-        <div class="tools">
-            <van-button round block type="info" native-type="submit" @click="point.showMap=false">确定</van-button>
+            <baidu-map  class="map" 
+            @ready="mapReady" 
+            :center="center" 
+            :zoom="15"
+            @click="clickEvent"
+            :style="{height:mapHeight}">
+                <bm-marker :position="{lng: this.point.lng, lat: this.point.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE" />
+                <bm-local-search  :location="'东营市'" :keyword="key" 
+                    :auto-viewport="true"
+                    :panel="false" :forceLocal="true" />
+            </baidu-map>
+            <div class="tools" ref="tools">
+                <van-button round block type="info" native-type="submit" @click="point.showMap=false">确定</van-button>
+            </div>
         </div>
     </div>
   
@@ -64,16 +67,30 @@ export default {
         return {
            key:'',
            inp_time:0,
+           mapHeight:0
         };
     },
-    mounted() {},
+    mounted() {
+        this.$nextTick(()=>{
+            this.onsize();
+        })
+        window.onresize=this.onsize();
+    },
     methods: {
         mapReady({ map, BMap }) {
             //将操作类存入window对象，方便调用
             window.map = map;
             window.BMao = BMap;
          //   map.enableScrollWheelZoom();
-        }, //点击地图监听
+        }, //自适应地图高度
+        onsize(){
+            let topHeight = this.$refs.top.offsetHeight;
+            let searchHeight = this.$refs.search.offsetHeight;
+            let toolsHeight = this.$refs.tools.offsetHeight;
+            let maxHeight = window.document.body.offsetHeight;
+            console.log(topHeight,searchHeight,toolsHeight);
+            this.mapHeight = maxHeight-toolsHeight-searchHeight-topHeight+'px';
+        },
         handleSizeChange(val) {
             /**
              * 子传父
@@ -154,10 +171,14 @@ export default {
     z-index: 1;
 }
 .search{
-    
+    position: relative;
 }
 .tools{
-    margin-top:1vh;
+    position: fixed;
+    padding-top: 0.5vh;
+    width: 90%;
+    margin-left: 5%;
+    padding-bottom: 0.5vh;
 }
 .info{
     color: #464242;

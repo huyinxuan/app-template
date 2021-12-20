@@ -25,7 +25,7 @@
       </div>
     </van-form>
 
-    <selectMap :center="'东营市'" v-model="point" v-show="point.showMap">
+    <selectMap :center="'东营市'" v-model="point" v-if="point.showMap">
     </selectMap>
 
       <!-- <van-button plain type="primary" size="large" @click="add()" icon="">保存</van-button> -->
