@@ -95,15 +95,6 @@ export default {
             console.log(topHeight,searchHeight,toolsHeight);
             this.mapHeight = maxHeight-toolsHeight-searchHeight-topHeight+'px';
         },
-        handleSizeChange(val) {
-            /**
-             * 子传父
-             * 参数1 父元素方法
-             * 参数2 数据
-             */
-            this.pageparm.pageSize = val
-            this.$emit('callFather', this.pageparm)
-        },
         clickEvent(e) {
             console.log(e);
             var map = window.map;
