@@ -34,11 +34,16 @@ import components from "./utils/components";
 import plugins from "./utils/plugins";
 
 import * as echarts from 'echarts';
-import moment from 'moment'//导入文件
-Vue.prototype.$moment = moment;//赋值使用
+import moment from 'moment' //导入文件
+Vue.prototype.$moment = moment; //赋值使用
 //注册百度地图
 import BaiduMap from 'vue-baidu-map'
 Vue.use(BaiduMap, { ak: 'ak=6pVSdLLnNEBwpgHl9VjcaNqA32Ph6iMg   ' })
+
+
+import { Dialog } from 'vant';
+// 弹出框
+Vue.use(Dialog);
 
 Vue.prototype.$echarts = echarts;
 

@@ -1,0 +1,168 @@
+<template>
+    <div class="main">
+        <div>
+            <van-nav-bar @click-left="point.showMap=false" 
+            title="地址选择" 
+            left-arrow border fixed placeholder/>
+            <div class="search">
+                <van-cell-group>
+                    <van-field v-model="point.address" @input="inp" placeholder="请输入地址" />
+                </van-cell-group>
+            </div>
+        </div>
+        
+        <baidu-map  class="map" 
+        @ready="mapReady" 
+        :center="center" 
+        :zoom="15"
+        @click="clickEvent">
+            <bm-marker :position="{lng: this.point.lng, lat: this.point.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE" />
+            <bm-local-search  :location="'东营市'" :keyword="key" 
+                :auto-viewport="true"
+                :panel="false" :forceLocal="true" />
+        </baidu-map>
+        <div class="tools">
+            <van-button round block type="info" native-type="submit" @click="point.showMap=false">确定</van-button>
+        </div>
+    </div>
+  
+</template>
+
+<script>
+export default {
+    name:"map",
+    model:{
+        prop:'point',
+        event: 'ok'
+    },
+    props:{
+        center:{
+            type:String,
+            default:"东营市"
+        },
+        show:false,
+        point:{
+            lng:{
+            type:String,
+            default:-1
+            },
+            lat:{
+                type:String,
+                default:-1
+            },
+            address:{
+                type:String,
+                default:''
+            },
+            showMap:{
+                type:Boolean,
+                default:false
+            }
+        }
+    },
+    data() {
+        return {
+           key:'',
+           inp_time:0,
+        };
+    },
+    mounted() {},
+    methods: {
+        mapReady({ map, BMap }) {
+            //将操作类存入window对象，方便调用
+            window.map = map;
+            window.BMao = BMap;
+         //   map.enableScrollWheelZoom();
+        }, //点击地图监听
+        handleSizeChange(val) {
+            /**
+             * 子传父
+             * 参数1 父元素方法
+             * 参数2 数据
+             */
+            this.pageparm.pageSize = val
+            this.$emit('callFather', this.pageparm)
+        },
+        clickEvent(e) {
+            console.log(e);
+            var map = window.map;
+            var BMap = window.BMao;
+            map.clearOverlays();
+            let Icon_0 = new BMap.Icon(
+                "http://api0.map.bdimg.com/images/marker_red_sprite.png",
+                new BMap.Size(64, 64),
+                {
+                    anchor: new BMap.Size(18, 32),
+                    imageSize: new BMap.Size(36, 25),
+                }
+            );
+            let myMarker = new BMap.Marker(
+                new BMap.Point(e.point.lng, e.point.lat),
+                { icon: Icon_0 }
+            );
+            map.addOverlay(myMarker);
+            //用所定位的经纬度查找所在地省市街道等信息
+            let point = new BMap.Point(e.point.lng, e.point.lat);
+            let gc = new BMap.Geocoder();
+            gc.getLocation(point, (rs)=> {
+                this.point.address = rs.address;
+            });
+            this.point.lng = e.point.lng;
+            this.point.lat = e.point.lat;
+        }, ok () {
+            this.$emit('ok', this.point)
+        },
+        //定位成功回调
+        getLoctionSuccess(point, AddressComponent, marker){
+            var map=window.map;
+            var BMap=window.BMap;
+            map.clearOverlays();
+            let Icon_0 = new BMap.Icon("http://api0.map.bdimg.com/images/marker_red_sprite.png", new BMap.Size(64, 64), {anchor: new BMap.Size(18, 32),imageSize: new BMap.Size(36, 36)});
+            let myMarker = new BMap.Marker(new BMap.Point(point.point.lng, point.point.lat),{icon: Icon_0});
+            map.addOverlay(myMarker);
+            this.point.lng = e.point.lng;
+            this.point.lat = e.point.lat;
+        },
+        //返回选中点的位置
+        findlocation(){
+            var map=window.map;
+            var BMap=window.BMap;
+            this.$emit("findlocdata",this.locData)
+            this.point.address=this.keyword;
+            this.point.lng = e.point.lng;
+            this.point.lat = e.point.lat;
+        },
+        inp(){
+          
+            clearTimeout(inp_time);
+            this.inp_time=setTimeout(()=>{
+                this.key=this.point.address;
+            },200)
+        }
+    },
+};
+</script>
+<style scoped>
+.map{
+    height: 78vh;
+    width: 100vh;
+}
+.main{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 1;
+}
+.search{
+    
+}
+.tools{
+    margin-top:1vh;
+}
+.info{
+    color: #464242;
+    margin-top:1vh;
+    height: 4vh;
+    text-align: center;
+}
+</style>
