@@ -23,8 +23,8 @@ import "./icons/index";
 
 // mock模式
 if (process.env.VUE_APP_MODE == "mock") {
-  require("../mock");
-  console.log("本地mock数据已导入");
+    require("../mock");
+    console.log("本地mock数据已导入");
 }
 
 // 注册自定义全局组件
@@ -33,13 +33,16 @@ import components from "./utils/components";
 // 注册全局插件
 import plugins from "./utils/plugins";
 
+//注册百度地图
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap, { ak: 'ak=6pVSdLLnNEBwpgHl9VjcaNqA32Ph6iMg   ' })
 
 
 Vue.use(plugins).use(components);
 
 
 new Vue({
-  router,
-  store,
-  render: (h) => h(App),
+    router,
+    store,
+    render: (h) => h(App),
 }).$mount("#app");
