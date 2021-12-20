@@ -38,7 +38,7 @@ export default {
           bgColor: "#5bbcdb",
           titColor:'#39b3d7',
           icon:'u14.png',
-          link:'/dataStatis'
+          link:'/weigui'
         },
         {
           name: "审核管理",

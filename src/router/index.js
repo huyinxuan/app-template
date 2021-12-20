@@ -16,6 +16,7 @@ import xcsb from '@/views/sh/xcsb';
 import zfsc from '@/views/sh/zfsc';
 
 import inspection from './inspection';
+import apanage from './apanage';
 
 
 // 启用路由
@@ -51,6 +52,7 @@ export default new Router({
                 requireAuth: false
             }
         },
+        ...apanage,
         ...inspection,
          {
             path: '/dataStatis',
