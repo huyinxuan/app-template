@@ -17,11 +17,11 @@
         <van-col span="8">span: 8</van-col>
       </van-row> -->
 
-      <!-- <div class="cl_line">
+      <div class="cl_line">
         <span class="cl_row">1</span>
         <span class="cl_row">2</span>
         <span class="cl_row">3</span>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
