@@ -12,10 +12,14 @@
       <template v-else>
         <van-tabs v-model="active" animated>
           <van-tab title="月">
-            <dataStatis></dataStatis>
+            <dataStatis :tabindex="active"></dataStatis>
           </van-tab>
-          <van-tab title="季">季</van-tab>
-          <van-tab title="年">年</van-tab>
+          <van-tab title="季">
+            <dataStatis :tabindex="active"></dataStatis>
+          </van-tab>
+          <van-tab title="年">
+            <dataStatis :tabindex="active"></dataStatis>
+          </van-tab>
         </van-tabs>
       </template>
   </div>
@@ -47,6 +51,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home{
+  background-color: #f7f7f7;
+}
 .van-loading{
   text-align: center;
   margin-top: 220px;

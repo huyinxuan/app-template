@@ -33,7 +33,11 @@ import components from "./utils/components";
 // 注册全局插件
 import plugins from "./utils/plugins";
 
+import * as echarts from 'echarts';
+import moment from 'moment'//导入文件
+Vue.prototype.$moment = moment;//赋值使用
 
+Vue.prototype.$echarts = echarts;
 
 Vue.use(plugins).use(components);
 

@@ -135,6 +135,10 @@ export default {
   margin-bottom: 40px;
   border-radius: 20px;
   padding: 40px;
-
+}
+.van-box{
+  .font-sz{
+    font-size: 28px;
+  }
 }
 </style>
