@@ -18,7 +18,8 @@
       />
       <van-tabs v-model="active" animated>
         <van-tab title="待处理">
-          <div class="van-box" v-for="(item, index) in tableData" :key="index">
+          <div class="van-box" v-for="(item, index) in tableData" :key="index"
+            @click="DetailFn(item.id)">
             <van-row class="card_title">
               <van-col span="8"
                 ><div class="van-ellipsis">{{ item.regionName }}</div></van-col
@@ -76,7 +77,12 @@
           </div>
         </van-tab>
         <van-tab title="已处理">
-          <div class="van-box" v-for="(item, index) in tableData" :key="index">
+          <div
+            class="van-box"
+            v-for="(item, index) in tableData"
+            :key="index"
+            @click="DetailFn(item.id)"
+          >
             <van-row class="card_title">
               <van-col span="8"
                 ><div class="van-ellipsis">{{ item.regionName }}</div></van-col
@@ -179,6 +185,11 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1);
+    },
+
+    //详情跳转
+    DetailFn(Id) {
+      this.$router.push({ path: "/violationDetails",query:{id:Id} });
     },
 
     //查询
