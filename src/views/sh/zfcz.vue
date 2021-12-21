@@ -75,7 +75,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .van-col{
   font-size: 26px;
 }

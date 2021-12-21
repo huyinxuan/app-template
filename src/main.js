@@ -40,8 +40,8 @@ Vue.prototype.$moment = moment; //赋值使用
 import BaiduMap from 'vue-baidu-map'
 Vue.use(BaiduMap, { ak: 'ak=6pVSdLLnNEBwpgHl9VjcaNqA32Ph6iMg   ' })
 
-
-import { Dialog } from 'vant';
+import { Empty, Dialog } from 'vant';
+Vue.use(Empty);
 // 弹出框
 Vue.use(Dialog);
 

@@ -35,7 +35,7 @@
           <van-tabs v-model="active1">
               <van-tab title="处理记录">
                   <div class="cl_Content" v-for="item in list" :key="item" >
-                        <van-row class="card_time_line">
+                        <van-row class="card_time_line" v-if="false">
                             <van-col offset="1" span="1" icon="">
                               <svg version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px" xmlns="http://www.w3.org/2000/svg">
                                 <g transform="matrix(1 0 0 1 -29 -20 )">
@@ -134,6 +134,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cl_type {
+  display: inline-block;
+  color: #999999;
+}
+
+.cl_conTitle{
+
+  margin-top: 30px;
+}
+
+.cl_conDLine {
+  width: 100%;
+  margin-top: 20px;
+  line-height: 50px;
+}
+
+.cl_conDrow {
+  margin-top: 5px;
+  width: 100%;
+  line-height: 100px;
+  height: 100px;
+  background-color: #ffff;
+}
+
+.cl_conName {
+  color: rgb(153, 153, 153);
+}
+
+
 .cl_head {
   height: 150px;
   width: 100%;
@@ -141,11 +170,11 @@ export default {
   background-color: #ffff;
 }
 
-.cl_contDt{
+.cl_contDt {
   line-height: 70px;
 }
 
-.cl_contDtImg{
+.cl_contDtImg {
   height: 60px;
   line-height: 30px;
 }
@@ -237,63 +266,75 @@ export default {
 .cl_title {
   font-size: 40px;
 }
-.card_icon{
-  margin-left:5px;
-  margin-top:-5px;
+.card_icon {
+  margin-left: 5px;
+  margin-top: -5px;
 }
-.card_box{
+.card_box {
   color: #666666;
-  width:95vw;
-  padding:2vw;
-  padding-top:20px;
-  background: #FFF;
-  border-radius: 25px;;
+  width: 95vw;
+  padding: 2vw;
+  padding-top: 20px;
+  background: #fff;
+  border-radius: 25px;
 }
-.card_type{
-  font-size:4vw;
+.card_type {
+  font-size: 30px;
   font-weight: 400;
 }
-.card_address{
-  font-size:1vw;
+.card_address {
+  font-size: 20px;
   color: #999999;
-  margin-left:10px;
+  margin-left: 10px;
 }
-.card_box .picList{
-  margin-top:1vw;
-  font-family: '微软雅黑', sans-serif;
+.card_box .picList {
+  margin-top: 1vw;
+  font-family: "微软雅黑", sans-serif;
 }
-.card_box img{
+.card_box img {
   margin-right: 15px;
 }
-.card_time{
-  margin-left:5px;
-  color:#999999;
+.card_time {
+  margin-top:6px;
+  margin-left: 5px;
+  color: #999999;
 }
-.time_ico{
-  margin-top:0.5px
+.time_ico {
+  margin-top: 7px;
 }
-.card_text{
-  color:#1d1d1d
+.card_text {
+  color: #1d1d1d;
 }
-.card_time_line{
-    font-weight: 400;
-    font-style: normal;
-    font-size: 12px;
-    color: rgb(153, 153, 153);
-    margin-bottom:8px;
+.card_content{
+  margin-top: -30px;
 }
-.title{
-  color:#CCCCCC;
+.card_time_line {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  color: rgb(153, 153, 153);
+  margin-bottom: 8px;
 }
-.text{
-  color:#999999;
+.title {
+  color: #cccccc;
+  font-size:24px;
 }
-.infoBox{
+.text {
+  color: #999999;
+  font-size:24px;
+  word-break: break-all;
+}
+.text .cl_type{
+  color: #999999;
+  font-size:24px;
+}
+.infoBox {
   font-weight: 400;
   font-style: normal;
   font-size: 12px;
   line-height: 24px;
   line-height: 45px;
-  font-family: '微软雅黑', sans-serif;
+  font-family: "微软雅黑", sans-serif;
+  text-align: center;
 }
 </style>

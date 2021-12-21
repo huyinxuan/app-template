@@ -18,68 +18,74 @@
       />
       <van-tabs v-model="active" animated>
         <van-tab title="待处理">
-          <div class="van-box" v-for="(item, index) in tableData" :key="index"
-            @click="DetailFn(item.id)">
-            <van-row class="card_title">
-              <van-col span="8"
-                ><div class="van-ellipsis">{{ item.regionName }}</div></van-col
-              >
-              <van-col
-                offset="13"
-                class="card_status_0"
-                v-show="item.status == 1"
-                >待处理</van-col
-              >
-              <van-col
-                offset="13"
-                class="card_status_0"
-                v-show="item.status == 2"
-                >已超期</van-col
-              >
-              <van-col
-                offset="13"
-                class="card_status_0"
-                v-show="item.status == 3"
-                >待审核</van-col
-              >
-              <van-col
-                offset="13"
-                class="card_status_1"
-                v-show="item.status == 4"
-                >已处理</van-col
-              >
-            </van-row>
-            <van-row>
-              <van-col span="12"
-                ><div class="van-ellipsis">
-                  违规日期：{{ item.createTime }}
-                </div></van-col
-              >
-              <van-col span="12"
-                ><div class="van-ellipsis">
-                  违规类型：{{ item.punishName }}
-                </div></van-col
-              >
-            </van-row>
-            <van-row>
-              <van-col span="12">
-                违规来源：
-                <span v-show="item.sourceType == 1">巡查</span>
-                <span v-show="item.sourceType == 2">群众举报</span>
-                <span v-show="item.sourceType == 3">智能抓拍</span>
-              </van-col>
-              <van-col span="12"
-                ><div class="van-ellipsis">
-                  处理结果：{{ item.handleResult }}
-                </div></van-col
-              >
-            </van-row>
-          </div>
+          <van-list 
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="LoadPage">
+            <div class="van-box" v-for="(item, index) in tableData1" :key="index"
+              @click="DetailFn(item.id)">
+              <van-row class="card_title">
+                <van-col span="8"
+                  ><div class="van-ellipsis">{{ item.regionName }}</div></van-col
+                >
+                <van-col
+                  offset="13"
+                  class="card_status_0"
+                  v-show="item.status == 1"
+                  >待处理</van-col
+                >
+                <van-col
+                  offset="13"
+                  class="card_status_0"
+                  v-show="item.status == 2"
+                  >已超期</van-col
+                >
+                <van-col
+                  offset="13"
+                  class="card_status_0"
+                  v-show="item.status == 3"
+                  >待审核</van-col
+                >
+                <van-col
+                  offset="13"
+                  class="card_status_1"
+                  v-show="item.status == 4"
+                  >已处理</van-col
+                >
+              </van-row>
+              <van-row>
+                <van-col span="12"
+                  ><div class="van-ellipsis">
+                    违规日期：{{ item.createTime }}
+                  </div></van-col
+                >
+                <van-col span="12"
+                  ><div class="van-ellipsis">
+                    违规类型：{{ item.punishName }}
+                  </div></van-col
+                >
+              </van-row>
+              <van-row>
+                <van-col span="12">
+                  违规来源：
+                  <span v-show="item.sourceType == 1">巡查</span>
+                  <span v-show="item.sourceType == 2">群众举报</span>
+                  <span v-show="item.sourceType == 3">智能抓拍</span>
+                </van-col>
+                <van-col span="12"
+                  ><div class="van-ellipsis">
+                    处理结果：{{ item.handleResult }}
+                  </div></van-col
+                >
+              </van-row>
+            </div>
+          </van-list>
         </van-tab>
         <van-tab title="已处理">
           <div
             class="van-box"
-            v-for="(item, index) in tableData"
+            v-for="(item, index) in tableData4"
             :key="index"
             @click="DetailFn(item.id)"
           >
@@ -154,31 +160,52 @@ export default {
       enterprise: "",
       active: 0,
       condition: true,
-      tableData: [],
+      tableData1:new Array(),
+      tableData4:new Array(),
       //查询变量
-      searchForm: {
+      searchForm1: {
         status: 1, //1待处理，2已超期，3待审核，4已处理
-        pageNum: 1,
+        pageNum: 0,
         pageSize: 10,
         enterpriseName: "",
+        loading: false,
+        finished: false,
       },
+      //查询变量
+      searchForm4: {
+        status: 4, //1待处理，2已超期，3待审核，4已处理
+        pageNum: 0,
+        pageSize: 10,
+        enterpriseName: "",
+        loading: false,
+        finished: false,
+      },
+      active:0,
+      timeNum:0
     };
   },
   watch: {
     active(e) {
       //0.待处理  1.已处理
+      this.active=e;
       if (e == 0) {
-        this.searchForm.status = 1;
+        this.DataList(this.searchForm1,this.tableData1);
       } else {
-        this.searchForm.status = 4;
+        this.DataList(this.searchForm4,this.tableData4);
       }
 
-      this.DataList(this.searchForm);
+    
     },
 
     enterprise(e) {
-      this.searchForm.enterpriseName = e;
-      this.DataList(this.searchForm);
+    
+      if (this.active == 0) {
+        this.DataList(this.searchForm1,this.tableData1);
+        this.searchForm1.enterpriseName = e;
+      } else {
+        this.DataList(this.searchForm4,this.tableData4);
+        this.searchForm4.enterpriseName = e;
+      }
     },
   },
 
@@ -194,30 +221,52 @@ export default {
 
     //查询
     search() {
-      this.DataList(this.searchForm);
+      if (this.active == 0) {
+        this.tableData4=[];
+        this.searchForm1.pageNum=0;
+        this.DataList(this.searchForm1,this.tableData1);
+      } else {
+        this.tableData1=[];
+        this.searchForm4.pageNum=0;
+        this.DataList(this.searchForm4,this.tableData4);
+      }
     },
-
+    LoadPage() {
+      clearTimeout(this.timeNum);
+      this.timeNum=setTimeout(()=>{
+        if (this.active == 0) {
+          this.DataList(this.searchForm1,this.tableData1);
+        } else {
+          this.DataList(this.searchForm4,this.tableData4);
+        }
+      },200)
+    
+    },
     //获取数据
-    DataList(searchForm) {
-      var than = this;
-      console.log("searchForm:", searchForm);
-      than.loadingBat = true;
+    DataList(searchForm,tableData) {
+      console.log("searchForm",searchForm);
+      searchForm.pageNum+=1;
+      if(!!!searchForm)return;
+      this.loadingBat = true;
       ComplaintsList(searchForm).then((res) => {
-        than.loadingBat = false;
+        this.loadingBat = false;
         if (res.code !== 200) {
-          this.$message({
+          this.$dialog.alert({
             type: "info",
             message: res.msg,
           });
         } else {
-          than.condition = false;
-          console.log("返回参数res:", res.data);
-          than.tableData = res.data.list;
+          this.condition = false;
+          this.loading = false;
+          
+          console.log("LIST:", tableData);
+          if(res.data.list.length>0)tableData.push(...res.data.list);
+          else  this.finished = true;
         }
       });
     },
   },
-  created() {
+  mounted() {
     this.search();
   },
   components: {
