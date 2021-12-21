@@ -82,8 +82,15 @@ export default {
     border-radius: 20px;
     padding: 40px;
     box-shadow: 0px 0px 10px rgb(0 0 0 / 5%);
+    .van-row{
+      .van-col{
+        height: 48px;
+        line-height: 48px;
+      }
+    }
 }
 .van-search__content{
     background-color: #fff !important;
 }
+
 </style>
