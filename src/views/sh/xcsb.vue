@@ -9,17 +9,17 @@
       <van-field v-model="data1.reportUserName" label="上传人员：" />
     
       <van-cell is-link @click="show =true" :value="data1.punishName" title="事件类型：" ></van-cell>
-      <van-popup v-model="show" round position="bottom" :style="{ height: '30%' }" >
-          <van-row v-for="item in actionsj" :key="item">
+      <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
+          <van-row class="select_row" v-for="item in actionsj" :key="item">
             <van-col span="24" @click="xz(item)">{{item.reason}}</van-col>
           </van-row>
       </van-popup>
 
       <van-cell is-link @click="openMap" :value="point.address" title="违规地点：" />
 
-       <van-cell is-link title="属地街道：" @click="show1 =true"  :value="data1.regionName" />
-       <van-popup v-model="show1" round position="bottom" :style="{ height: '30%' }" >
-          <van-row v-for="item in actions" :key="item">
+      <van-cell is-link title="属地街道：" @click="show1 =true"  :value="data1.regionName" />
+      <van-popup class="select_rows_box" v-model="show1" round position="bottom" :style="{ height: '30%' }" >
+          <van-row class="select_row" v-for="item in actions" :key="item">
             <van-col span="24" @click="sd(item)">{{item.name}}</van-col>
           </van-row>
       </van-popup>
@@ -128,7 +128,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .van-col{
   font-size: 26px;
 }
@@ -136,5 +136,15 @@ export default {
   font-size: 36px;
   font-weight: 500;
 }
-
+.select_row{
+  text-align: center;
+  margin-top: 25px;
+}
+.select_row .van-col{
+  font-size:30px;
+  color:#666666;
+}
+.select_rows_box{
+  padding-bottom: 25px;
+}
 </style>
