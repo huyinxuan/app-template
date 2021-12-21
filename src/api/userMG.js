@@ -323,3 +323,8 @@ export const czList = (params) => { return reget("get", "/api/monitor/operlog/li
 // export const insertcz = (params) => { return reput("post", "/api/system/role", params) };
 // // 职位管理删除
 // export const deletecz = (params) => { return delt("DELETE", "/api/system/role", params) };
+
+//小程序核准查询
+export const hzList = (params) => { return reget("get", "/api/approvalCard/selectApprovalCardList", params) };
+// 小程序核准删除
+export const deletehz = (params) => { return reget("DELETE", "/api/approvalCard/deleteApprovalCard", params) };

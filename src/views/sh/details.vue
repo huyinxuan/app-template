@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <van-nav-bar
-      title="违法处置详情"
+      :title="title"
       left-arrow
       border
       fixed
@@ -10,97 +10,91 @@
     />
     <van-loading v-if="condition" size="24px">加载中...</van-loading>
     <template v-else>
-      <div class="van-box">
+      <div class="van-box infoBox">
         <van-grid :column-num="3">
           <van-grid-item>
-            <p>违规日期</p>
-            <p>2010-10-10</p>
+            <p class="title">违规日期</p>
+            <p class="text">2010-10-10</p>
           </van-grid-item>
           <van-grid-item>
-            <p>处理状态</p>
-            <p>0</p>
+            <p class="title">违规日期</p>
+            <p class="text">2010-10-10</p>
           </van-grid-item>
           <van-grid-item>
-            <p>违规类别</p>
-            <p>2</p>
+            <p class="title">违规日期</p>
+            <p class="text">2010-10-10</p>
           </van-grid-item>
         </van-grid>
       </div>
       <div class="cl_Map">地图模块</div>
       <div class="cl_MapCk">
-        <van-tabs v-model="active1">
-          <van-tab title="处理记录">
-                <div class="cl_Content">
-                  <div class="cl_tiDate">03-02</div>
-                  <div class="cl_ContentD">
-                    <van-col class="cl_mapFont" span="2">图标</van-col>
-                    <van-col class="cl_mapFontTable" span="22">
-                      <div class="cl_contDt">摄像机北二路口</div>
-                      <div class="cl_contDt">智能抓拍违法事件</div>
-                      <div class="cl_contDtImg">
-                        <span>图片1</span>
-                        <span>图片2</span>
-                      </div>
-                      <div class="cl_contDt">2020-03-20</div>
-                    </van-col>
-                  </div>
-                </div>
-                <div class="cl_Content">
-                  <div class="cl_tiDate">03-02</div>
-                  <div class="cl_ContentD">
-                    <van-col class="cl_mapFont" span="2">图标</van-col>
-                    <van-col class="cl_mapFontTable" span="22">
-                      <div class="cl_contDt">摄像机北二路口</div>
-                      <div class="cl_contDt">智能抓拍违法事件</div>
-                      <div class="cl_contDtImg">
-                        <span>图片1</span>
-                        <span>图片2</span>
-                      </div>
-                      <div class="cl_contDt">2020-03-20</div>
-                    </van-col>
-                  </div>
-                </div>
-          </van-tab>
-          <van-tab title="信息详情">
-              <!-- <div class="cl_xxDate">基本信息</div> -->
-              <!-- <div>
-                <!-- <van-row >
-                    <van-col span="8"><span>违规地点：</span></van-col>
-                    <van-col span="16"><span>{{1}}</span></van-col>
-                </van-row>
-                <van-row >
-                    <van-col span="8"><span>管辖归属：</span></van-col>
-                    <van-col span="16"><span>{{1}}</span></van-col>
-                </van-row>
-                <van-row >
-                    <van-col span="8"><span>违规日期：</span></van-col>
-                    <van-col span="16"><span>{{1}}</span></van-col>
-                </van-row>
-                <van-row >
-                    <van-col span="8"><span>违规来源：</span></van-col>
-                    <van-col span="16"><span>{{1}}</span></van-col>
-                </van-row>
-                <van-row >
-                    <van-col span="8"><span>违规类型：</span></van-col>
-                    <van-col span="16"><span>{{1}}</span></van-col>
-                </van-row> 
-              </div> -->
-               <van-cell-group inset>
-                  <van-cell title="违规地点：" value="内容" />
-                  <van-cell title="管辖归属：" value="内容"  />
-                  <van-cell title="违规日期：" value="内容"  />
-                  <van-cell title="违规来源：" value="内容"  />
-                  <van-cell title="违规类型：" value="内容"  />
+        <!-- <van-row>
+          <van-col class="cl_mapFont" span="12"> 处理记录 </van-col>
+          <van-col class="cl_mapFont" span="12"> 信息详情 </van-col>
+        </van-row> -->
+          <van-tabs v-model="active1">
+              <van-tab title="处理记录">
+                  <div class="cl_Content" v-for="item in list" :key="item" >
+                        <van-row class="card_time_line">
+                            <van-col offset="1" span="1" icon="">
+                              <svg version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="matrix(1 0 0 1 -29 -20 )">
+                                  <path d="M 34 21  C 36.24 21  38 22.759999999999998  38 25  C 38 27.240000000000002  36.24 29  34 29  C 31.759999999999998 29  30 27.240000000000002  30 25  C 30 22.759999999999998  31.759999999999998 21  34 21  Z " fill-rule="nonzero" fill="#f9f9f9" stroke="none" />
+                                  <path d="M 34 21  C 36.24 21  38 22.759999999999998  38 25  C 38 27.240000000000002  36.24 29  34 29  C 31.759999999999998 29  30 27.240000000000002  30 25  C 30 22.759999999999998  31.759999999999998 21  34 21  Z " stroke-width="2" stroke="#0079fe" fill="none" />
+                                </g>
+                              </svg>
+                            </van-col>
+                            <van-col span="21" icon="">
+                                03-02
+                            </van-col>
+                        </van-row>
+                        <div class="card_box">
+                          <van-row>
+                            <van-col span="3" icon="">
+                              <van-icon class="card_icon" name="eye-o" size="26" />
+                            </van-col>
+                            <van-col span="21" class="card_type">摄像机<span class="card_address">北二路路口</span></van-col>
+                          </van-row>
+                          <van-row>
+                            <van-col span="3">
+                            </van-col>
+                            <van-col span="21" class="card_text">
+                              智能抓拍违规事件<br>
+                              <div class="picList">
+                                <img width="80px" src="https://files1.xuruidea.com/0/20211221/11640057427435.png">
+                                <img width="80px"  src="https://files1.xuruidea.com/0/20211221/11640057427435.png">
+                              </div>
+                            </van-col>
+                          </van-row>
+                          <van-row>
+                            <van-col span="3"></van-col>
+                            <van-col span="1">  
+                              <van-icon class="time_ico" name="underway-o" />
+                            </van-col>
+                            <van-col span="19" class="card_time">
+                              <span>2020-03-20 23:31</span>
+                            </van-col>
+                          </van-row>
+                        </div>
+                    </div>
+              </van-tab>
+              <van-tab title="信息详情">
+                  <van-cell-group inset>
+                        <van-cell title="基本信息"/>
+                        <van-cell title="违规地点：" value="内容" />
+                        <van-cell title="管辖归属：" value="内容"  />
+                        <van-cell title="违规日期：" value="内容"  />
+                        <van-cell title="违规来源：" value="内容"  />
+                        <van-cell title="违规类型：" value="内容"  />
                 </van-cell-group>
-          </van-tab>
-        </van-tabs>
+              </van-tab>
+          </van-tabs>  
       </div>
-      <!-- <div class="cl_MapCk"> -->
-          <van-tabbar v-model="active" placeholder fixed>
-            <van-tabbar-item icon="info-o"  @click="sjss()">事件申诉</van-tabbar-item>
-            <van-tabbar-item icon="records"  @click="zfcz()">执法处置</van-tabbar-item>
-          </van-tabbar>
-      <!-- </div> -->
+    
+        <van-tabbar v-model="active" placeholder fixed>
+          <van-tabbar-item icon="info-o"  @click="sjss()">事件申诉</van-tabbar-item>
+          <van-tabbar-item icon="records"  @click="zfcz()">执法处置</van-tabbar-item>
+        </van-tabbar>
     </template>
   </div>
 </template>
@@ -110,13 +104,15 @@ import dataStatis from "@/components/dataStatis";
 export default {
   data() {
     return {
-      active1:0,
+      title:"违法处置详情",
+      list:[{name:"1"},{name:"1"}],
+      pic:require("../../icons/svg/u20.svg"),
       active: 0,
       condition: true,
     };
   },
   methods: {
-    sjss(){
+     sjss(){
       this.$router.push({ path: "/sjss" });
     },
     zfcz(){
@@ -180,9 +176,7 @@ export default {
   width: 100%;
   background-color: #ffff;
 }
-.cl_xxDate{
-  margin-top: 30px;
-}
+
 .home {
   background-color: #f7f7f7;
 }
@@ -242,5 +236,64 @@ export default {
 
 .cl_title {
   font-size: 40px;
+}
+.card_icon{
+  margin-left:5px;
+  margin-top:-5px;
+}
+.card_box{
+  color: #666666;
+  width:95vw;
+  padding:2vw;
+  padding-top:20px;
+  background: #FFF;
+  border-radius: 25px;;
+}
+.card_type{
+  font-size:4vw;
+  font-weight: 400;
+}
+.card_address{
+  font-size:1vw;
+  color: #999999;
+  margin-left:10px;
+}
+.card_box .picList{
+  margin-top:1vw;
+  font-family: '微软雅黑', sans-serif;
+}
+.card_box img{
+  margin-right: 15px;
+}
+.card_time{
+  margin-left:5px;
+  color:#999999;
+}
+.time_ico{
+  margin-top:0.5px
+}
+.card_text{
+  color:#1d1d1d
+}
+.card_time_line{
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12px;
+    color: rgb(153, 153, 153);
+    margin-bottom:8px;
+}
+.title{
+  color:#CCCCCC;
+}
+.text{
+  color:#999999;
+}
+.infoBox{
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 24px;
+  line-height: 45px;
+  font-family: '微软雅黑', sans-serif;
 }
 </style>
