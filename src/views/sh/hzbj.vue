@@ -5,13 +5,13 @@
     </div>
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
-      <van-field v-model="text" label="工程名称：" />
-      <van-field v-model="text" label="工程地址：" />
-      <van-field v-model="text" label="建设单位：" />
-      <van-field v-model="text" label="施工单位：" />
-      <van-field v-model="text" label="运输单位：" />
-      <van-field v-model="val" label="处置数量及方式：" />
-      <van-field v-model="text" label="处置场所：" />
+      <van-field v-model="text" colon label="工程名称" />
+      <van-field v-model="text" colon label="工程地址" />
+      <van-field v-model="text" colon label="建设单位" />
+      <van-field v-model="text" colon label="施工单位" />
+      <van-field v-model="text" colon label="运输单位" />
+      <van-field v-model="val" colon label="处置数量" />
+      <van-field v-model="text" colon label="处置场所" />
       <!-- <van-input lable="qqq" v-model="val"></van-input> -->
       <!-- <van-field v-model="text" label="证件有效期：" /> -->
      <van-cell title="证件有效期：" :value="date1" @click="show1 = true" />

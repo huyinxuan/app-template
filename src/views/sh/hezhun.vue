@@ -39,7 +39,7 @@
             <van-row >
                 <van-col span="23"><span>处置数量及方式：{{item.name}}</span></van-col>
             </van-row>
-            <van-row >z
+            <van-row >
                 <van-col span="23"><span>处置场所：{{item.name}}</span></van-col>
             </van-row>
             <van-row >

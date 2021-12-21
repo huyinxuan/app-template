@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <van-nav-bar fixed title="首页" />
+    <van-nav-bar safe-area-inset-top  placeholder fixed title="首页" />
     <div class="home-box">
       <div
         class="home-cont"
