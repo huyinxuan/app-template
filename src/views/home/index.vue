@@ -78,6 +78,7 @@ export default {
           bgColor: "#ec6f5a",
           icon: "u27.png",
           titColor: "#e9573f",
+          link: "/violation",
         },
         {
           name: "账号管理",
