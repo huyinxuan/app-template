@@ -60,10 +60,12 @@ export default {
             id:this.$route.query.id
           }
           hzList(id).then(res => {
+            this.uploader = []
             this.loadingBat = false;
             if (res.code == 200) {
               this.data = res.data[0];
-              //this.uploader[0] =res.data[0].fileUrl
+              this.uploader.push({url:res.data[0].fileUrl,isImage: true})
+              // this.uploader = res.data
             } else {
               this.$message.error(res.msg);
             }
