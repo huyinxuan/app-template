@@ -138,7 +138,13 @@ export default {
 }
 .select_row{
   text-align: center;
-  margin-top: 25px;
+  padding: 3.33333vw;
+  border-bottom: 1px solid #f3f2f2;
+  width: 95%;
+  margin: 0 auto;
+}
+.select_row:last-child{
+  border: 0;
 }
 .select_row .van-col{
   font-size:30px;
