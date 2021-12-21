@@ -5,53 +5,72 @@
     </div>
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
-      <van-field v-model="text" label="工程名称：" />
-      <van-field v-model="text" label="工程地址：" />
-      <van-field v-model="text" label="建设单位：" />
-      <van-field v-model="text" label="施工单位：" />
-      <van-field v-model="text" label="运输单位：" />
-      <van-field v-model="val" label="处置数量及方式：" />
-      <van-field v-model="text" label="处置场所：" />
+      <van-field v-model="data.projectName" label="工程名称：" />
+      <van-field v-model="data.projectAddress" label="工程地址：" />
+      <van-field v-model="data.property" label="建设单位：" />
+      <van-field v-model="data.construction" label="施工单位：" />
+      <van-field v-model="data.transportName" label="运输单位：" />
+      <van-field v-model="data.handleNum" label="处置数量及方式：" />
+      <van-field v-model="data.handlePlace" label="处置场所：" />
       <!-- <van-input lable="qqq" v-model="val"></van-input> -->
       <!-- <van-field v-model="text" label="证件有效期：" /> -->
-     <van-cell title="证件有效期：" :value="date1" @click="show1 = true" />
+     <van-cell title="证件有效期：" :value="data.cardUseTime" @click="show1 = true" />
       <van-calendar v-model="show1" type="range" @confirm="onConfirm1"  />
 
-      <van-cell title="办理日期：" :value="date" @click="show = true" />
-        <van-calendar v-model="show" @confirm="onConfirm"  />
+      <van-cell title="办理日期：" :value="data.createTime" @click="show = true" />
+      <van-calendar v-model="show" @confirm="onConfirm"  />
+
       <van-field name="uploader" label="照片：">
         <template #input>
-          <van-uploader v-model="uploader" />
+          <van-uploader v-model="uploader" multiple :max-count="1"/>
         </template>
       </van-field>
-
       <div style="margin: 16px;">
         <van-button round block type="info" native-type="submit">提交</van-button>
       </div>
     </van-form>
-      <!-- <van-button plain type="primary" size="large" @click="add()" icon="">保存</van-button> -->
   </div>
 </template>
 
 <script>
+import { hzList } from "@/api/userMG";
 
 export default {
   data() {
     return {
-      val:'123',
-      date: '',
-      date1:'',
+      data:[],
+       //date: '',
+      // date1:'',
       show1: false,
       show: false,
-     title:"添加核准证",
-     uploader: [{ url: 'https://img01.yzcdn.cn/vant/leaf.jpg' }],
+      title:'',
+      uploader: [],
     };
   },
-
+ created(){
+   this.onLoad();
+  },
   methods: {
     onLoad() {
-      // 异步更新数据
-      
+      //let id =,
+      if(this.$route.query.id){
+          this.title="编辑核准证"
+          this.loadingBat= true
+          let id ={
+            id:this.$route.query.id
+          }
+          hzList(id).then(res => {
+            this.loadingBat = false;
+            if (res.code == 200) {
+              this.data = res.data[0];
+              //this.uploader[0] =res.data[0].fileUrl
+            } else {
+              this.$message.error(res.msg);
+            }
+          });
+      }else{
+        this.title="添加核准证"
+      }
     },
      onClickLeft(){
       this.$router.go(-1)
@@ -61,12 +80,12 @@ export default {
     },
     onConfirm(date) {
       this.show = false;
-      this.date = this.formatDate(date);
+      this.data.createTime = this.formatDate(date);
     },
     onConfirm1(date1){
       const [start, end] = date1;
       this.show1 = false;
-      this.date1 = `${this.formatDate(start)} - ${this.formatDate(end)}`;
+      this.data.cardUseTime = `${this.formatDate(start)} 至 ${this.formatDate(end)}`;
     },
     onSubmit(values){
       console.log('submit', values);
