@@ -14,6 +14,10 @@ import hezhun from '@/views/sh/hezhun';
 import hzbj from '@/views/sh/hzbj';
 import xcsb from '@/views/sh/xcsb';
 import zfsc from '@/views/sh/zfsc';
+import details from '@/views/sh/details';
+import zfcz from '@/views/sh/zfcz';
+import sjss from '@/views/sh/sjss';
+import sptjdataStatis from '@/views/sh/sptjdataStatis';
 
 import inspection from './inspection';
 import apanage from './apanage';
@@ -96,6 +100,42 @@ export default new Router({
             hidden: true,
             meta: {
                 index: 7,
+                requireAuth: true
+            }
+        },{
+            path: '/details',
+            name: '核准证详情',
+            component: details,
+            hidden: true,
+            meta: {
+                index: 8,
+                requireAuth: true
+            }
+        },{
+            path: '/zfcz',
+            name: '执法处置',
+            component: zfcz,
+            hidden: true,
+            meta: {
+                index: 9,
+                requireAuth: true
+            }
+        },{
+            path: '/sjss',
+            name: '事件申报',
+            component: sjss,
+            hidden: true,
+            meta: {
+                index: 10,
+                requireAuth: true
+            }
+        },{
+            path: '/sptjdataStatis',
+            name: '审批局数据统计',
+            component: sptjdataStatis,
+            hidden: true,
+            meta: {
+                index: 10,
                 requireAuth: true
             }
         }
