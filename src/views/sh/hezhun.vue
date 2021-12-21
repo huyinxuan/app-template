@@ -15,8 +15,8 @@
             background="#f2f2f2"
             placeholder="请输入搜索关键词" />
           <div class="home-canvan">
-            <!-- @click="xq(item)" -->
-            <div v-for="item in list" :key="item" class="hezhun-cont" > 
+            <div v-for="item in list" :key="item" class="hezhun-cont" >
+              <div @click='xq(item.id)'>
               <van-row>
                 <van-col span="24" ><span>{{item.cardId}}</span></van-col>
               </van-row>
@@ -47,6 +47,7 @@
               <van-row >
                   <van-col span="23"><span>办理日期：{{item.createTime}}</span></van-col>
               </van-row>
+              </div> 
               <van-row class="btns">
                   <van-col span="8">
                     <van-button plain type="info" icon="delete" @click="del(item.id)">删除</van-button>
@@ -135,9 +136,9 @@ export default {
       this.$router.push({ path: "/hzbj",query:{
          id:id}});
     },
-    xq(item){
+    xq(id){
       this.$router.push({ path: "/details",query:{
-         id:item.id}});
+         id:id}});
     }
   },
   components: {

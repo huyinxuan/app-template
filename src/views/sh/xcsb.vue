@@ -6,17 +6,23 @@
     </div>
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
-      <van-field v-model="text" label="上传人员：" />
-      <van-cell is-link title="事件类型"  @click="show2 = true" />
-      <van-action-sheet v-model="punishId" :actions="actionsj" @select="sjSelect" />     
+      <van-field v-model="data1.reportUserName" label="上传人员：" />
+    
+      <van-cell is-link @click="show =true" :value="data1.punishName" title="事件类型：" ></van-cell>
+      <van-popup v-model="show" round position="bottom" :style="{ height: '30%' }" >
+          <van-row v-for="item in actionsj" :key="item">
+            <van-col span="24" @click="xz(item)">{{item.reason}}</van-col>
+          </van-row>
+      </van-popup>
 
       <van-cell is-link @click="openMap" :value="point.address" title="违规地点：" />
 
-       <van-cell is-link title="属地街道："  @click="show1 = true" />
-      <van-action-sheet v-model="regionId" :actions="actions" @select="onSelect" /> 
-      
-      <van-field v-model="text" label="运输单位：" />
-
+       <van-cell is-link title="属地街道：" @click="show1 =true"  :value="data1.regionName" />
+       <van-popup v-model="show1" round position="bottom" :style="{ height: '30%' }" >
+          <van-row v-for="item in actions" :key="item">
+            <van-col span="24" @click="sd(item)">{{item.name}}</van-col>
+          </van-row>
+      </van-popup>
       <van-field name="uploader" label="照片：">
         <template #input>
           <van-uploader v-model="uploader" multiple :max-count="1" />
@@ -37,17 +43,18 @@
 
 <script>
 import { regionListAll } from "@/api/payMG";
-import { punishDailyDropList } from "@/api/userMG";
+import { punishDailyDropList,insertComplaints } from "@/api/userMG";
 import selectMap from '@/components/map'
 export default {
   data() {
     return {
-     // val:'123',
-      // date: '',
-      // date1:'',
-      show2: false,
+      data1:{
+        punishId:'',
+        regionId:'',
+      },
       show1: false,
       title:"巡查上报",
+      show:false,
       uploader: [],
       actionsj: [],
       actions: [],
@@ -78,13 +85,11 @@ export default {
             }
       });
      },
-    // 事件类型下拉
-    onSelect(item) {
-      // 默认情况下点击选项时不会自动收起
-      // 可以通过 close-on-click-action 属性开启自动收起
-      this.show2 = false;
-      Toast(item.reason);
-    },
+     xz(item){
+        this.show = false;
+        this.data1.punishName = item.reason
+        this.data1.punishId = item.id
+     },
     // 属地街道下拉查询
      sdSelect(){
       regionListAll().then(res => {
@@ -95,11 +100,11 @@ export default {
             }
       });
      },
-    // 属地街道下拉
-    onSelect(item) {
-      this.show1 = false;
-      Toast(item.name);
-    },
+    sd(item){
+        this.show1 = false;
+        this.data1.regionName = item.name
+        this.data1.regionId = item.id
+     },
     //打开地图选择窗口
     openMap(){
       this.point.showMap=true;
@@ -108,12 +113,19 @@ export default {
     onClickLeft(){
       this.$router.go(-1)
     },
-    onSubmit(values){
-      console.log('submit', values);
+    onSubmit(){
+      this.data1.handlePlace = this.point.address;
+      this.data1.longitudeLatitude= this.point.lng+','+this.point.lat;
+      insertComplaints(this.data1).then(res => {
+            if (res.code == 200) {
+              this.$router.go(-1)
+            }else{
+              this.$message.error(res.msg);
+            }
+        });
     }
   }
 };
-
 </script>
 
 <style>

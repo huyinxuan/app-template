@@ -4,7 +4,7 @@
       <van-nav-bar  :title="title" left-arrow border fixed placeholder  @click-left="onClickLeft"/>
     </div>
     <!-- 输入任意文本 -->
-    <van-form @submit="onSubmit">
+    <van-form @submit="onSubmit(data)">
       <van-field v-model="data.projectName" label="工程名称：" />
       <van-field v-model="data.projectAddress" label="工程地址：" />
       <van-field v-model="data.property" label="建设单位：" />
@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import { hzList } from "@/api/userMG";
+import { hzList,edithz,inserthz } from "@/api/userMG";
 
 export default {
   data() {
     return {
-      data:[],
+      data:{},
        //date: '',
       // date1:'',
       show1: false,
@@ -80,17 +80,43 @@ export default {
      formatDate(date) {
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     },
+    formatDate1(date) {
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} 00:00:00`;
+    },
     onConfirm(date) {
       this.show = false;
-      this.data.createTime = this.formatDate(date);
+      this.data.createTime = this.formatDate1(date);
     },
     onConfirm1(date1){
       const [start, end] = date1;
       this.show1 = false;
       this.data.cardUseTime = `${this.formatDate(start)} 至 ${this.formatDate(end)}`;
     },
-    onSubmit(values){
-      console.log('submit', values);
+    onSubmit(data){
+      if(data.id){
+        //console.log("id"+data.id)
+        edithz(data).then(res => {
+            this.loading = false;
+            if (res.code == 200) {
+             // this.onLoad();
+              this.$router.go(-1)
+            }else{
+              this.$message.error(res.msg);
+            }
+          });
+      }else{
+        this.data["uploader"] =this.uploader
+         console.log(this.data)
+        inserthz(this.data).then(res => {
+            this.loading = false;
+            if (res.code == 200) {
+              this.$router.go(-1)
+            }else{
+              this.$message.error(res.msg);
+            }
+          });
+      }
+      //console.log('submit', data.property);
     }
   },
   components:{

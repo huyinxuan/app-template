@@ -323,8 +323,15 @@ export const czList = (params) => { return reget("get", "/api/monitor/operlog/li
 // export const insertcz = (params) => { return reput("post", "/api/system/role", params) };
 // // 职位管理删除
 // export const deletecz = (params) => { return delt("DELETE", "/api/system/role", params) };
-
+    
 //小程序核准查询
 export const hzList = (params) => { return reget("get", "/api/approvalCard/selectApprovalCardList", params) };
 // 小程序核准删除
 export const deletehz = (params) => { return reget("DELETE", "/api/approvalCard/deleteApprovalCard", params) };
+ // 职位管理修改
+export const edithz = (params) => { return reput("put", "/api/approvalCard/updateApprovalCard", params) };
+ // 职位管理新增
+export const inserthz = (params) => { return reput("post", "/api/approvalCard/insertApprovalCard", params) };
+//添加巡查上报和群众举报
+export const insertComplaints = (params) => { return reput("post", "/api/complaints/insertComplaints", params) };
+
