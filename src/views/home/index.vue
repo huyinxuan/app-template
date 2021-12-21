@@ -84,6 +84,14 @@ export default {
           bgColor: "#649ae1",
           icon: "u30.png",
           titColor: "#4a89dc",
+          link: "/accoutManage"
+        },
+        {
+          name: "历史数据",
+          bgColor: "#5bc0de",
+          icon: "u22.png",
+          titColor: "#39b3d7",
+          link: "/history"
         },
       ],
     };

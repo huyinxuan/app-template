@@ -39,6 +39,7 @@ body {
 }
 .container{
     overflow-x: hidden;
+    height: 100%;
 }
 .slide-right-enter-active,
 .slide-right-leave-active,

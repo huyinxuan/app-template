@@ -1,7 +1,7 @@
 <template>
   <div  class="home">
         <van-nav-bar
-            title="事件查询"
+            title="历史记录"
             left-arrow
             border
             fixed
@@ -20,7 +20,7 @@
           <van-tab title="待处理">
               <div class="van-box" v-for="(item, index) in 10" :key="index">
                   <van-row class="card_title">
-                        <van-col span="8">北二路路口</van-col>
+                        <van-col span="8">某某小区</van-col>
                         <van-col offset="13" class="card_status_0">待处理</van-col>
                     </van-row>
                     <van-row>
@@ -36,7 +36,7 @@
           <van-tab title="已处理">
                 <div class="van-box" v-for="(item, index) in 10" :key="index">
                   <van-row class="card_title">
-                        <van-col span="8">北二路路口</van-col>
+                        <van-col span="8">某某小区</van-col>
                         <van-col offset="13" class="card_status_1">已处理</van-col>
                     </van-row>
                     <van-row>
@@ -55,7 +55,6 @@
 </template>
 
 <script>
-import dataStatis from '@/components/dataStatis'
 export default {
   data() {
     return {
@@ -72,9 +71,6 @@ export default {
     setTimeout(() => {
       this.condition = false
     }, 650);
-  },
-  components:{
-    dataStatis
   }
 }
 </script>
@@ -113,11 +109,8 @@ export default {
   color: #70B603;
   font-size:20px
 }
->>> .van-tabs__content{
-    height: 100%;
-}
 .van-tab__pane-wrapper{
-    height: calc(100% - 288px);
+    height: 1000px;
     overflow: auto;
 }
 </style>
