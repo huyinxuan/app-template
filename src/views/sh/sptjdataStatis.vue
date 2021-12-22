@@ -11,12 +11,12 @@
       <van-loading v-if="condition" size="24px">加载中...</van-loading>
       <template v-else>
         <van-tabs v-model="active" animated>
-          <van-tab title="月">
+          <!-- <van-tab title="月">
             <dataStatis :tabindex="active"></dataStatis>
           </van-tab>
           <van-tab title="季">
             <dataStatis :tabindex="active"></dataStatis>
-          </van-tab>
+          </van-tab> -->
           <van-tab title="年">
             <dataStatis :tabindex="active"></dataStatis>
           </van-tab>

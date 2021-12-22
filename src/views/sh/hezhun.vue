@@ -139,16 +139,12 @@ export default {
       hzList(search).then(res => {
         this.loadingBat = false;
         if (res.code == 200) {          
-          //this.tableData = res.data;
-         // console.log(res.data)
-           console.log(this.tableData)
-          if(res.data.length>0 && this.tableData.length )tableData.push(...res.data);
-
+           console.log(res.data.length)
+           console.log(res.data)
+          if(res.data.length>0  )tableData.push(...res.data);
           else  this.finished = true;
-
         } else {
-           this.$message({
-            type: "info",
+           this.$message({ type: "info",
             message: res.msg
           });
         }

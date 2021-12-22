@@ -2,8 +2,8 @@
   <div>
     <div class="van-month">
       <van-tabs class="van-top" @click="onClick"  v-model="active"  type="card">
-        <van-tab :title="titleOne"></van-tab>
-        <van-tab :title="titleTwo"></van-tab>
+        <van-tab title="今年"></van-tab>
+        <van-tab title="去年"></van-tab>
       </van-tabs>
     </div>
     <div class="van-box">
@@ -16,14 +16,14 @@
             <p class="font-fz">25</p>
           </div>
         </div>
-        
       <div class="box-bar" ref="chart"></div>
     </div>
   </div>
 </template>
-
 <script>
-import { baseInfo, baseYear, baseJiDu, baseMonth } from "@/api/basisMG.js";
+import {  baseYear } from "@/api/basisMG.js";
+import { statistics } from "@/api/inspectionapi.js";
+
 export default {
   props: {
     myChart: "",
@@ -36,12 +36,8 @@ export default {
   },
   data() {
     return {
-      chinaTil:{chanqianlaji:'拆迁垃圾',gongchengzhatu:'工程渣土',zhuangxiuzhuangshi:'装修装饰垃圾'},
+     // chinaTil:{chanqianlaji:'拆迁垃圾',gongchengzhatu:'工程渣土',zhuangxiuzhuangshi:'装修装饰垃圾'},
       active:0,
-      titleOne:
-        this.tabindex == 0 ? "本月" : this.tabindex == 1 ? "本季" : "今年",
-      titleTwo:
-        this.tabindex == 0 ? "上月" : this.tabindex == 1 ? "上季" : "去年",
       option2: {
         tooltip: {
           trigger: "axis",
@@ -91,70 +87,15 @@ export default {
     };
   },
   methods: {
-    onClick(name, title) {
-      this.tabindex == 0 ? this.baseMonthInit() :( this.tabindex == 1 ? this.baseJiDuInit() : this.baseYearInit())
+    onClick() {
+      this.baseYearInit()
     },
-    baseInit() {
-      baseInfo().then((res) => {
-        if (res.code == 200) {
-          this.baseList = res.data;
-        } else {
-          this.$message.error(res.msg);
-        }
-      });
-    },
+
     baseYearInit() {
-      baseYear({ year: this.active == 0 ? this.$moment().get('year'): this.$moment().get('year')-1 }).then((res) => {
+      statistics({ year: this.active == 0 ? this.$moment().get('year'): this.$moment().get('year')-1 }).then((res) => {
         if (res.code == 200) {
-          this.initChat2(res.data.zhuzhuangtu);
-          let blist = []
-          for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
-            const element = Object.keys(res.data.bingzhuangtu)[index];
-            blist.push({name:element,value: res.data.bingzhuangtu[element]})
-          }
-          this.barList = blist;
-        } else {
-          this.$message.error(res.msg);
-        }
-      });
-    },
-    baseMonthInit() {
-      let jidu = {
-        year: this.$moment().year(),
-        month: this.active == 0 ?  this.$moment().format('MM') : this.$moment().format('MM') -1
-      }
-      baseMonth(jidu).then(
-        (res) => {
-          if (res.code == 200) {
-            // this.baseList = res.data
-            this.initChat2(res.data.zhuzhuangtu);
-            let blist = []
-            for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
-              const element = Object.keys(res.data.bingzhuangtu)[index];
-              blist.push({name:element,value: res.data.bingzhuangtu[element]})
-            }
-            this.barList = blist;
-          } else {
-            this.$message.error(res.msg);
-          }
-        }
-      );
-    },
-    baseJiDuInit() {
-      let jidu = {
-        year: this.$moment().year(),
-        jidu: this.active == 0 ?  this.$moment().quarter() : this.$moment().quarter() -1
-      }
-      baseJiDu(jidu).then((res) => {
-        if (res.code == 200) {
-          // this.baseList = res.data
-          this.initChat2(res.data.zhuzhuangtu);
-          let blist = []
-          for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
-            const element = Object.keys(res.data.bingzhuangtu)[index];
-            blist.push({name:element,value: res.data.bingzhuangtu[element]})
-          }
-          this.barList = blist;
+          console.log(res.data)
+          this.initChat2(res.data);
         } else {
           this.$message.error(res.msg);
         }
@@ -166,20 +107,13 @@ export default {
         const element = data[index];
         newData.push(element.month);
       }
-      this.option2.xAxis[0].data = newData;
-      // let initData = ['chanqianlaji','gongchengzhatu','zhuangxiuzhuangshi']
+       this.option2.xAxis[0].data = newData;
       let data1 = [];
-      //let data2 = [];
-      //let data3 = [];
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
-        data1.push(element.chanqianlaji);
-        //data2.push(element.gongchengzhatu);
-        //data3.push(element.zhuangxiuzhuangshi);
+        data1.push(element.amount);
       }
       this.option2.series[0].data = data1;
-      //this.option2.series[1].data = data2;
-      //this.option2.series[2].data = data3;
       this.myChart = this.$echarts.init(this.$refs.chart);
       this.myChart.clear()
       this.option2 && this.myChart.setOption(this.option2,true);
@@ -187,30 +121,8 @@ export default {
   },
   created() {
     this.$nextTick(() => {
-      // this.initChar(this.tabindex);
-      this.tabindex == 0 ? this.baseMonthInit() :( this.tabindex == 1 ? this.baseJiDuInit() : this.baseYearInit())
+      this.baseYearInit()
     });
-  },
-  mounted(){
-      this.baseInit();
-  },
-  watch: {
-    tabindex:{
-      handler(nal,onx){
-        if(nal == 0){
-          this.titleOne = '本月'
-          this.titleTwo = '上月'
-        }else if(nal == 1){
-          this.titleOne = '本季'
-          this.titleTwo = '上季'
-        }else{
-          this.titleOne = '今年'
-          this.titleTwo = '去年'
-        }
-        this.baseInit();
-
-      }
-    }
   },
 };
 </script>
