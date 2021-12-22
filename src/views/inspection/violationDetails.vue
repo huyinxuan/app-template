@@ -162,7 +162,7 @@
         </van-tabs>
       </template>
     </div>
-    <van-tabbar :v-show="type!=5" class="cl_MapCk" placeholder fixed>
+    <van-tabbar v-show="type!=5" class="cl_MapCk" placeholder fixed>
       <van-tabbar-item icon="chat-o" @click="ContentsUpdateFn()">事件申诉</van-tabbar-item>
       <van-tabbar-item icon="edit" @click="UpdateFn()"><span> 违规处置</span></van-tabbar-item>
     </van-tabbar>
