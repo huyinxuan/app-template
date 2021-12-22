@@ -81,6 +81,7 @@ export default {
   data() {
     return {
       show2: false, //企业或个人下拉状态
+      show:false,
       Type: "企业", //企业 个人
       title: "执法处置",
       fileList: [],

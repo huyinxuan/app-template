@@ -47,7 +47,7 @@
           </baidu-map>
         </div>
         <van-tabs v-model="active" animated>
-          <van-tab title="处理记录">
+          <van-tab title="处理记录" style="min-height: 40vh;">
             <div v-for="item in entity.complaintRecordVos">
               <van-row class="card_time_line" v-show="false">
                 <van-col offset="1" span="1">
