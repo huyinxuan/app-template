@@ -21,7 +21,7 @@
       <van-field v-model="data1.rewardScore" label="加分分数：" />
       <van-field name="uploader" label="上传照片：">
         <template #input>
-          <van-uploader v-model="fileList"  multiple :max-count="1" />
+          <van-uploader  :after-read="afterRead" v-model="uploader"  multiple :max-count="1" />
         </template>
       </van-field>
 
@@ -34,6 +34,7 @@
 
 <script>
 import { enterpriseDropList,companyreward } from "@/api/userMG";
+import {uploadImages} from "@/api/upload";
 export default {
   data() {
     return {
@@ -44,7 +45,7 @@ export default {
      actionjf:[],
      show: false,
      title:"执法上传",
-     fileList:[],
+     uploader:[],
     };
   },
 created(){
@@ -82,6 +83,22 @@ created(){
               this.$message.error(res.msg);
             }
           });
+    },
+    afterRead(file) {
+      file.status = 'uploading';
+      file.message = '上传中...';
+      uploadImages(file).then(res=>{
+        console.log(res);
+        if(res.code==200){
+          file.url=res.data[0].data.url;
+          file.status = 'done';
+          file.message = '上传成功';
+          console.log(this.uploader);
+        }else{
+          file.status = 'failed';
+          file.message = '上传失败';
+        }
+      })
     }
   },
   components:{

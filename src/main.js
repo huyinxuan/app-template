@@ -40,11 +40,11 @@ Vue.prototype.$moment = moment; //赋值使用
 import BaiduMap from 'vue-baidu-map'
 Vue.use(BaiduMap, { ak: 'ak=6pVSdLLnNEBwpgHl9VjcaNqA32Ph6iMg   ' })
 
-import { Empty, Dialog } from 'vant';
+import { Empty, Dialog, Toast } from 'vant';
 Vue.use(Empty);
 // 弹出框
 Vue.use(Dialog);
-
+Vue.use(Toast);
 Vue.prototype.$echarts = echarts;
 
 Vue.use(plugins).use(components);

@@ -88,6 +88,7 @@ export default {
          //   map.enableScrollWheelZoom();
         }, //自适应地图高度
         onsize(){
+            if(!!!this.$refs.top)return;
             let topHeight = this.$refs.top.offsetHeight;
             let searchHeight = this.$refs.search.offsetHeight;
             let toolsHeight = this.$refs.tools.offsetHeight;

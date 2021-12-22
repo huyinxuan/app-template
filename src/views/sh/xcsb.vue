@@ -25,7 +25,7 @@
       </van-popup>
       <van-field name="uploader" label="照片：">
         <template #input>
-          <van-uploader v-model="uploader" multiple :max-count="1" />
+          <van-uploader  :after-read="afterRead" v-model="uploader" multiple :max-count="1" />
         </template>
       </van-field>
 
@@ -44,7 +44,8 @@
 <script>
 import { regionListAll } from "@/api/payMG";
 import { punishDailyDropList,insertComplaints } from "@/api/userMG";
-import selectMap from '@/components/map'
+import selectMap from '@/components/map';
+import {uploadImages} from "@/api/upload";
 export default {
   data() {
     return {
@@ -125,7 +126,24 @@ export default {
               this.$message.error(res.msg);
             }
         });
+    },
+    afterRead(file) {
+      file.status = 'uploading';
+      file.message = '上传中...';
+      uploadImages(file).then(res=>{
+        console.log(res);
+        if(res.code==200){
+          file.url=res.data[0].data.url;
+          file.status = 'done';
+          file.message = '上传成功';
+          console.log(this.uploader);
+        }else{
+          file.status = 'failed';
+          file.message = '上传失败';
+        }
+      })
     }
+
   }
 };
 </script>
