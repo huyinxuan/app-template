@@ -284,7 +284,7 @@ export default {
   
   created() {
     this.searchForm.id = this.$route.query.id;
-      this.searchForm.id = this.$route.query.type;
+    this.type= this.$route.query.type;
     this.DataList(this.searchForm);
     setTimeout(() => {
       this.condition = false;
