@@ -17,10 +17,8 @@ export const generalOverviewSti = (params) => { return reget("get", "/api/compla
 export const street = (params) => { return reget("get", "/api/complaints/tendency/street", params) };
 //执法局数据统计-执法排名
 export const generalOevrankview = (params) => { return reget("get", "/api/complaints/rank/generalOverview", params) };
-
 //执法局-严管示范街-数据统计-处理事件占比
 export const proportionStreet = (params) => { return reget("get", "/api/complaints/proportion/street", params) };
-
 
 //执法局_严管示范街 查询表
 export const shifanjieList = (params) => { return reget("get", "/api/suree/zxsp/shifanjieList", params) };
