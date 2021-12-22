@@ -80,6 +80,13 @@ export default {
           link: "/violation",
         },
         {
+          name: "群众举报",
+          bgColor: "#f7c65f",
+          icon: "u16.png",
+          titColor: "#f6bb42",
+          link: "/qzjb",
+        },
+        {
           name: "账号管理",
           bgColor: "#649ae1",
           icon: "u30.png",

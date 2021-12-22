@@ -74,7 +74,6 @@ export default {
   created(){
     this.sjSelect();
      this.sdSelect();
-       this.$toast.success(11111);
   },
   methods: {
      // 事件类型下拉查询
@@ -83,7 +82,7 @@ export default {
             if (res.code == 200) {
               this.actionsj = res.data;
             } else {
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
       });
      },
@@ -98,7 +97,7 @@ export default {
             if (res.code == 200) {
               this.actions = res.data;
             } else {
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
       });
      },

@@ -114,8 +114,10 @@ export default {
             deletehz(ids).then(res => {
             this.loading = false;
             if (res.code == 200) {
+              this.$toast.success(res.msg);
               this.onLoad();
             }else{
+              this.$toast.fail(res.msg);
               this.$message.error(res.msg);
             }
           });
@@ -144,9 +146,7 @@ export default {
           if(res.data.length>0  )tableData.push(...res.data);
           else  this.finished = true;
         } else {
-           this.$message({ type: "info",
-            message: res.msg
-          });
+           this.$toast.fail(res.msg);
         }
       });
     },

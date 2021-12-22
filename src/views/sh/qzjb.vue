@@ -25,7 +25,7 @@
       </van-popup>
       <van-field name="uploader" label="照片：">
         <template #input>
-          <van-uploader v-model="uploader" multiple :max-count="1" />
+          <van-uploader v-model="uploader" :after-read="afterRead" multiple :max-count="1" />
         </template>
       </van-field>
       <van-field v-model="data1.contents" rows="3" autosize label="问题说明" type="textarea"  placeholder="请输入问题说明" show-word-limit />
@@ -45,6 +45,7 @@
 <script>
 import { regionListAll } from "@/api/payMG";
 import { punishDailyDropList,insertComplaints } from "@/api/userMG";
+import {uploadImages} from "@/api/upload";
 import selectMap from '@/components/map'
 export default {
   data() {
@@ -82,7 +83,7 @@ export default {
             if (res.code == 200) {
               this.actionsj = res.data;
             } else {
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
       });
      },
@@ -95,9 +96,10 @@ export default {
      sdSelect(){
       regionListAll().then(res => {
             if (res.code == 200) {
+              this.$toast.success(res.msg);
               this.actions = res.data;
             } else {
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
       });
      },
@@ -120,14 +122,32 @@ export default {
       this.data1.handlePlace = this.point.address;
       this.data1.longitudeLatitude= this.point.lng+','+this.point.lat;
       this.data1.contents= this.data1.contents+"联系人电话："+this.data1.num
-      console.log(this.data1.contents)
+      this.data1.pic = this.uploader[0].url;
+     // console.log(this.data1.contents)
       insertComplaints(this.data1).then(res => {
             if (res.code == 200) {
+              this.$toast.success(res.msg);
               this.$router.go(-1)
             }else{
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
         });
+    },
+    afterRead(file) {
+      file.status = 'uploading';
+      file.message = '上传中...';
+      uploadImages(file).then(res=>{
+        console.log(res);
+        if(res.code==200){
+          file.url=res.data[0].data.url;
+          file.status = 'done';
+          file.message = '上传成功';
+          console.log(this.uploader);
+        }else{
+          file.status = 'failed';
+          file.message = '上传失败';
+        }
+      })
     }
   }
 };

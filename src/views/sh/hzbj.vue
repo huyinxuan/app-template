@@ -37,7 +37,7 @@
 
       <van-field name="uploader" label="照片：">
         <template #input>
-          <van-uploader v-model="uploader" multiple :max-count="1"/>
+          <van-uploader v-model="uploader" :after-read="afterRead" multiple :max-count="1"/>
         </template>
       </van-field>
       <div style="margin: 16px;">
@@ -48,7 +48,8 @@
 </template>
 
 <script>
-import { hzList,edithz,inserthz,gcztList,enterpriseDropList,xqhz } from "@/api/userMG";
+import { edithz,inserthz,gcztList,enterpriseDropList,xqhz } from "@/api/userMG";
+import {uploadImages} from "@/api/upload";
 
 export default {
   data() {
@@ -59,7 +60,7 @@ export default {
         transportName:'',
         sourceName:'',
         cardStartTime:'',
-      cardEndTime:''
+        cardEndTime:''
       },
       show3: false,
       show2: false,
@@ -83,7 +84,7 @@ export default {
             if (res.code == 200) {
               this.actionys = res.data;
             } else {
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
       });
      },
@@ -98,7 +99,7 @@ export default {
             if (res.code == 200) {
               this.actions = res.rows;
             } else {
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
       });
      },
@@ -116,14 +117,15 @@ export default {
             id:this.$route.query.id
           }
           xqhz(id).then(res => {
-            this.uploader = []
+            //this.uploader = []
             //this.loadingBat = false;
             if (res.code == 200) {
+              this.$toast.success(res.msg);
               this.data = res.data;
               this.uploader.push({url:res.data.fileUrl,isImage: true})
               // this.uploader = res.data
             } else {
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
           });
       }else{
@@ -154,29 +156,46 @@ export default {
     onSubmit(data){
       
       if(data.id){
-        //console.log("id"+data.id)
+         //this.data.fileUrl =this.uploader.url
+         this.data.fileUrl = this.uploader[0].url;
         edithz(data).then(res => {
             this.loading = false;
             if (res.code == 200) {
              // this.onLoad();
+             this.$toast.success(res.msg);
               this.$router.go(-1)
             }else{
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
           });
       }else{
-        this.data["uploader"] =this.uploader
+        this.data.fileUrl =this.uploader[0].url
          console.log(this.data)
         inserthz(this.data).then(res => {
             this.loading = false;
             if (res.code == 200) {
+              this.$toast.success(res.msg);
               this.$router.go(-1)
             }else{
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
           });
       }
-      //console.log('submit', data.property);
+    },
+    afterRead(file) {
+      file.status = 'uploading';
+      file.message = '上传中...';
+      uploadImages(file).then(res=>{
+        if(res.code==200){
+          file.url=res.data[0].data.url;
+          console.log("url"+res.data[0].data.url)
+          file.status = 'done';
+          file.message = '上传成功';
+        }else{
+          file.status = 'failed';
+          file.message = '上传失败';
+        }
+      })
     }
   },
   components:{

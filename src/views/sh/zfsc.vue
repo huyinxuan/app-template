@@ -59,7 +59,7 @@ created(){
             if (res.code == 200) {
               this.actionjf = res.data;
             } else {
-              this.$message.error(res.msg);
+               this.$message.error(res.msg);
             }
       });
     },
@@ -79,16 +79,16 @@ created(){
               if (res.code == 200) {
                 this.$router.go(-1)
               }else{
-                this.$message.error(res.msg);
+                this.$toast.fail(res.msg);
               }
           });
         companyreward(this.data1).then(res => {
             this.loading = false;
             if (res.code == 200) {
-              this.$message.error(res.msg);
+             this.$toast.success(res.msg);
               this.$router.go(-1)
             }else{
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
           });
     },
