@@ -1,4 +1,5 @@
 <template>
+<!-- 违法处置页面 -->
   <div class="home">
     <van-nav-bar
       title="违法处置"
@@ -216,7 +217,7 @@ export default {
 
     //详情跳转
     DetailFn(Id) {
-      this.$router.push({ path: "/violationDetails",query:{id:Id} });
+      this.$router.push({ path: "/wfczxq",query:{id:Id} });
     },
 
     //查询
@@ -251,10 +252,7 @@ export default {
       ComplaintsList(searchForm).then((res) => {
         this.loadingBat = false;
         if (res.code !== 200) {
-          this.$dialog.alert({
-            type: "info",
-            message: res.msg,
-          });
+           this.$dialog.alert({ message:res.msg, });
         } else {
           this.condition = false;
           this.loading = false;

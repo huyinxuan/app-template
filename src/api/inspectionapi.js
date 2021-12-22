@@ -47,6 +47,8 @@ export const ComplaintsList = (params) => { return reget("get", "/api/complaints
 export const ComplaintsById = (params) => { return reget("get", "/api/complaints/selectComplaintsById", params) };
 //修改违法事件信息
 export const updateComplaints = (params) => { return reput("put", "/api/complaints/updateComplaints", params) };
+//修改违法事件信息带添加历史记录
+export const updateComplaintsStatus = (params) => { return reput("put", "/api/complaints/updateComplaintsStatus", params) };
 //根据id删除违法事件信息
 export const deleteComplaints = (params) => { return reget("delete", "/api/complaints/deleteComplaints", params) };
 //获取扣分列表(违规类型下拉列表)
