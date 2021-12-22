@@ -36,11 +36,13 @@ html,
 body {
   height: 100%;
   width: 100%;
+  background-color: #f9f9f9;
 }
 .container{
     overflow-x: hidden;
-    height: 100%;
+  
 }
+
 .slide-right-enter-active,
 .slide-right-leave-active,
 .slide-left-enter-active,

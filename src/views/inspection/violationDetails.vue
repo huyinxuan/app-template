@@ -254,10 +254,7 @@ export default {
       console.log("searchForm:", searchForm);
       ComplaintsById(searchForm).then((res) => {
         if (res.code !== 200) {
-          this.$message({
-            type: "info",
-            message: res.msg,
-          });
+            this.$dialog.alert({ message:res.msg, });
         } else {
           res.data.complaintRecordVos.forEach((element) => {
             if (element.pic != null) {
@@ -283,6 +280,7 @@ export default {
       });
     },
   },
+  
   created() {
     this.searchForm.id = this.$route.query.id;
     this.DataList(this.searchForm);

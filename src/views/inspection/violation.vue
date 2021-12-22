@@ -217,7 +217,7 @@ export default {
 
     //详情跳转
     DetailFn(Id) {
-      this.$router.push({ path: "/wfczxq",query:{id:Id} });
+      this.$router.push({ path: "/violationDetails",query:{id:Id} });
     },
 
     //查询
