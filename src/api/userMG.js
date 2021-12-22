@@ -326,6 +326,8 @@ export const czList = (params) => { return reget("get", "/api/monitor/operlog/li
     
 //小程序核准查询
 export const hzList = (params) => { return reget("get", "/api/approvalCard/selectApprovalCardList", params) };
+//小程序核准详情查询
+export const xqhz = (params) => { return reget("get", "/api/approvalCard/selectApprovalCardById", params) };
 // 小程序核准删除
 export const deletehz = (params) => { return reget("DELETE", "/api/approvalCard/deleteApprovalCard", params) };
  // 职位管理修改

@@ -51,7 +51,6 @@ export default {
           titColor: "#f28e56",
           link: "",
         },
-
         {
           name: "企业加分",
           bgColor: "#5bc0de",

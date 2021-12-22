@@ -6,11 +6,19 @@
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
       <van-field v-model="text" label="上传人员：" />
-      <!-- <van-field v-model="text" label="加分企业：" /> -->
-      <van-cell is-link title="加分企业：" @click="show2 = true" />
-      <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />       
-      <van-field v-model="text" label="加分内容：" />
-      <van-field v-model="text" label="加分分数：" />
+      <!-- <van-cell is-link title="加分企业：" @click="show2 = true" />
+      <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />      -->
+      
+      <van-cell is-link @click="show =true" :value="data1.name" title="加分企业：" ></van-cell>
+      <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
+
+          <van-row class="select_row" v-for="item in actionjf" :key="item">
+            <van-col span="24" @click="xz(item)">{{item.name}}</van-col>
+          </van-row>
+      </van-popup>
+
+      <van-field v-model="data1.rewardDetail" label="加分内容：" />
+      <van-field v-model="data1.rewardScore" label="加分分数：" />
       <van-field name="uploader" label="上传照片：">
         <template #input>
           <van-uploader v-model="fileList"  multiple :max-count="1" />
@@ -25,37 +33,55 @@
 </template>
 
 <script>
-
+import { enterpriseDropList,companyreward } from "@/api/userMG";
 export default {
   data() {
     return {
-      date: '',
-      date1:'',
-      show2:false,
-      show1: false,
-      show: false,
+     data1: {
+       enterpriseId:'',
+       name:'',
+     },
+     actionjf:[],
+     show: false,
      title:"执法上传",
      fileList:[],
-     actions: [{ name: '选项一' }, { name: '选项二' }, { name: '选项三' }],
     };
   },
-
+created(){
+    this.onSelect()
+  },
   methods: {
+
     // 企业下拉
-    onSelect(item) {
-      // 默认情况下点击选项时不会自动收起
-      // 可以通过 close-on-click-action 属性开启自动收起
-      this.show = false;
-      Toast(item.name);
+    onSelect() {
+      enterpriseDropList().then(res => {
+            if (res.code == 200) {
+              this.actionjf = res.data;
+            } else {
+              this.$message.error(res.msg);
+            }
+      });
     },
-  
+    xz(item){
+        this.show = false;
+        this.data1.name = item.name
+        this.data1.enterpriseId = item.id
+     },
     // 返回上一页
      onClickLeft(){
       this.$router.go(-1)
     },
     // 提交
-    onSubmit(values){
-      console.log('submit', values);
+    onSubmit(){
+        companyreward(this.data1).then(res => {
+            this.loading = false;
+            if (res.code == 200) {
+              this.$message.error(res.msg);
+              this.$router.go(-1)
+            }else{
+              this.$message.error(res.msg);
+            }
+          });
     }
   },
   components:{
@@ -65,13 +91,30 @@ export default {
 
 </script>
 
-<style>
+<style  scoped>
 .van-col{
   font-size: 26px;
 }
 .van-col--24{
   font-size: 36px;
   font-weight: 500;
+}
+.select_row{
+  text-align: center;
+  padding: 3.33333vw;
+  border-bottom: 1px solid #f3f2f2;
+  width: 95%;
+  margin: 0 auto;
+}
+.select_row:last-child{
+  border: 0;
+}
+.select_row .van-col{
+  font-size:30px;
+  color:#666666;
+}
+.select_rows_box{
+  padding-bottom: 25px;
 }
 
 </style>

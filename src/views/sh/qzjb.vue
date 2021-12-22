@@ -6,8 +6,8 @@
     </div>
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
-      <van-field v-model="data1.reportUserName" label="上传人员：" />
-    
+      <van-field v-model="data1.reportUserName" label="举报人：" />
+      <van-field v-model="data1.num" label="联系电话：" />
       <van-cell is-link @click="show =true" :value="data1.punishName" title="事件类型：" ></van-cell>
       <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
           <van-row class="select_row" v-for="item in actionsj" :key="item">
@@ -28,6 +28,7 @@
           <van-uploader v-model="uploader" multiple :max-count="1" />
         </template>
       </van-field>
+      <van-field v-model="data1.contents" rows="3" autosize label="问题说明" type="textarea"  placeholder="请输入问题说明" show-word-limit />
 
       <div style="margin: 16px;">
         <van-button round block type="info" native-type="submit">提交</van-button>
@@ -53,7 +54,7 @@ export default {
         regionId:'',
       },
       show1: false,
-      title:"巡查上报",
+      title:"群众举报",
       show:false,
       uploader: [],
       actionsj: [],
@@ -114,10 +115,12 @@ export default {
       this.$router.go(-1)
     },
     onSubmit(){
-      this.data1.status=1,  //待处理
-      this.data1.sourceType=1, //巡查
+       this.data1.status=1,  //待处理
+      this.data1.sourceType=2, //群众举报
       this.data1.handlePlace = this.point.address;
       this.data1.longitudeLatitude= this.point.lng+','+this.point.lat;
+      this.data1.contents= this.data1.contents+"联系人电话："+this.data1.num
+      console.log(this.data1.contents)
       insertComplaints(this.data1).then(res => {
             if (res.code == 200) {
               this.$router.go(-1)

@@ -18,6 +18,7 @@ import details from '@/views/sh/details';
 import zfcz from '@/views/sh/zfcz';
 import sjss from '@/views/sh/sjss';
 import sptjdataStatis from '@/views/sh/sptjdataStatis';
+import qzjb from '@/views/sh/qzjb';
 
 import inspection from './inspection';
 import apanage from './apanage';
@@ -133,6 +134,15 @@ export default new Router({
             path: '/sptjdataStatis',
             name: '审批局数据统计',
             component: sptjdataStatis,
+            hidden: true,
+            meta: {
+                index: 10,
+                requireAuth: true
+            }
+        },{
+            path: '/qzjb',
+            name: '群众举报',
+            component: qzjb,
             hidden: true,
             meta: {
                 index: 10,

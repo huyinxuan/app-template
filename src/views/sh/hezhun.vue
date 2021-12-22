@@ -1,13 +1,14 @@
 <template>
   <div  class="home">
         <van-nav-bar
-            title="审核证管理"
+            title="核准证管理"
             left-arrow
             border
             fixed
             placeholder 
             @click-left="onClickLeft"/>
       <van-loading v-if="condition" size="24px">加载中...</van-loading>
+      
       <template v-else>
         <van-search
             v-model="search.projectName"
@@ -15,56 +16,61 @@
             background="#f2f2f2"
             placeholder="请输入搜索关键词" />
           <div class="home-canvan">
-            <div v-for="item in list" :key="item" class="hezhun-cont" >
-              <div @click='xq(item.id)'>
-              <van-row>
-                <van-col span="24" ><span>{{item.cardId}}</span></van-col>
-              </van-row>
-              <van-row >
-                  <van-col span="23"><span>工程名称：{{item.projectName}}</span></van-col>
-              </van-row>
-              <van-row >
-                  <van-col span="23"><span>工程地址：{{item.projectAddress}}</span></van-col>
-              </van-row>
-              <van-row >
-                  <van-col span="23"><span>建设单位：{{item.property}}</span></van-col>
-              </van-row>
-              <van-row >
-                  <van-col span="23"><span>施工单位：{{item.construction}}</span></van-col>
-              </van-row>
-              <van-row >
-                  <van-col span="23"><span>运输单位：{{item.transportName}}</span></van-col>
-              </van-row>
-              <van-row >
-                  <van-col span="23"><span>处置数量及方式：{{item.handleNum}}</span></van-col>
-              </van-row>
-              <van-row >
-                  <van-col span="23"><span>处置场所：{{item.handlePlace}}</span></van-col>
-              </van-row>
-              <van-row >
-                  <van-col span="23"><span>证件有效期：{{item.cardUseTime}}</span></van-col>
-              </van-row>
-              <van-row >
-                  <van-col span="23"><span>办理日期：{{item.createTime}}</span></van-col>
-              </van-row>
-              </div> 
-              <van-row class="btns">
-                  <van-col span="8">
-                    <van-button plain type="info" icon="delete" @click="del(item.id)">删除</van-button>
-                  </van-col>
-                  <van-col span="8">
-                    <van-button plain type="info" icon="edit" @click="add(item.id)">编辑</van-button>
-                  </van-col>
-                  <van-col span="8">
-                    <van-button plain type="info" icon="photo-o" >照片</van-button>
-                  </van-col>
-              </van-row>
-            </div>
+            <van-list v-model="loading" :finished="finished" finished-text="没有更多了"   @load="onLoad">
+              <div v-for="(item, index) in tableData" :key="index" class="hezhun-cont" >
+                <!-- <div @click='xq(item.sourceId)'> -->
+                <van-row>
+                  <van-col span="24" ><span>{{item.cardId}}</span></van-col>
+                </van-row>
+                <van-row >
+                    <van-col span="23"><span>工程名称：{{item.projectName}}</span></van-col>
+                </van-row>
+                <van-row >
+                    <van-col span="23"><span>工程地址：{{item.projectAddress}}</span></van-col>
+                </van-row>
+                <van-row >
+                    <van-col span="23"><span>建设单位：{{item.property}}</span></van-col>
+                </van-row>
+                <van-row >
+                    <van-col span="23"><span>施工单位：{{item.construction}}</span></van-col>
+                </van-row>
+                <van-row >
+                    <van-col span="23"><span>运输单位：{{item.transportName}}</span></van-col>
+                </van-row>
+                <van-row >
+                    <van-col span="23"><span>处置数量及方式：{{item.handleNum}}</span></van-col>
+                </van-row>
+                <van-row >
+                    <van-col span="23"><span>处置场所：{{item.handlePlace}}</span></van-col>
+                </van-row>
+                <van-row >
+                    <van-col span="23"><span>证件有效期：{{item.cardUseTime}}</span></van-col>
+                </van-row>
+                <van-row >
+                    <van-col span="23"><span>办理日期：{{item.createTime}}</span></van-col>
+                </van-row>
+                <!-- </div>  -->
+                <van-row class="btns">
+                    <van-col span="8">
+                      <van-button plain type="info" icon="delete" @click="del(item.id)">删除</van-button>
+                    </van-col>
+                    <van-col span="8">
+                      <van-button plain type="info" icon="edit" @click="add(item.id)">编辑</van-button>
+                    </van-col>
+                    <van-col span="8">
+                      <van-button plain type="info" icon="photo-o" >照片</van-button>
+                    </van-col>
+                </van-row>
+              </div>
+             </van-list>
           </div>
           <van-tabbar v-model="active" placeholder fixed>
             <van-tabbar-item icon="records"  @click="add(null)">添加</van-tabbar-item>
           </van-tabbar>
       </template>
+      
+          
+     
   </div>
 </template>
 
@@ -78,11 +84,12 @@ export default {
   data() {
     return {
       condition:true,
-      // search:'',
       search: {
+        pageNum: 0,
+        pageSize: 10,
         projectName: "",
       },
-      list: [],
+      tableData:new Array(),
       loading: false,
       finished: false,
     };
@@ -118,12 +125,27 @@ export default {
     onClickLeft(){
       this.$router.go(-1)
     },
+    // 加载数据
     onLoad() {
+      clearTimeout(this.timeNum);
+      this.timeNum=setTimeout(()=>{
+          this.list(this.search,this.tableData);
+      },200)
+    },
+
+  // 获取数据
+    list(search,tableData) {
         this.loadingBat= true
-      hzList(this.search).then(res => {
+      hzList(search).then(res => {
         this.loadingBat = false;
-        if (res.code == 200) {
-          this.list = res.data;
+        if (res.code == 200) {          
+          //this.tableData = res.data;
+         // console.log(res.data)
+           console.log(this.tableData)
+          if(res.data.length>0 && this.tableData.length )tableData.push(...res.data);
+
+          else  this.finished = true;
+
         } else {
            this.$message({
             type: "info",

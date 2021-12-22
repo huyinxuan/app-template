@@ -175,7 +175,6 @@ export default {
               const element = Object.keys(res.data.bingzhuangtu)[index];
               blist.push({name:element,value: res.data.bingzhuangtu[element]})
             }
-            debugger
             this.barList = blist;
           } else {
             this.$message.error(res.msg);
