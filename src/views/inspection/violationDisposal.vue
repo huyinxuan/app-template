@@ -44,7 +44,7 @@
 
       <van-field name="uploader" label="上传照片：">
         <template #input>
-          <van-uploader v-model="fileList" multiple :max-count="1" />
+          <van-uploader  :after-read="afterRead" v-model="fileList" multiple :max-count="6" />
         </template>
       </van-field>
 
@@ -77,6 +77,7 @@ import {
   enterpriseDropList,
   updateComplaintsStatus,
 } from "@/api/inspectionapi";
+import {uploadImages} from "@/api/upload";
 export default {
   data() {
     return {
@@ -142,7 +143,11 @@ export default {
     //提交
     submitForm() {
       console.log("提交的数据：", this.entity);
-
+      let arr = new Array();
+      this.fileList.forEach(file => {
+        arr.push(file.url);
+      });
+      this.entity.pic=arr.join(",");
       updateComplaintsStatus(this.entity).then((res) => {
         if (res.code !== 200) {
           this.$message({
@@ -178,6 +183,22 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
+    afterRead(file) {
+      file.status = 'uploading';
+      file.message = '上传中...';
+      uploadImages(file).then(res=>{
+        console.log(res);
+        if(res.code==200){
+          file.url=res.data[0].data.url;
+          file.status = 'done';
+          file.message = '上传成功';
+          console.log(this.uploader);
+        }else{
+          file.status = 'failed';
+          file.message = '上传失败';
+        }
+      })
+    }
 
     // 提交
     // onSubmit(values) {
