@@ -502,6 +502,7 @@ export default {
 .cl_MapCk {
   color: #999999;
   bottom: 0px;
+  background: #f7f7f7;
 
   .van-grid-item {
     width: 50%;
