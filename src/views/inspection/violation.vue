@@ -24,7 +24,7 @@
             :finished="finished"
             finished-text="没有更多了"
             @load="LoadPage">
-            <div class="van-box" v-for="(item, index) in tableData1" :key="index"
+            <div class="van-box" v-for="(item, index) in tableData1" v-if="item.status!=4" :key="index"
               @click="DetailFn(item.id)">
               <van-row class="card_title">
                 <van-col span="8"
@@ -138,11 +138,11 @@
                 <span v-show="item.sourceType == 2">群众举报</span>
                 <span v-show="item.sourceType == 3">智能抓拍</span>
               </van-col>
-              <van-col span="12"
-                ><div class="van-ellipsis">
+              <van-col span="12">
+                <div class="van-ellipsis">
                   处理结果：{{ item.handleResult }}
-                </div></van-col
-              >
+                </div>
+              </van-col>
             </van-row>
           </div>
         </van-tab>
@@ -165,7 +165,7 @@ export default {
       tableData4:new Array(),
       //查询变量
       searchForm1: {
-        status: 1, //1待处理，2已超期，3待审核，4已处理
+        status:"", //1待处理，2已超期，3待审核，4已处理
         pageNum: 0,
         pageSize: 10,
         enterpriseName: "",
@@ -190,6 +190,7 @@ export default {
       //0.待处理  1.已处理
       this.active=e;
       if (e == 0) {
+        this.searchForm1.status="";
         this.DataList(this.searchForm1,this.tableData1);
       } else {
         this.DataList(this.searchForm4,this.tableData4);
@@ -217,7 +218,7 @@ export default {
 
     //详情跳转
     DetailFn(Id) {
-      this.$router.push({ path: "/violationDetails",query:{id:Id} });
+      this.$router.push({ path: "/violationDetails",query:{id:Id,type:1} });
     },
 
     //查询
@@ -232,6 +233,7 @@ export default {
         this.DataList(this.searchForm4,this.tableData4);
       }
     },
+
     LoadPage() {
       clearTimeout(this.timeNum);
       this.timeNum=setTimeout(()=>{

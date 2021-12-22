@@ -162,7 +162,7 @@
         </van-tabs>
       </template>
     </div>
-    <van-tabbar class="cl_MapCk" placeholder fixed>
+    <van-tabbar :v-show="type!=5" class="cl_MapCk" placeholder fixed>
       <van-tabbar-item icon="chat-o" @click="ContentsUpdateFn()">事件申诉</van-tabbar-item>
       <van-tabbar-item icon="edit" @click="UpdateFn()"><span> 违规处置</span></van-tabbar-item>
     </van-tabbar>
@@ -178,6 +178,7 @@ export default {
       pic: require("../../icons/svg/u20.svg"),
       active: 0,
       condition: true,
+      type:0,
       createTime: "", //违规日期
       punishName: "", //违规类型
       point: {
@@ -283,6 +284,7 @@ export default {
   
   created() {
     this.searchForm.id = this.$route.query.id;
+      this.searchForm.id = this.$route.query.type;
     this.DataList(this.searchForm);
     setTimeout(() => {
       this.condition = false;
