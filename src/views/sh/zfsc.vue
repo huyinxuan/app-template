@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { enterpriseDropList,companyreward } from "@/api/userMG";
+import { enterpriseDropList,companyreward,insertComplaints } from "@/api/userMG";
 import {uploadImages} from "@/api/upload";
 export default {
   data() {
@@ -74,6 +74,14 @@ created(){
     },
     // 提交
     onSubmit(){
+       if(this.uploader.length>0)this.data1.picAfter=this.uploader[0].url;
+        insertComplaints(this.data1).then(res => {
+              if (res.code == 200) {
+                this.$router.go(-1)
+              }else{
+                this.$message.error(res.msg);
+              }
+          });
         companyreward(this.data1).then(res => {
             this.loading = false;
             if (res.code == 200) {

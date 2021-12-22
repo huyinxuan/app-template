@@ -72,8 +72,9 @@ export default {
     selectMap
   },
   created(){
-    this.sjSelect(),
-     this.sdSelect()
+    this.sjSelect();
+     this.sdSelect();
+       this.$toast.success(11111);
   },
   methods: {
      // 事件类型下拉查询
@@ -119,11 +120,13 @@ export default {
       this.data1.sourceType=1, //巡查
       this.data1.handlePlace = this.point.address;
       this.data1.longitudeLatitude= this.point.lng+','+this.point.lat;
+      if(this.uploader.length>0)this.data1.picAfter=this.uploader[0].url;
       insertComplaints(this.data1).then(res => {
             if (res.code == 200) {
-              this.$router.go(-1)
+              this.$router.go(-1);
+              this.$toast.success(res.msg);
             }else{
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
             }
         });
     },

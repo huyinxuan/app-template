@@ -6,16 +6,21 @@
         <van-tab title="去年"></van-tab>
       </van-tabs>
     </div>
+   
     <div class="van-box">
-        <div class="box-tip">
-          <div>
-          <p class="font-fz">图</p>
-          </div>
-          <div>
-              <p class="font-tl">审核证办理数</p>
-            <p class="font-fz">25</p>
-          </div>
-        </div>
+        <van-row>
+          <van-col span="21" class="line">
+          </van-col>
+        </van-row>
+        <van-row class="box-tipr">
+          <van-col offset="2" span="6">
+              <svg t="1602486026361" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="40639" width="64" height="64"><path d="M525.47584 957.44H217.088A99.328 99.328 0 0 1 117.76 858.33728V170.76736a99.328 99.328 0 0 1 99.328-99.11808h594.944A99.328 99.328 0 0 1 911.36 170.76736v446.592a29.696 29.696 0 0 1-59.392 0V170.76736a39.936 39.936 0 0 0-39.936-39.83872H217.088a39.936 39.936 0 0 0-39.936 39.83872v687.56992a39.936 39.936 0 0 0 39.936 39.83872h308.39296a29.63968 29.63968 0 1 1-0.00512 59.264zM679.936 303.85664H320.77312a29.63968 29.63968 0 1 1 0-59.27936H679.936a29.63968 29.63968 0 1 1 0 59.27936z m0 179.7376H320.77312a29.63968 29.63968 0 1 1 0-59.27936H679.936a29.63968 29.63968 0 1 1 0 59.28448z m-125.44 177.69472H320.77312a29.63968 29.63968 0 1 1 0-59.27424h233.7536a29.63968 29.63968 0 1 1 0 59.27936z" fill="#ffffff" p-id="40640"></path><path d="M686.592 957.39392a52.5056 52.5056 0 0 1-37.376-15.5392l-90.03008-90.624a29.99296 29.99296 0 0 1 0-42.24 29.52192 29.52192 0 0 1 41.984 0l85.47328 86.016 171.24864-170.5472a29.5424 29.5424 0 0 1 41.984 0.22528 30.02368 30.02368 0 0 1-0.22528 42.25024L723.79392 942.08a52.53632 52.53632 0 0 1-37.20192 15.31392z" fill="#ffffff" p-id="40641"></path></svg>
+          </van-col>
+          <van-col span="15">
+            <div class="title">审核证办理数</div>
+            <div class="num">25</div>
+          </van-col>
+        </van-row>
       <div class="box-bar" ref="chart"></div>
     </div>
   </div>
@@ -127,7 +132,41 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
+.box-tipr{
+  min-height: 27vw;
+  background-color: #58a3f7;
+  width: 85%;
+  margin: 0 auto;
+  border-radius: 1.33333vw;
+  .van-tab{
+    color: #fff;
+  }
+  .van-col{
+    color:#FFF;
+  }
+  .icon{
+    font-size: 55px;
+    color: #c9e3ff;
+    text-align: center;
+    margin-top: 5.5vw;
+    opacity: 0.6;
+  }
+  .title{
+    font-size: 30px;
+    margin-top: 8vw;
+  } 
+  .num{
+    font-size:56px;
+    margin-top: 12px;
+  }
+}
+.line{
+  padding-top: 3vw;
+  border-top: 1px solid #e6e6e6;
+  width: 100%;
+  margin-top: 2vw;
+}
 .van-month {
   width: 684px;
   height: 100px;
@@ -188,5 +227,7 @@ export default {
     font-weight: 400;
     color: #999;
   }
+
 }
+
 </style>
