@@ -14,9 +14,10 @@
             v-model="search.projectName"
             shape="round"
             background="#f2f2f2"
-            placeholder="请输入搜索关键词" />
+            placeholder="请输入搜索关键词"
+            @input="changeTxt" />
           <div class="home-canvan">
-            <van-list v-model="loading" :finished="finished" finished-text="没有更多了"   @load="onLoad">
+            <van-list v-model="loadingBat" :finished="finished" finished-text="没有更多了" style="height:100vh;overflow-y: auto;"   @load="next">
               <div v-for="(item, index) in tableData" :key="index" class="hezhun-cont" >
                 <!-- <div @click='xq(item.sourceId)'> -->
                 <van-row>
@@ -77,6 +78,7 @@
 <script>
 import { hzList, deletehz ,insertZt,deleteZt ,importDc } from "@/api/userMG";
 import { Dialog } from 'vant';
+import _ from "lodash";
 // 弹出框
 Vue.use(Dialog);
 
@@ -92,17 +94,24 @@ export default {
       tableData:new Array(),
       loading: false,
       finished: false,
+      loadingBat:false,
+      timeNum:0
     };
   },
-  created(){
-    tableData=[];
-    setTimeout(() => {
-      this.onLoad();
-      this.condition = false
-    }, 650);
+  mounted(){
+    this.tableData=[];
+    this.next();
     
+    console.log("初始化")
   },
   methods: {
+    changeTxt: _.debounce(function (e, item) {
+        console.log(e);
+        this.tableData=[];
+        this.search.pageNum=0;
+        this.search.projectName=e;
+        this.next();
+     }, 100),
     del(id){
        Dialog.confirm({
           title: '提示',
@@ -116,7 +125,11 @@ export default {
             this.loading = false;
             if (res.code == 200) {
               this.$toast.success(res.msg);
-              this.onLoad();
+              this.tableData.forEach((item,i)=>{
+                if(item.id==id){
+                  this.tableData.splice(i, 1)
+                }
+              })
             }else{
               this.$toast.fail(res.msg);
               this.$message.error(res.msg);
@@ -128,24 +141,34 @@ export default {
     onClickLeft(){
       this.$router.go(-1)
     },
-    // 加载数据
-    onLoad() {
+    next(){
+      console.log("翻页")
       clearTimeout(this.timeNum);
       this.timeNum=setTimeout(()=>{
-          this.list(this.search,this.tableData);
+        this.search.pageNum++;
+        this.list(this.search,this.tableData,true);
       },200)
+     
     },
 
   // 获取数据
-    list(search,tableData) {
-        this.loadingBat= true
+    list(search,tableData,next=false) {
+
       hzList(search).then(res => {
         this.loadingBat = false;
-        if (res.code == 200) {          
+        if (res.code == 200) { 
+           if(res.data.lastPage<search.pageNum){
+            search.pageNum=res.data.lastPage;
+            this.finished = true;
+            return;
+          }         
+           this.condition=false;
            console.log(res.data.length)
            console.log(res.data)
-          if(res.data.length>0  )tableData.push(...res.data);
-          else  this.finished = true;
+           if(next==true){
+            if(res.data.list.length>0  )tableData.push(...res.data.list);
+            else  this.finished = true;
+           }
         } else {
            this.$toast.fail(res.msg);
         }

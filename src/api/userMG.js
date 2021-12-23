@@ -227,7 +227,7 @@ export const companylist = (params) => { return reget("get", "/api/suree/reward/
 // 企业加分管理添加接口
 export const companyreward = (params) => { return reput("post", "/api/suree/reward", params) };
 // 企业加分管理审核通过
-export const  companyagree= (params) => { return reget("put", "/api/suree/reward/agree", params) };
+export const companyagree = (params) => { return reget("put", "/api/suree/reward/agree", params) };
 // 企业加分管理审核拒绝
 export const companyreject = (params) => { return reget("put", "/api/suree/reward/reject", params) };
 //资源化利用列表接口
@@ -235,11 +235,11 @@ export const zylylist = (params) => { return reget("get", "/api/suree/dump/list"
 // 资源化利用添加接口
 export const zylyaddump = (params) => { return reput("post", "/api/suree/dump", params) };
 // 资源化利用修改
-export const  zylydump= (params) => { return reput("put", "/api/suree/dump", params) };
+export const zylydump = (params) => { return reput("put", "/api/suree/dump", params) };
 // 资源化利用删除
 export const zylydeldump = (params) => { return delt("delete", "/api/suree/dump", params) };
 // 资源化利用详情视频
-export const zylyVideo= (params) => { return reget("get", "/api/suree/dump/dumpVideo", params) };
+export const zylyVideo = (params) => { return reget("get", "/api/suree/dump/dumpVideo", params) };
 // 资源化利用导出
 export const zylyexport = (params) => { return reget("get", "/api/suree/dump/export", params) };
 
@@ -278,7 +278,7 @@ export const importwg = (params) => { return reget("get", "/api/suree/dumpOut/ex
 // 违规倾倒删除
 export const deletewg = (params) => { return delt("DELETE", "/api/suree/dumpOut", params) };
 // 违规倾倒详情视频
-export const wgVideo= (params) => { return reget("get", "/api/suree/dumpOut/dumpOutVideo", params) };
+export const wgVideo = (params) => { return reget("get", "/api/suree/dumpOut/dumpOutVideo", params) };
 
 
 // 部门管理列表
@@ -323,17 +323,16 @@ export const czList = (params) => { return reget("get", "/api/monitor/operlog/li
 // export const insertcz = (params) => { return reput("post", "/api/system/role", params) };
 // // 职位管理删除
 // export const deletecz = (params) => { return delt("DELETE", "/api/system/role", params) };
-    
+
 //小程序核准查询
-export const hzList = (params) => { return reget("get", "/api/approvalCard/selectApprovalCardList", params) };
+export const hzList = (params) => { return reget("get", "/api/approvalCard/selectApprovalCardListPage", params) };
 //小程序核准详情查询
 export const xqhz = (params) => { return reget("get", "/api/approvalCard/selectApprovalCardById", params) };
 // 小程序核准删除
 export const deletehz = (params) => { return reget("DELETE", "/api/approvalCard/deleteApprovalCard", params) };
- // 职位管理修改
+// 职位管理修改
 export const edithz = (params) => { return reput("put", "/api/approvalCard/updateApprovalCard", params) };
- // 职位管理新增
+// 职位管理新增
 export const inserthz = (params) => { return reput("post", "/api/approvalCard/insertApprovalCard", params) };
 //添加巡查上报和群众举报
 export const insertComplaints = (params) => { return reput("post", "/api/complaints/insertComplaints", params) };
-
