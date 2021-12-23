@@ -49,7 +49,7 @@ export default {
           bgColor: "#f0a175",
           icon: "u35.png",
           titColor: "#f28e56",
-          link: "",
+          link: "/examine",
         },
         {
           name: "企业加分",

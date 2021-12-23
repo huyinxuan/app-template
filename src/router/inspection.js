@@ -11,6 +11,8 @@ import violationDisposal from '@/views/inspection/violationDisposal';
 //违法处置详情(申诉)
 import vioProsecution from '@/views/inspection/vioProsecution';
 
+//审核管理
+import examine from '@/views/inspection/examine';
 
 //历史详情记录
 import historyDetails from '@/views/inspection/historyDetails';
@@ -38,7 +40,15 @@ export default [
             requireAuth: true
         }
     },
-
+    {
+        path: '/examine',
+        name: '审核管理',
+        component: examine,
+        meta: {
+            index:34,
+            requireAuth: true
+        }
+    },
     {
         path: '/historyDetails',
         name: '历史详情',
