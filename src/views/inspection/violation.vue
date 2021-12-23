@@ -54,7 +54,7 @@
                 >
                 <van-col
                   offset="13"
-                  class="card_status_0"
+                  class="card_status_2"
                   v-show="item.status == 3"
                   >申诉中</van-col
                 >
@@ -347,6 +347,11 @@ export default {
   font-size: 32px;
 }
 .card_status_0 {
+  color: #D9001B;
+  font-size: 20px;
+}
+
+.card_status_2 {
   color: #f59a23;
   font-size: 20px;
 }
