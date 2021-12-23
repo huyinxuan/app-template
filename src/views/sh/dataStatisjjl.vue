@@ -12,13 +12,13 @@
       <template v-else>
         <van-tabs v-model="active" animated>
           <van-tab title="月">
-            <dataStatisjj :tabindex="active"></dataStatisjj>
+            <dataStatisjj :type="1" h="解决率" :tabindex="active"></dataStatisjj>
           </van-tab>
           <van-tab title="季">
-            <dataStatisjj :tabindex="active"></dataStatisjj>
+            <dataStatisjj :type="2" h="解决率" :tabindex="active"></dataStatisjj>
           </van-tab>
           <van-tab title="年">
-            <dataStatisjj :tabindex="active"></dataStatisjj>
+            <dataStatisjj :type="3" h="解决率" :tabindex="active"></dataStatisjj>
           </van-tab>
         </van-tabs>
       </template>

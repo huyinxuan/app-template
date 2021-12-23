@@ -8,21 +8,24 @@
     </div>
     <div class="van-box">
       <div class="box-tip">
-         <div >
+        <div style="margin-top:30px;margin-left:40px">
           <!-- <van-circle v-model="currentRate" :rate="70" color="#58a3f7"  layer-color="#3fecff" size="120px" :clockwise="false" :text="text"/> -->
-          <van-circle v-model="currentRate" :rate="60.5" :speed="100"  color="#58a3f7"  size="120px" :clockwise="false"
+          <van-circle ref="ci" v-model="currentRate" :rate="toRate" :speed="100"  color="#58a3f7"  size="120px" :clockwise="false"
           :stroke-width="120" layer-color="#e9e9e9" :text="text()" />
         </div>
-        <div >
+        <div style="margin-top:30px;text-align:left;margin-left:20px;">
           <p class="font-fz">违规事件</p>
-          <p class="font-tl">200</p>
+          <p class="font-tl">{{data.total}}</p>
           <p class="font-fz">已处理</p>
-          <p class="font-tl">170</p>
+          <p class="font-tl">{{data.processedNum}}</p>
         </div>
       </div>
-      <h2>{{this.h}}</h2>
+      <div class="tit">{{this.h}}</div>
       <div class="box-tip2">
-
+        <div class="pm_box" v-for="(info,index) in dataList" :key="index">
+          <div class="info"><span class="No">{{(index+1).length==1?(index+1):"0"+(index+1)}}</span><span class="name">{{info.deptName}}</span></div>
+          <van-progress :percentage="info.total/data.total*100" :show-pivot="false" color="#4BCED0"  />
+        </div>
         <!-- <div v-for="(item, index) in  barList" :key="index">
           <p class="font-fz">{{ item.value}}<span class="font-fz-12">万m³</span></p>
           <p class="font-tl">{{ chinaTil[item.name]}}</p>
@@ -34,131 +37,103 @@
 </template>
 
 <script>
-import { baseInfo, baseYear, baseJiDu, baseMonth } from "@/api/basisMG.js";
+import { percentage,enforcement } from "@/api/basisMG.js";
 export default {
   props: {
     h:'',
-    currentRate: 0,
+   
     myChart: "",
-    baseList: [],
-    barList: [],
+    dataList: [],
     tabindex: {
       type: Number,
       default: 0,
     },
+    type:1
   },
   data() {
     return {
       chinaTil:{chanqianlaji:'拆迁垃圾',gongchengzhatu:'工程渣土',zhuangxiuzhuangshi:'装修装饰垃圾'},
       active:0,
       titleOne:
-        this.tabindex == 0 ? "本月" : this.tabindex == 1 ? "本季" : "今年",
+        this.type == 1? "本月" : this.type == 2 ? "本季" : "今年",
       titleTwo:
-        this.tabindex == 0 ? "上月" : this.tabindex == 1 ? "上季" : "去年",
+        this.type == 1 ? "上月" : this.type == 2 ? "上季" : "去年",
       
+      data:{},
+      toRate:100, 
+      currentRate: 1,
     };
   },
   methods: {
-    onClick(name, title) {
+    onClick() {
       // this.tabindex == 0 ? this.baseMonthInit() :( this.tabindex == 1 ? this.baseJiDuInit() : this.baseYearInit())
+      if(this.type==1){
+         this.active == 0 ? this.generalOverview(this.type,(new Date().getMonth()+1)) :this.generalOverview(this.type,new Date().getMonth());
+    
+        //this.active == 0 ? this.generalOverview(this.type,new Date().getFullYear()+"-"+(new Date().getMonth()+1)) :this.generalOverview(this.type,new Date().getFullYear()+"-"+new Date().getMonth());
+      }else if(this.type==2){
+        this.active == 0 ? this.generalOverview(this.type,this.getQuarter()) :this.generalOverview(this.type,this.getQuarter()-1);
+      }else if(this.type==3){
+        this.active == 0 ? this.generalOverview(this.type,new Date().getFullYear()) :this.generalOverview(this.type,new Date().getFullYear()-1);
+      }
+      
+    },
+    getQuarter(){
+      var currMonth= new Date().getMonth()+1;
+      var currQuarter = Math.floor( ( currMonth % 3 == 0 ? ( currMonth / 3 ) : ( currMonth / 3 + 1 ) ) );
+      return currQuarter;
     },
     text() {
-      return '解决率'+this.currentRate + '%';
+      if(this.data.processedNum==0)return "解决率0%";
+      console.log(this.currentRate);
+      return '解决率'+Math.round(this.data.processedNum/this.data.total*100,2) + '%';
     },
-    baseInit() {
-      baseInfo().then((res) => {
-        if (res.code == 200) {
-          this.baseList = res.data;
-        } else {
-          this.$message.error(res.msg);
-        }
-      });
-    },
-    // baseYearInit() {
-    //   baseYear({ year: this.active == 0 ? this.$moment().get('year'): this.$moment().get('year')-1 }).then((res) => {
-    //     if (res.code == 200) {
-    //       // this.baseList = res.data
-    //       this.initChat2(res.data.zhuzhuangtu);
-    //       let blist = []
-    //       for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
-    //         const element = Object.keys(res.data.bingzhuangtu)[index];
-    //         blist.push({name:element,value: res.data.bingzhuangtu[element]})
-    //       }
-    //       this.barList = blist;
-    //     } else {
-    //       this.$message.error(res.msg);
-    //     }
-    //   });
-    // },
-    // baseMonthInit() {
-    //   let jidu = {
-    //     year: this.$moment().year(),
-    //     month: this.active == 0 ?  this.$moment().format('MM') : this.$moment().format('MM') -1
-    //   }
-    //   baseMonth(jidu).then(
-    //     (res) => {
-    //       if (res.code == 200) {
-    //         // this.baseList = res.data
-    //         this.initChat2(res.data.zhuzhuangtu);
-    //         let blist = []
-    //         for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
-    //           const element = Object.keys(res.data.bingzhuangtu)[index];
-    //           blist.push({name:element,value: res.data.bingzhuangtu[element]})
-    //         }
-    //         this.barList = blist;
-    //       } else {
-    //         this.$message.error(res.msg);
-    //       }
-    //     }
-    //   );
-    // },
-    // baseJiDuInit() {
-    //   let jidu = {
-    //     year: this.$moment().year(),
-    //     jidu: this.active == 0 ?  this.$moment().quarter() : this.$moment().quarter() -1
-    //   }
-    //   baseJiDu(jidu).then((res) => {
-    //     if (res.code == 200) {
-    //       // this.baseList = res.data
-    //       this.initChat2(res.data.zhuzhuangtu);
-    //       let blist = []
-    //       for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
-    //         const element = Object.keys(res.data.bingzhuangtu)[index];
-    //         blist.push({name:element,value: res.data.bingzhuangtu[element]})
-    //       }
-    //       this.barList = blist;
-    //     } else {
-    //       this.$message.error(res.msg);
-    //     }
-    //   });
-    // },
-    // initChat2(data) {
-    //   let newData = []; // 横坐标
-    //   for (let index = 0; index < data.length; index++) {
-    //     const element = data[index];
-    //     newData.push(element.month);
-    //   }
-    //   this.option2.xAxis[0].data = newData;
-    //   // let initData = ['chanqianlaji','gongchengzhatu','zhuangxiuzhuangshi']
-    //   let data1 = [];
-    //   let data2 = [];
-    //   let data3 = [];
-    //   for (let index = 0; index < data.length; index++) {
-    //     const element = data[index];
-    //     data1.push(element.chanqianlaji);
-    //     data2.push(element.gongchengzhatu);
-    //     data3.push(element.zhuangxiuzhuangshi);
-    //   }
-    //   this.option2.series[0].data = data1;
-    //   this.option2.series[1].data = data2;
-    //   this.option2.series[2].data = data3;
-    //   this.myChart = this.$echarts.init(this.$refs.chart);
-    //   this.myChart.clear()
-    //   this.option2 && this.myChart.setOption(this.option2,true);
-    // }
+    generalOverview(Type,num){
+     
+      var from = {
+        type:Type
+      };
+      if(Type=="1"){
+        this.$set(from,'month',num);
+      }else if(Type=="2"){
+        this.$set(from,'season',num);
+      }else if(Type=="3"){
+        this.$set(from,'year',num);
+      }
+       if(this.h=="执法排名"){
+          console.log(from);
+          enforcement(from).then((res)=>{
+          if(res.code==200){
+            console.log(res.data.statisticsVos)
+            this.dataList=res.data.statisticsVos;
+            this.data=res.data;
+            this.currentRate=0;
+            this.toRate=Math.floor(this.data.processedNum/this.data.total*100);
+      
+          }else{
+            this.$toast.fail(res.msg);
+          }
+        })
+      }else{
+        console.log(from);
+        percentage(from).then((res)=>{
+          if(res.code==200){
+            console.log(res.data.statisticsVos)
+            this.dataList=res.data.statisticsVos;
+            this.data=res.data;
+            this.currentRate=0;
+            this.toRate=Math.floor(this.data.processedNum/this.data.total*100);
+      
+          }else{
+            this.$toast.fail(res.msg);
+          }
+        })
+      }
+    }
   },
   created() {
     this.$nextTick(() => {
+          this.onClick();
       // this.initChar(this.tabindex);
       //this.tabindex == 0 ? this.baseMonthInit() :( this.tabindex == 1 ? this.baseJiDuInit() : this.baseYearInit())
     });
@@ -179,8 +154,7 @@ export default {
           this.titleOne = '今年'
           this.titleTwo = '去年'
         }
-        // this.baseInit();
-
+        this.onClick();
       }
     }
   },
@@ -211,7 +185,7 @@ export default {
   padding: 0 0 10px 0;
   background-color: #fff;
   .box-tip,
-  .box-tip2 {
+   {
     display: flex;
     > div {
       flex: 1;
@@ -220,9 +194,14 @@ export default {
       justify-content: center;
       text-align: center;
       > .font-fz {
-        font-size: 36px;
-        color: #000;
-        font-weight: bold;
+        font-size: 25px;
+        color: #666666;
+        margin: 20px 0;
+      }
+      > .font-tl{
+         font-size: 38px;
+        color: #666666;
+        font-weight: 400;
         margin: 20px 0;
       }
     }
@@ -248,5 +227,35 @@ export default {
     font-weight: 400;
     color: #999;
   }
+}
+.box-tip2{
+  width: 90%;
+  margin: 0 auto;
+  .pm_box{
+    
+    .info{
+      text-align: left;
+      font-size: 30px;
+      font-family: '微软雅黑', sans-serif;
+      .No{
+        color:#666666;
+        font-weight: 700;
+      }
+      .name{
+        color:#666666;
+        margin-left: 5px;
+        font-weight: 400;
+      }
+      margin-bottom: 20px;
+      margin-top: 35px;
+    }
+  }
+}
+.tit{
+  font-size: 30px;
+  font-weight: bold;
+  color: #666;
+  text-indent: 35px;
+  margin-top: 50px;
 }
 </style>

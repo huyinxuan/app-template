@@ -42,7 +42,10 @@ export const baseInfo = (params) => { return reget("get", "/api/suree/bigdata/ar
 export const baseYear = (params) => { return reget("get", "/api/suree/bigdata/searchByYear", params) };
 export const baseJiDu = (params) => { return reget("get", "/api/suree/bigdata/searchByJidu", params) };
 export const baseMonth = (params) => { return reget("get", "/api/suree/bigdata/searchByMonth", params) };
-
+export const percentage = (params) => { return reget("get", "/api/complaints/statistics/percentage", params) };
+export const generalOverview = (params) => { return reget("get", "/api/complaints/statistics/generalOverview", params) };
+export const generalOverview_m = (params) => { return reget("get", "/api/complaints/tendency/generalOverview", params) };
+export const enforcement = (params) => { return reget("get", "/api/complaints/statistics/enforcement", params) };
 /**
  * 添加公共信息
  */
