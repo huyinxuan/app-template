@@ -58,9 +58,11 @@
         :rules="[{ required: true, message: '请输入正确内容' }]"
       />
 
-      <div class="van-hairline--surround cl_State">
-        禁用/启用 <van-switch v-model="checked" size="24px" />
-      </div>
+      <van-field label="禁用/启用 ">
+        <template #input>
+          <van-switch v-model="checked" size="24" />
+        </template>
+      </van-field>
 
       <div style="margin: 16px">
         <van-button round block type="info" native-type="submit"
@@ -92,7 +94,7 @@ export default {
       entity: {
         nickName: "", //姓名
         phonenumber: "", //联系方式
-        manageBelonging: "", //归属管辖
+        manageBelonging: null, //归属管辖
         community: "", //所属社区
         responsibleRegion: "", //负责范围
         status: 0, //0.启用/1.禁用
@@ -138,11 +140,15 @@ export default {
 
     //提交
     submitForm() {
+      if(this.entity.manageBelonging==null){
+        this.$toast.fail("请选择管辖归属！");
+        return;
+      }
       insetWgy(this.entity).then((res) => {
         if (res.code == 200) {
-          this.Toast.success("添加完成");
+          this.$toast.success("添加完成");
         } else {
-          this.Toast.fail(res.msg);
+          this.$toast.fail(res.msg);
         }
       });
     },
@@ -160,7 +166,7 @@ export default {
       var that = this;
       selectRegionList(this.detailsForm).then((res) => {
         if (res.code !== 200) {
-           this.Toast.fail(res.msg);
+           this.$toast.fail(res.msg);
         } else {
           that.selectRegionList_ar = res.data;
         }

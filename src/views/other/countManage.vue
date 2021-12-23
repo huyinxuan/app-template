@@ -16,6 +16,7 @@
         shape="round"
         background="#f2f2f2"
         placeholder="请输入姓名搜索"
+        @input="changeTxt"
       />
       <van-row class="table-title">
         <van-col span="8">添加日期</van-col>
@@ -27,7 +28,9 @@
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
-        @load="onLoad"
+        @load="next"
+        immediate-check
+         style="height:100vh;overflow-y: auto;" 
       >
         <!-- <div></div> -->
         <van-row
@@ -80,19 +83,19 @@ export default {
         pageNum: 1,
         pageSize: 10,
       },
+      loading:false,
+      finished:false
     };
-  },
-  watch: {
-    //监听搜索
-    Name(n) {
-      this.searchForm.nickName = n;
-      this.getData(this.searchForm);
-    },
   },
   methods: {
     onClickLeft() {
       this.$router.go(-1);
-    },
+    }, 
+    changeTxt: _.debounce(function (e, item) {
+        this.searchForm.pageNum=1;
+        this.searchForm.nickName = e;
+        this.getData(this.searchForm);
+     }, 100),
     
     //删除账号
     deleteUser(id) {
@@ -100,10 +103,10 @@ export default {
       var Data={userId:id}
       delWgy(Data).then((res) => {
         if (res.code == 200) {
-          this.Toast.success("删除成功");
+          this.$toast.success("删除成功");
           this.getData(this.searchForm);
         } else {
-          this.Toast.fail(res.msg);
+          this.$toast.fail(res.msg);
         }
       });
     },
@@ -112,22 +115,38 @@ export default {
     ManageAddFn() {
       this.$router.push({ path: "/countManageAdd" });
     },
-
+    next(){
+      console.log("翻页")
+      clearTimeout(this.timeNum);
+      this.timeNum=setTimeout(()=>{
+        this.searchForm.pageNum++;
+        this.getData(this.searchForm,true);
+      },200)
+     
+    },
     // 获取用户列表
-    getData(searchForm) {
+    getData(searchForm,page=false) {
       this.loading = true;
       /***
        * 调用接口，注释上面模拟数据 取消下面注释
        */
-
       wgyglList(searchForm).then((res) => {
         this.loading = false;
         if (res.code == 200) {
           console.log("拉取的值", res);
-          this.tableData = res.rows;
+          if(page){
+            if(res.total<=this.tableData.length){
+              searchForm.pageNum=searchForm.pageNum-1;
+              this.finished = true;
+              return;
+            }
+            this.tableData.push(...res.rows);
+          }else{
+            this.tableData = res.rows;
+          }
           // this.pageparm.total = res.total;
         } else {
-          this.Toast.fail(res.msg);
+          this.$toast.fail(res.msg);
           // 分页赋值
           // this.pageparm.currentPage = this.searchForm.page
           // this.pageparm.pageSize = this.searchForm.pageSize

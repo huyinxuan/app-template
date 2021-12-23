@@ -18,8 +18,6 @@
         placeholder="受理企业/个人"
         @input="changeTxt"
       />
-      <van-tabs v-model="active" animated>
-        <van-tab title="">
           <van-list 
             v-model="searchForm1.loading"
             :finished="searchForm1.finished"
@@ -84,9 +82,6 @@
               </van-row>
             </div>
           </van-list>
-        </van-tab>
-     
-      </van-tabs>
     </template>
   </div>
 </template>
