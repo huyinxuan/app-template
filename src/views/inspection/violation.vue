@@ -1,5 +1,5 @@
 <template>
-<!-- 违法处置页面 -->
+  <!-- 违法处置页面 -->
   <div class="home">
     <van-nav-bar
       title="违法处置"
@@ -20,17 +20,25 @@
       />
       <van-tabs v-model="active" animated>
         <van-tab title="待处理">
-          <van-list 
+          <van-list
             v-model="searchForm1.loading"
             :finished="searchForm1.finished"
             finished-text="没有更多了"
             @load="LoadPage"
-            style="height:100vh;overflow-y: auto;">
-            <div class="van-box" v-for="(item, index) in tableData1" v-if="item.status!=4" :key="index"
-              @click="DetailFn(item.id)">
+            style="height: 100vh; overflow-y: auto"
+          >
+            <div
+              class="van-box"
+              v-for="(item, index) in tableData1"
+              v-if="item.status != 4"
+              :key="index"
+              @click="DetailFn(item.id, item.status)"
+            >
               <van-row class="card_title">
                 <van-col span="8"
-                  ><div class="van-ellipsis">{{ item.regionName }}</div></van-col
+                  ><div class="van-ellipsis">
+                    {{ item.regionName }}
+                  </div></van-col
                 >
                 <van-col
                   offset="13"
@@ -48,7 +56,7 @@
                   offset="13"
                   class="card_status_0"
                   v-show="item.status == 3"
-                  >待审核</van-col
+                  >申诉中</van-col
                 >
                 <van-col
                   offset="13"
@@ -86,21 +94,24 @@
           </van-list>
         </van-tab>
         <van-tab title="已处理">
-           <van-list 
+          <van-list
             v-model="searchForm4.loading"
             :finished="searchForm4.finished"
             finished-text="没有更多了"
             @load="LoadPage"
-            style="height:100vh;overflow-y: auto;">
+            style="height: 100vh; overflow-y: auto"
+          >
             <div
               class="van-box"
               v-for="(item, index) in tableData4"
               :key="index"
-              @click="DetailFn(item.id)"
+              @click="DetailFn(item.id, item.status)"
             >
               <van-row class="card_title">
                 <van-col span="8"
-                  ><div class="van-ellipsis">{{ item.regionName }}</div></van-col
+                  ><div class="van-ellipsis">
+                    {{ item.regionName }}
+                  </div></van-col
                 >
                 <van-col
                   offset="13"
@@ -118,7 +129,7 @@
                   offset="13"
                   class="card_status_0"
                   v-show="item.status == 3"
-                  >待审核</van-col
+                  >申诉中</van-col
                 >
                 <van-col
                   offset="13"
@@ -153,7 +164,7 @@
                 </van-col>
               </van-row>
             </div>
-           </van-list>
+          </van-list>
         </van-tab>
       </van-tabs>
     </template>
@@ -170,11 +181,11 @@ export default {
       enterprise: "",
       active: 0,
       condition: true,
-      tableData1:new Array(),
-      tableData4:new Array(),
+      tableData1: new Array(),
+      tableData4: new Array(),
       //查询变量
       searchForm1: {
-        status:"", //1待处理，2已超期，3待审核，4已处理
+        status: "", //1待处理，2已超期，3待审核，4已处理
         pageNum: 0,
         pageSize: 10,
         enterpriseName: "",
@@ -190,94 +201,112 @@ export default {
         loading: false,
         finished: false,
       },
-      active:0,
-      timeNum:0
+      active: 0,
+      timeNum: 0,
     };
   },
   watch: {
     active(e) {
       //0.待处理  1.已处理
-      this.active=e;
+      this.active = e;
       if (e == 0) {
-        this.searchForm1.status="";
-        this.DataList(this.searchForm1,this.tableData1);
+        this.searchForm1.status = "";
+        this.DataList(this.searchForm1, this.tableData1);
       } else {
-        this.DataList(this.searchForm4,this.tableData4);
+        this.DataList(this.searchForm4, this.tableData4);
       }
-
-    
-    }
+    },
   },
 
   methods: {
-   changeTxt: _.debounce(function (e, item) {
-        console.log(e);
-        if (this.active == 0) {
-          this.tableData1=[];
-          this.searchForm1.pageNum=0;
-          this.searchForm1.enterpriseName=e;
-        } else {
-          this.tableData4=[];
-          this.searchForm4.pageNum=0;
-          this.searchForm4.enterpriseName=e;
-        }
-        
-        this.LoadPage();
-     }, 100),
+    changeTxt: _.debounce(function (e, item) {
+      console.log(e);
+      if (this.active == 0) {
+        this.tableData1 = [];
+        this.searchForm1.pageNum = 0;
+        this.searchForm1.enterpriseName = e;
+      } else {
+        this.tableData4 = [];
+        this.searchForm4.pageNum = 0;
+        this.searchForm4.enterpriseName = e;
+      }
+
+      this.LoadPage();
+    }, 100),
     onClickLeft() {
       this.$router.go(-1);
     },
 
     //详情跳转
-    DetailFn(Id) {
-      this.$router.push({ path: "/violationDetails",query:{id:Id,type:6} });
+    DetailFn(Id, status) {
+      if (status == 1) {
+        
+        this.$router.push({
+          path: "/violationDetails",
+          query: { id: Id, type: 1 },
+        });
+
+      } else if (status == 3) {
+        
+        this.$router.push({
+          path: "/violationDetails",
+          query: { id: Id, type: 3 },
+        });
+      
+      } else {
+      
+      this.$router.push({
+          path: "/violationDetails",
+          query: { id: Id, type: 4 },
+        });
+      
+      }
     },
 
     //查询
     search() {
       if (this.active == 0) {
-        this.tableData4=[];
-        this.searchForm1.pageNum=0;
-        this.DataList(this.searchForm1,this.tableData1);
+        this.tableData4 = [];
+        this.searchForm1.pageNum = 0;
+        this.DataList(this.searchForm1, this.tableData1);
       } else {
-        this.tableData1=[];
-        this.searchForm4.pageNum=0;
-        this.DataList(this.searchForm4,this.tableData4);
+        this.tableData1 = [];
+        this.searchForm4.pageNum = 0;
+        this.DataList(this.searchForm4, this.tableData4);
       }
     },
 
     LoadPage() {
       console.log("底部");
       clearTimeout(this.timeNum);
-      this.timeNum=setTimeout(()=>{
+      this.timeNum = setTimeout(() => {
         if (this.active == 0) {
-          this.DataList(this.searchForm1,this.tableData1);
+          this.DataList(this.searchForm1, this.tableData1);
         } else {
-          this.DataList(this.searchForm4,this.tableData4);
+          this.DataList(this.searchForm4, this.tableData4);
         }
-      },200)
-    
+      }, 200);
     },
     //获取数据
-    DataList(searchForm,tableData) {
-      console.log("searchForm",searchForm);
-      searchForm.pageNum+=1;
-      if(!!!searchForm)return;
+    DataList(searchForm, tableData) {
+      console.log("searchForm", searchForm);
+      searchForm.pageNum += 1;
+      if (!!!searchForm) return;
       ComplaintsList(searchForm).then((res) => {
         this.loadingBat = false;
         if (res.code !== 200) {
-           this.$dialog.alert({ message:res.msg, });
+          this.$dialog.alert({ message: res.msg });
         } else {
-          if(res.data.lastPage<searchForm.pageNum){
-            searchForm.pageNum=res.data.lastPage;
+          if (res.data.lastPage < searchForm.pageNum) {
+            searchForm.pageNum = res.data.lastPage;
             searchForm.finished = true;
             return;
           }
           this.condition = false;
-          searchForm.loading=false;
+          searchForm.loading = false;
           console.log("LIST:", tableData);
-          if(res.data.list.length>0)tableData.push(...res.data.list);
-          else  searchForm.finished = true;
+          if (res.data.list.length > 0) tableData.push(...res.data.list);
+          else searchForm.finished = true;
         }
       });
     },

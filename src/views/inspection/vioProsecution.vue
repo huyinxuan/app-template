@@ -41,11 +41,16 @@ export default {
       entity: {
         id: 0, //id
         contents: "",
+        reportUserId:0,//用户Id
+        reportUserName:"",//操作用户Id
         operateType: 1, //1申诉 2执法处置 3审核拒绝 4审核通过
       },
     };
   },
   created() {
+    var UserInfo=localStorage.getItem("userdata");
+    this.entity.reportUserId=UserInfo.userId;//用户Id
+    this.entity.reportUserName=UserInfo.nickName;//操作用户Id
     this.entity.id = this.$route.query.id;
   },
   methods: {
@@ -72,10 +77,7 @@ export default {
 
       updateComplaintsStatus(this.entity).then((res) => {
         if (res.code !== 200) {
-          this.$message({
-            type: "info",
-            message: res.msg,
-          });
+             this.$toast.success(res.msg);
         } else {
             this.$dialog.alert({ message: '成功', });
         }

@@ -22,7 +22,7 @@
             v-model="searchForm1.loading"
             :finished="searchForm1.finished"
             finished-text="没有更多了"
-            @load="LoadPage"
+            @load="loadingBat"
             style="height:100vh;overflow-y: auto;">
             <div class="van-box" v-for="(item, index) in tableData1" :key="index"
               @click="DetailFn(item.id)">
@@ -95,6 +95,7 @@ export default {
     return {
       enterprise: "",
       active: 0,
+      loadingBat:false,
       condition: true,
       tableData1:new Array(),
       tableData4:new Array(),
@@ -156,7 +157,7 @@ export default {
 
     //详情跳转
     DetailFn(Id) {
-      this.$router.push({ path: "/violationDetails",query:{id:Id,type:5} });
+      this.$router.push({ path: "/violationDetails",query:{id:Id,type:2} });
     },
 
     //查询

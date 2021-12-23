@@ -39,8 +39,8 @@
         required :rules="[{ required: true, message: '请输入正确内容' }]"
       />
 
-      <van-field v-model="entity.platePhone" required :rules="[{  validator:isPhone, message: '请填写正确手机号' }]" label="联系方式：" />
-
+      <!-- <van-field v-model="entity.platePhone" required :rules="[{  validator:isPhone, message: '请填写正确手机号' }]" label="联系方式：" /> -->
+    <van-field v-model="entity.platePhone" required label="联系方式：" />
       <van-field v-model="entity.plateNumber" required :rules="[{ validator:isVehicleNumber, message: '请输入正确的车牌号' }]" label="涉事车牌号：" />
 
       <van-field name="uploader" label="上传照片：">
@@ -102,6 +102,8 @@ export default {
         id: 0, //id
         plateNumber: "", //涉事车牌
         contents: "",
+        reportUserId:0,//执法/举报人员ID
+        reportUserName:"",//执法/举报人名称
         operateType: 2, //1申诉 2执法处置 3审核拒绝 4审核通过
         enterpriseId: null, //企业Id
         enterpriseName: null, //企业/个人名称
@@ -111,6 +113,9 @@ export default {
     };
   },
   created() {
+    var UserInfo=localStorage.getItem("userdata");
+    this.entity.reportUserId=UserInfo.userId;//用户Id
+    this.entity.reportUserName=UserInfo.nickName;//操作用户Id
     this.entity.id = this.$route.query.id;
 
     this.enterpriseDropListFn(); //获取企业列表
@@ -167,6 +172,8 @@ export default {
       console.log("enterpriseId:", this.entity.enterpriseId);
       this.show = false;
     },
+    
+  
 
     //提交
     submitForm() {
@@ -182,12 +189,9 @@ export default {
       this.entity.pic=arr.join(",");
       updateComplaintsStatus(this.entity).then((res) => {
         if (res.code !== 200) {
-          this.$message({
-            type: "info",
-            message: res.msg,
-          });
+          this.$toast.fail(res.msg);
         } else {
-          this.$dialog.alert({ message: '成功', });
+             this.$toast.success('成功');
         }
       });
     },
@@ -196,10 +200,7 @@ export default {
     enterpriseDropListFn: function () {
       enterpriseDropList(this.detailsForm).then((res) => {
         if (res.code !== 200) {
-          this.$message({
-            type: "info",
-            message: res.msg,
-          });
+              this.$toast.success(res.msg);
         } else {
           console.log("enterpriseDropList_ar:", res);
           res.data.forEach((val) => {

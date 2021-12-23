@@ -102,7 +102,7 @@ export default {
               this.$router.push({ path: "/home" });
             }, 1000);
           } else {
-            this.$message.error(res.msg);
+               this.$toast.fail(res.msg);
             this.logining = false;
             this.isSlider = false
             this.$refs.slider.init()

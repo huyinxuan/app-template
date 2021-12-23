@@ -106,7 +106,7 @@ export default {
           this.total =res.data.total
           this.initChat2(res.data.list);
         } else {
-          this.$message.error(res.msg);
+            this.$toast.fail(res.msg);
         }
       });
     },

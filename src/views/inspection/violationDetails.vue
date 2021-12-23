@@ -1,5 +1,5 @@
 <template>
-<!-- 违法处置详情页面 -->
+  <!-- 违法处置详情页面 -->
   <div class="main">
     <van-nav-bar
       :title="entity.regionName"
@@ -25,6 +25,7 @@
               <div class="text">
                 <span v-show="entity.status == 1">待处理</span>
                 <span v-show="entity.status == 2">已超期</span>
+                <span v-show="entity.status == 3&&type==3">待处理</span>
                 <span v-show="entity.status == 3">待审核</span>
                 <span v-show="entity.status == 4">已处理</span>
               </div>
@@ -47,7 +48,7 @@
           </baidu-map>
         </div>
         <van-tabs v-model="active" animated>
-          <van-tab title="处理记录" style="min-height: 40vh;">
+          <van-tab title="处理记录" style="min-height: 40vh">
             <div v-for="item in entity.complaintRecordVos">
               <van-row class="card_time_line" v-show="false">
                 <van-col offset="1" span="1">
@@ -162,26 +163,53 @@
         </van-tabs>
       </template>
     </div>
-    
+
     <!-- 违法处置显示块 -->
-    <van-tabbar v-show="type!==1" class="cl_MapCk" placeholder fixed>
-      <van-tabbar-item icon="chat-o" @click="ContentsUpdateFn()">事件申诉</van-tabbar-item>
-      <van-tabbar-item icon="edit" @click="UpdateFn()"><span> 违规处置</span></van-tabbar-item>
+    <van-tabbar v-show="type == 1" class="cl_MapCk" placeholder fixed>
+      <van-tabbar-item icon="chat-o" @click="ContentsUpdateFn()"
+        >事件申诉</van-tabbar-item
+      >
+      <van-tabbar-item icon="edit" @click="UpdateFn()"
+        ><span> 违规处置</span></van-tabbar-item
+      >
     </van-tabbar>
-  
+
+    <!-- 待审核显示块 -->
+    <van-tabbar v-show="type == 2" class="cl_MapCk" placeholder fixed>
+      <van-tabbar-item icon="chat-o" @click="approveFn(4)"
+        >审核通过</van-tabbar-item
+      >
+      <van-tabbar-item icon="edit" @click="approveFn(3)"
+        ><span> 审核否决</span></van-tabbar-item
+      >
+    </van-tabbar>
+
+    <!-- 待申诉显示块 -->
+    <van-tabbar v-show="type == 3" class="cl_MapCk" placeholder fixed>
+      <van-tabbar-item icon="chat-o" @click="approveFn(4)"
+        >通过</van-tabbar-item
+      >
+      <van-tabbar-item icon="edit"><span> 转交</span></van-tabbar-item>
+
+      <van-tabbar-item icon="edit"  @click="approveFn(3)"
+        ><span> 驳回</span></van-tabbar-item
+      >
+    </van-tabbar>
   </div>
 </template>
 
 <script>
-import { ComplaintsById } from "@/api/inspectionapi";
+import { ComplaintsById,updateComplaintsStatus} from "@/api/inspectionapi";
 import dataStatis from "@/components/dataStatis";
 export default {
   data() {
     return {
       pic: require("../../icons/svg/u20.svg"),
       active: 0,
+      userId:0,//用户Id
+      nickName:"",//操作用户Id
       condition: true,
-      type:0,
+      type: 0,
       createTime: "", //违规日期
       punishName: "", //违规类型
       point: {
@@ -190,6 +218,14 @@ export default {
       },
       searchForm: {
         id: 1,
+      },
+      
+      //审核实体
+      entity1:{
+        id:0,
+        operateType:0, //操作类型：1申诉 2执法处置 3审核拒绝 4审核通过
+        reportUserId:0,//	执法/举报人员ID
+        reportUserName:"",//执法/举报人名称
       },
 
       //详情实体
@@ -239,6 +275,18 @@ export default {
       console.log("点击违法处置");
       this.$router.push({ path: "/wfczcl", query: { id: this.searchForm.id } });
     },
+    
+      //审批方法
+    approveFn(type){
+        this.entity1.operateType=type
+        updateComplaintsStatus(this.entity1).then((res) => {
+        if (res.code !== 200) {
+          this.$toast.fail(res.msg);
+        } else {
+             this.$toast.success('成功');
+        }
+      });
+    },
 
     //读取地图
     readyMap({ map, BMap }) {
@@ -258,7 +306,7 @@ export default {
       console.log("searchForm:", searchForm);
       ComplaintsById(searchForm).then((res) => {
         if (res.code !== 200) {
-            this.$dialog.alert({ message:res.msg, });
+          this.$dialog.alert({ message: res.msg });
         } else {
           res.data.complaintRecordVos.forEach((element) => {
             if (element.pic != null) {
@@ -284,10 +332,15 @@ export default {
       });
     },
   },
-  
+
   created() {
+    var UserInfo=localStorage.getItem("userdata");
+    this.entity1.reportUserId=UserInfo.userId;//用户Id
+    this.entity1.reportUserName=UserInfo.nickName;//操作用户Id
+    this.entity1.id=this.$route.query.id;
+
     this.searchForm.id = this.$route.query.id;
-    this.type= this.$route.query.type;
+    this.type = this.$route.query.type;
     this.DataList(this.searchForm);
     setTimeout(() => {
       this.condition = false;

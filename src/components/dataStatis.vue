@@ -140,7 +140,7 @@ export default {
         if (res.code == 200) {
           this.baseList = res.data;
         } else {
-          this.$message.error(res.msg);
+          this.$toast.fail(res.msg);
         }
       });
     },
@@ -156,7 +156,7 @@ export default {
           }
           this.barList = blist;
         } else {
-          this.$message.error(res.msg);
+            this.$toast.fail(res.msg);
         }
       });
     },
@@ -177,7 +177,7 @@ export default {
             }
             this.barList = blist;
           } else {
-            this.$message.error(res.msg);
+          this.$toast.fail(res.msg);
           }
         }
       );
@@ -198,7 +198,7 @@ export default {
           }
           this.barList = blist;
         } else {
-          this.$message.error(res.msg);
+           this.$toast.fail(res.msg);
         }
       });
     },

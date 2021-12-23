@@ -217,10 +217,7 @@ export default {
       console.log("searchForm:", searchForm);
       ComplaintsById(searchForm).then((res) => {
         if (res.code !== 200) {
-          this.$message({
-            type: "info",
-            message: res.msg,
-          });
+          this.$toast.fail(res.msg);
         } else {
           res.data.complaintRecordVos.forEach((element) => {
             if (element.pic != null) {

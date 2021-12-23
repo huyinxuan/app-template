@@ -88,52 +88,100 @@ export default {
       console.log(this.currentRate);
       return '解决率'+Math.round(this.data.processedNum/this.data.total*100,2) + '%';
     },
-    generalOverview(Type,num){
-     
-      var from = {
-        type:Type
-      };
-      if(Type=="1"){
-        this.$set(from,'month',num);
-      }else if(Type=="2"){
-        this.$set(from,'season',num);
-      }else if(Type=="3"){
-        this.$set(from,'year',num);
-      }
-       if(this.h=="执法排名"){
-          console.log(from);
-          enforcement(from).then((res)=>{
-          if(res.code==200){
-            console.log(res.data.statisticsVos)
-            this.dataList=res.data.statisticsVos;
-            this.data=res.data;
-            this.currentRate=0;
-            this.toRate=Math.floor(this.data.processedNum/this.data.total*100);
-      
-          }else{
-            this.$toast.fail(res.msg);
-          }
-        })
-      }else{
-        console.log(from);
-        percentage(from).then((res)=>{
-          if(res.code==200){
-            console.log(res.data.statisticsVos)
-            this.dataList=res.data.statisticsVos;
-            this.data=res.data;
-            this.currentRate=0;
-            this.toRate=Math.floor(this.data.processedNum/this.data.total*100);
-      
-          }else{
-            this.$toast.fail(res.msg);
-          }
-        })
-      }
-    }
+    baseInit() {
+      baseInfo().then((res) => {
+        if (res.code == 200) {
+          this.baseList = res.data;
+        } else {
+         this.$toast.fail(res.msg);
+        }
+      });
+    },
+    // baseYearInit() {
+    //   baseYear({ year: this.active == 0 ? this.$moment().get('year'): this.$moment().get('year')-1 }).then((res) => {
+    //     if (res.code == 200) {
+    //       // this.baseList = res.data
+    //       this.initChat2(res.data.zhuzhuangtu);
+    //       let blist = []
+    //       for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
+    //         const element = Object.keys(res.data.bingzhuangtu)[index];
+    //         blist.push({name:element,value: res.data.bingzhuangtu[element]})
+    //       }
+    //       this.barList = blist;
+    //     } else {
+    //       this.$message.error(res.msg);
+    //     }
+    //   });
+    // },
+    // baseMonthInit() {
+    //   let jidu = {
+    //     year: this.$moment().year(),
+    //     month: this.active == 0 ?  this.$moment().format('MM') : this.$moment().format('MM') -1
+    //   }
+    //   baseMonth(jidu).then(
+    //     (res) => {
+    //       if (res.code == 200) {
+    //         // this.baseList = res.data
+    //         this.initChat2(res.data.zhuzhuangtu);
+    //         let blist = []
+    //         for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
+    //           const element = Object.keys(res.data.bingzhuangtu)[index];
+    //           blist.push({name:element,value: res.data.bingzhuangtu[element]})
+    //         }
+    //         this.barList = blist;
+    //       } else {
+    //         this.$message.error(res.msg);
+    //       }
+    //     }
+    //   );
+    // },
+    // baseJiDuInit() {
+    //   let jidu = {
+    //     year: this.$moment().year(),
+    //     jidu: this.active == 0 ?  this.$moment().quarter() : this.$moment().quarter() -1
+    //   }
+    //   baseJiDu(jidu).then((res) => {
+    //     if (res.code == 200) {
+    //       // this.baseList = res.data
+    //       this.initChat2(res.data.zhuzhuangtu);
+    //       let blist = []
+    //       for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
+    //         const element = Object.keys(res.data.bingzhuangtu)[index];
+    //         blist.push({name:element,value: res.data.bingzhuangtu[element]})
+    //       }
+    //       this.barList = blist;
+    //     } else {
+    //       this.$message.error(res.msg);
+    //     }
+    //   });
+    // },
+    // initChat2(data) {
+    //   let newData = []; // 横坐标
+    //   for (let index = 0; index < data.length; index++) {
+    //     const element = data[index];
+    //     newData.push(element.month);
+    //   }
+    //   this.option2.xAxis[0].data = newData;
+    //   // let initData = ['chanqianlaji','gongchengzhatu','zhuangxiuzhuangshi']
+    //   let data1 = [];
+    //   let data2 = [];
+    //   let data3 = [];
+    //   for (let index = 0; index < data.length; index++) {
+    //     const element = data[index];
+    //     data1.push(element.chanqianlaji);
+    //     data2.push(element.gongchengzhatu);
+    //     data3.push(element.zhuangxiuzhuangshi);
+    //   }
+    //   this.option2.series[0].data = data1;
+    //   this.option2.series[1].data = data2;
+    //   this.option2.series[2].data = data3;
+    //   this.myChart = this.$echarts.init(this.$refs.chart);
+    //   this.myChart.clear()
+    //   this.option2 && this.myChart.setOption(this.option2,true);
+    // }
   },
   created() {
     this.$nextTick(() => {
-          this.onClick();
       // this.initChar(this.tabindex);
       //this.tabindex == 0 ? this.baseMonthInit() :( this.tabindex == 1 ? this.baseJiDuInit() : this.baseYearInit())
     });
@@ -154,7 +202,8 @@ export default {
           this.titleOne = '今年'
           this.titleTwo = '去年'
         }
-        this.onClick();
+        // this.baseInit();
+
       }
     }
   },

@@ -146,7 +146,8 @@ export default {
               })
             }else{
               this.$toast.fail(res.msg);
-              this.$message.error(res.msg);
+              this.$toast.fail(res.msg);
+     
             }
           });
         }).catch(() => {

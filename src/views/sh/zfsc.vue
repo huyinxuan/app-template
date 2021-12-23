@@ -61,8 +61,8 @@ created(){
             if (res.code == 200) {
               this.actionjf = res.data;
             } else {
-               this.$message.error(res.msg);
-            }
+              this.$toast.fail(res.msg);
+           }
       });
     },
     xz(item){
