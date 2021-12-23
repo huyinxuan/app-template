@@ -59,7 +59,11 @@
                       <van-button plain type="info" icon="edit" @click="add(item.id)">编辑</van-button>
                     </van-col>
                     <van-col span="8">
-                      <van-button plain type="info" icon="photo-o" >照片</van-button>
+                      <!-- item.fileUrl -->
+                      <van-button plain type="info" icon="photo-o"  @click="zp(item.fileUrl)" >照片 
+                          <van-image-preview v-model="show" :images="img" >
+                          </van-image-preview>
+                      </van-button>
                     </van-col>
                 </van-row>
               </div>
@@ -78,14 +82,19 @@
 <script>
 import { hzList, deletehz ,insertZt,deleteZt ,importDc } from "@/api/userMG";
 import { Dialog } from 'vant';
-import _ from "lodash";
+// import _ from "lodash";
+
+
+
 // 弹出框
 Vue.use(Dialog);
 
 export default {
   data() {
     return {
+      show:false,
       condition:true,
+      img:[],
       search: {
         pageNum: 0,
         pageSize: 10,
@@ -105,6 +114,11 @@ export default {
     console.log("初始化")
   },
   methods: {
+    zp(url){
+      this.show=true;
+      console.log('地址'+url)
+      this.img[0]= url
+    },
     changeTxt: _.debounce(function (e, item) {
         console.log(e);
         this.tableData=[];

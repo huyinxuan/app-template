@@ -46,6 +46,11 @@ Vue.use(Dialog);
 Vue.use(Toast);
 Vue.prototype.$echarts = echarts;
 
+//预览
+// import Vue from 'vue';
+import { ImagePreview } from 'vant';
+Vue.use(ImagePreview);
+
 Vue.use(plugins).use(components);
 
 

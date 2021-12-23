@@ -15,10 +15,11 @@ import hzbj from '@/views/sh/hzbj';
 import xcsb from '@/views/sh/xcsb';
 import zfsc from '@/views/sh/zfsc';
 import details from '@/views/sh/details';
-import zfcz from '@/views/sh/zfcz';
-import sjss from '@/views/sh/sjss';
+// import zfcz from '@/views/sh/zfcz';
+// import sjss from '@/views/sh/sjss';
 import sptjdataStatis from '@/views/sh/sptjdataStatis';
 import qzjb from '@/views/sh/qzjb';
+import dataStatisjjl from '@/views/sh/dataStatisjjl';
 
 import inspection from './inspection';
 import apanage from './apanage';
@@ -112,31 +113,34 @@ export default new Router({
                 index: 8,
                 requireAuth: true
             }
-        },{
-            path: '/zfcz',
-            name: '执法处置',
-            component: zfcz,
-            hidden: true,
-            meta: {
-                index: 9,
-                requireAuth: true
-            }
-        },{
-            path: '/sjss',
-            name: '事件申报',
-            component: sjss,
+        },
+        // {
+        //     path: '/zfcz',
+        //     name: '执法处置',
+        //     component: zfcz,
+        //     hidden: true,
+        //     meta: {
+        //         index: 9,
+        //         requireAuth: true
+        //     }
+        // },
+        {
+            path: '/dataStatisjjl',
+            name: '数据统计-解决率',
+            component: dataStatisjjl,
             hidden: true,
             meta: {
                 index: 10,
                 requireAuth: true
             }
-        },{
+        },
+        {
             path: '/sptjdataStatis',
             name: '审批局数据统计',
             component: sptjdataStatis,
             hidden: true,
             meta: {
-                index: 10,
+                index: 11,
                 requireAuth: true
             }
         },{
@@ -145,7 +149,7 @@ export default new Router({
             component: qzjb,
             hidden: true,
             meta: {
-                index: 10,
+                index: 12,
                 requireAuth: true
             }
         }
