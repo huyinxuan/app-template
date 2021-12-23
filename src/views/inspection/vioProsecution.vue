@@ -17,6 +17,7 @@
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
       <van-field
+        :rules="[{ required: true, message: '请输入申诉理由' }]" 
         v-model="entity.contents"
         rows="3"
         autosize

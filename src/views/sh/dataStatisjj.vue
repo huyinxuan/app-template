@@ -9,8 +9,7 @@
     <div class="van-box">
       <div class="box-tip">
         <div style="margin-top:30px;margin-left:40px">
-          <!-- <van-circle v-model="currentRate" :rate="70" color="#58a3f7"  layer-color="#3fecff" size="120px" :clockwise="false" :text="text"/> -->
-          <van-circle ref="ci" v-model="currentRate" :rate="toRate" :speed="100"  color="#58a3f7"  size="120px" :clockwise="false"
+          <van-circle ref="ci" v-if="toRate!=-1" v-model="currentRate" :rate="toRate" :speed="100"  color="#58a3f7"  size="120px" :clockwise="false"
           :stroke-width="120" layer-color="#e9e9e9" :text="text()" />
         </div>
         <div style="margin-top:30px;text-align:left;margin-left:20px;">
@@ -24,14 +23,9 @@
       <div class="box-tip2">
         <div class="pm_box" v-for="(info,index) in dataList" :key="index">
           <div class="info"><span class="No">{{(index+1).length==1?(index+1):"0"+(index+1)}}</span><span class="name">{{info.deptName}}</span></div>
-          <van-progress :percentage="info.total/data.total*100" :show-pivot="false" color="#4BCED0"  />
+          <van-progress :percentage="!!(info.total/data.total)?(info.total/data.total)*100:0" :show-pivot="false" color="#4BCED0"  />
         </div>
-        <!-- <div v-for="(item, index) in  barList" :key="index">
-          <p class="font-fz">{{ item.value}}<span class="font-fz-12">万m³</span></p>
-          <p class="font-tl">{{ chinaTil[item.name]}}</p>
-        </div> -->
       </div>
-      <!-- <div class="box-bar" ref="chart"></div> -->
     </div>
   </div>
 </template>
@@ -41,9 +35,7 @@ import { percentage,enforcement } from "@/api/basisMG.js";
 export default {
   props: {
     h:'',
-   
     myChart: "",
-    dataList: [],
     tabindex: {
       type: Number,
       default: 0,
@@ -60,23 +52,23 @@ export default {
         this.type == 1 ? "上月" : this.type == 2 ? "上季" : "去年",
       
       data:{},
-      toRate:100, 
-      currentRate: 1,
+      toRate:-1, 
+      currentRate: 0,
+      dataList: []
     };
   },
   methods: {
     onClick() {
+      this.$nextTick(() => {
       // this.tabindex == 0 ? this.baseMonthInit() :( this.tabindex == 1 ? this.baseJiDuInit() : this.baseYearInit())
-      if(this.type==1){
-         this.active == 0 ? this.generalOverview(this.type,(new Date().getMonth()+1)) :this.generalOverview(this.type,new Date().getMonth());
-    
-        //this.active == 0 ? this.generalOverview(this.type,new Date().getFullYear()+"-"+(new Date().getMonth()+1)) :this.generalOverview(this.type,new Date().getFullYear()+"-"+new Date().getMonth());
-      }else if(this.type==2){
-        this.active == 0 ? this.generalOverview(this.type,this.getQuarter()) :this.generalOverview(this.type,this.getQuarter()-1);
-      }else if(this.type==3){
-        this.active == 0 ? this.generalOverview(this.type,new Date().getFullYear()) :this.generalOverview(this.type,new Date().getFullYear()-1);
-      }
-      
+        if(this.type==1){
+          this.active == 0 ? this.generalOverview(this.type,(new Date().getMonth()+1)) :this.generalOverview(this.type,new Date().getMonth());
+        }else if(this.type==2){
+          this.active == 0 ? this.generalOverview(this.type,this.getQuarter()) :this.generalOverview(this.type,this.getQuarter()-1);
+        }else if(this.type==3){
+          this.active == 0 ? this.generalOverview(this.type,new Date().getFullYear()) :this.generalOverview(this.type,new Date().getFullYear()-1);
+        }
+      });
     },
     getQuarter(){
       var currMonth= new Date().getMonth()+1;
@@ -85,11 +77,9 @@ export default {
     },
     text() {
       if(this.data.processedNum==0)return "解决率0%";
-      console.log(this.currentRate);
       return '解决率'+Math.round(this.data.processedNum/this.data.total*100,2) + '%';
     },
     generalOverview(Type,num){
-     
       var from = {
         type:Type
       };
@@ -100,30 +90,25 @@ export default {
       }else if(Type=="3"){
         this.$set(from,'year',num);
       }
-       if(this.h=="执法排名"){
-          console.log(from);
+      if(this.h=="执法排名"){
           enforcement(from).then((res)=>{
           if(res.code==200){
-            console.log(res.data.statisticsVos)
+            this.toRate=Math.floor(res.data.processedNum/res.data.total*100);
+            this.currentRate=0;
             this.dataList=res.data.statisticsVos;
             this.data=res.data;
-            this.currentRate=0;
-            this.toRate=Math.floor(this.data.processedNum/this.data.total*100);
-      
           }else{
             this.$toast.fail(res.msg);
           }
         })
       }else{
-        console.log(from);
         percentage(from).then((res)=>{
           if(res.code==200){
-            console.log(res.data.statisticsVos)
+            this.toRate=Math.floor(res.data.processedNum/res.data.total*100);
+            this.currentRate=0;
+            console.log("torate",this.toRate);
             this.dataList=res.data.statisticsVos;
             this.data=res.data;
-            this.currentRate=0;
-            this.toRate=Math.floor(this.data.processedNum/this.data.total*100);
-      
           }else{
             this.$toast.fail(res.msg);
           }
@@ -133,9 +118,7 @@ export default {
   },
   created() {
     this.$nextTick(() => {
-          this.onClick();
-      // this.initChar(this.tabindex);
-      //this.tabindex == 0 ? this.baseMonthInit() :( this.tabindex == 1 ? this.baseJiDuInit() : this.baseYearInit())
+      this.onClick();
     });
   },
   mounted(){
@@ -154,7 +137,6 @@ export default {
           this.titleOne = '今年'
           this.titleTwo = '去年'
         }
-        this.onClick();
       }
     }
   },

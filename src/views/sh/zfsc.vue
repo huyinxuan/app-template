@@ -9,7 +9,7 @@
       <!-- <van-cell is-link title="加分企业：" @click="show2 = true" />
       <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />      -->
       
-      <van-cell is-link @click="show =true" :value="data1.name" title="加分企业：" ></van-cell>
+      <van-field is-link @click="show =true"  :rules="[{ required: true, message: '请选择企业' }]" required :value="data1.name" label="加分企业：" ></van-field>
       <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
 
           <van-row class="select_row" v-for="item in actionjf" :key="item">
@@ -17,8 +17,10 @@
           </van-row>
       </van-popup>
 
-      <van-field v-model="data1.rewardDetail" label="加分内容：" />
-      <van-field v-model="data1.rewardScore" label="加分分数：" />
+      <van-field required
+        :rules="[{ required: true, message: '请输入内容' }]" v-model="data1.rewardDetail" label="加分内容：" />
+      <van-field required
+        :rules="[{ validator:isNum, message: '请输入一个数字' }]" v-model="data1.rewardScore" label="加分分数：" />
       <van-field name="uploader" label="上传照片：">
         <template #input>
           <van-uploader  :after-read="afterRead" v-model="uploader"  multiple :max-count="1" />
@@ -38,10 +40,10 @@ import {uploadImages} from "@/api/upload";
 export default {
   data() {
     return {
-      name:'',
+      name:null,
      data1: {
        enterpriseId:'',
-       name:'',
+       name:null,
      },
      actionjf:[],
      show: false,
@@ -54,7 +56,28 @@ created(){
     this.name =JSON.parse(localStorage.getItem("userdata")).nickName
   },
   methods: {
-
+   isPhone (val) {
+      if (val === "") {
+          return false;
+      } else {
+         if (!/^1[3456789]\d{9}$/.test(val)) {
+            return false;
+        } else {
+            return true;
+        }
+      }
+    },
+    isNum(val){
+        if (val === "") {
+            return false;
+        } else {
+          if ((/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/).test(val) == false) {
+              return false;
+          } else {
+              return true;
+          }
+        }
+    },
     // 企业下拉
     onSelect() {
       enterpriseDropList().then(res => {
@@ -76,7 +99,12 @@ created(){
     },
     // 提交
     onSubmit(){
-       if(this.uploader.length>0)this.data1.picAfter=this.uploader[0].url;
+      if(this.data1.name==null){
+        this.$toast.fail("请选择企业！");
+        return;
+      }
+      if(this.uploader.length>0)this.data1.picAfter=this.uploader[0].url;
+
         insertComplaints(this.data1).then(res => {
               if (res.code == 200) {
                 this.$router.go(-1)

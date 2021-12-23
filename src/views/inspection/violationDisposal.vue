@@ -40,7 +40,7 @@
       />
 
       <!-- <van-field v-model="entity.platePhone" required :rules="[{  validator:isPhone, message: '请填写正确手机号' }]" label="联系方式：" /> -->
-    <van-field v-model="entity.platePhone" required label="联系方式：" />
+      <van-field v-model="entity.platePhone" required  :rules="[{ validator:isPhone, message: '请填写正确手机号' }]" label="联系方式：" />
       <van-field v-model="entity.plateNumber" required :rules="[{ validator:isVehicleNumber, message: '请输入正确的车牌号' }]" label="涉事车牌号：" />
 
       <van-field name="uploader" label="上传照片：">
@@ -130,14 +130,22 @@ export default {
       if (val === "") {
           return false;
       } else {
-          return (!/^1[3456789]\d{9}$/).test(val);
+         if (!/^1[3456789]\d{9}$/.test(val)) {
+            return false;
+        } else {
+            return true;
+        }
       }
     },
     isNum(val){
         if (val === "") {
             return false;
         } else {
-            return (/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/).test(val)
+          if ((/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/).test(val) == false) {
+              return false;
+          } else {
+              return true;
+          }
         }
     },
     /**

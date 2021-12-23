@@ -17,6 +17,7 @@
         label="用户名"
         right-icon="question-o"
         placeholder="请输入手机号码"
+        :rules="[{ validator:isPhone, message: '请输入正确的手机号码' }]"
       />
     </van-cell-group>
     <van-cell-group>
@@ -26,6 +27,7 @@
         clearable
         label="短信验证码"
         placeholder="请输入短信验证码"
+        :rules="[{ required: true, message: '请输入验证码' }]"
       >
         <template #button>
           <van-button size="small" @click="getMsg" type="primary">发送验证码</van-button>
@@ -63,7 +65,17 @@ export default {
   mounted() {
     console.log(this.$store.state);
   },
-  methods: {
+  methods: { isPhone (val) {
+      if (val === "") {
+          return false;
+      } else {
+         if (!/^1[3456789]\d{9}$/.test(val)) {
+            return false;
+        } else {
+            return true;
+        }
+      }
+    },
     getMsg: _.throttle(function(){
       let _this = this
       console.log(this)

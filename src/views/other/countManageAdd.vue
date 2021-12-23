@@ -29,11 +29,12 @@
         :rules="[{ required: true, message: '请输入正确内容' }]"
       />
 
-      <van-cell
+      <van-field
         is-link
-        title="归属管辖"
+        label="归属管辖"
         @click="show2 = true"
         :value="entity.manageBelonging"
+        :rules="[{ required: true, message: '请选择归属管辖' }]"
         required
         style="3em"
       />
@@ -122,20 +123,27 @@ export default {
     },
   },
   methods: {
-    isPhone(val) {
+    isPhone (val) {
       if (val === "") {
-        return false;
+          return false;
       } else {
-        return (!/^1[3456789]\d{9}$/).test(val);
+         if (!/^1[3456789]\d{9}$/.test(val)) {
+            return false;
+        } else {
+            return true;
+        }
       }
     },
-
-    isNum(val) {
-      if (val === "") {
-        return false;
-      } else {
-        return /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/.test(val);
-      }
+    isNum(val){
+        if (val === "") {
+            return false;
+        } else {
+          if ((/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/).test(val) == false) {
+              return false;
+          } else {
+              return true;
+          }
+        }
     },
 
     //提交
