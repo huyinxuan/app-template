@@ -1,5 +1,5 @@
 <template>
-<!-- 违法处置详情(申诉) -->
+<!-- 违法处置详情(申诉)页面 -->
   <div>
     <div>
       <van-nav-bar
@@ -64,10 +64,7 @@ export default {
     //提交
     submitForm() {
       if (this.entity.contents == "") {
-        this.$message({
-          type: "info",
-          message: "申诉理由不能为空！",
-        });
+         this.$dialog.alert({ message: '申诉理由不能为空！', });
         return;
       }
 
@@ -80,10 +77,7 @@ export default {
             message: res.msg,
           });
         } else {
-          this.$message({
-            type: "success",
-            message: "成功",
-          });
+            this.$dialog.alert({ message: '成功', });
         }
       });
     },

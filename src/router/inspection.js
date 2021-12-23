@@ -17,12 +17,24 @@ import history from '@/views/inspection/history';
 //历史详情记录
 import historyDetails from '@/views/inspection/historyDetails';
 
+//新增账号页面
+import countManageAdd from '@/views/other/countManageAdd';
+
 
 export default [
     {
         path: '/violationDetails',
         name: '违法处置详情',
         component: violationDetails,
+        meta: {
+            index:34,
+            requireAuth: true
+        }
+    }, 
+    {
+        path: '/countManageAdd',
+        name: '新增账号页面',
+        component: countManageAdd,
         meta: {
             index:34,
             requireAuth: true
