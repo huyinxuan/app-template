@@ -95,6 +95,7 @@ export default {
     };
   },
   created(){
+    tableData=[];
     setTimeout(() => {
       this.onLoad();
       this.condition = false

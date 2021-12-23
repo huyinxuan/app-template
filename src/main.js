@@ -29,7 +29,6 @@ if (process.env.VUE_APP_MODE == "mock") {
 
 // 注册自定义全局组件
 import components from "./utils/components";
-
 // 注册全局插件
 import plugins from "./utils/plugins";
 
