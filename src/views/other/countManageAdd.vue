@@ -162,7 +162,6 @@ export default {
         if (res.code !== 200) {
            this.Toast.fail(res.msg);
         } else {
-          console.log("selectRegionList_ar:", res);
           that.selectRegionList_ar = res.data;
         }
       });
