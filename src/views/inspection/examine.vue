@@ -198,6 +198,7 @@ export default {
           if(res.data.lastPage<searchForm.pageNum){
             searchForm.pageNum=res.data.lastPage;
             searchForm.finished = true;
+            this.condition = false;
             return;
           }
           this.condition = false;

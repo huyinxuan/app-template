@@ -23,6 +23,7 @@
                     :auto-viewport="true"
                     :panel="false" :forceLocal="true" />
             </baidu-map>
+            <van-icon class="getpoint" name="map-marked" size="25" @click="getPoint"/>
             <div class="tools" ref="tools">
                 <div style="width:90%;margin-left:5%">
                     <van-button  round block type="info"  native-type="submit" @click="point.showMap=false">确定</van-button>
@@ -81,6 +82,25 @@ export default {
         
     },
     methods: {
+        getPoint(){
+            var map=window.map;
+            var BMap=window.BMap;
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition((r) => {
+                if (r.point) {
+                    var point = new BMap.Point( r.longitude, r.latitude);//用当前定位的经纬度查找省市区街道等信息
+                    var gc = new BMap.Geocoder();
+                    gc.getLocation(point, (rs)=>{
+                        this.point.address=rs.address;
+                        console.log(rs.address);//弹出当前所在地址
+                    });
+                    this.point.lng=point.lng;
+                    this.point.lat=point.lat;
+                    //map.panTo(r.point);
+                    map.centerAndZoom(point, 16);
+                }
+            })
+        },
         mapReady({ map, BMap }) {
             //将操作类存入window对象，方便调用
             window.map = map;
@@ -184,5 +204,19 @@ export default {
 }
 .mbox{
     background: #fff;
+}
+.getpoint{
+    width: 10vw;
+    height: 10vw;
+    position: fixed;
+    bottom: 18.53333vw;
+    right: 3.46667vw;
+    color: #1989fa;
+    background: #fbfbfb;
+    border-radius: 6.66667vw;
+    text-align: center;
+    line-height: 9vw;
+    border: 1px solid #48a0f9;
+    cursor: pointer;
 }
 </style>
