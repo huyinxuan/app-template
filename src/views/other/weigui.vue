@@ -16,14 +16,16 @@
         shape="round"
         background="#f2f2f2"
         placeholder="受理企业/个人"
+        @input="changeTxt"
       />
       <van-tabs v-model="active" animated>
         <van-tab title="待处理">
           <van-list 
-            v-model="loading"
-            :finished="finished"
+            v-model="searchForm1.loading"
+            :finished="searchForm1.finished"
             finished-text="没有更多了"
-            @load="LoadPage">
+            @load="LoadPage"
+            style="height:100vh;overflow-y: auto;">
             <div class="van-box" v-for="(item, index) in tableData1" v-if="item.status!=4" :key="index"
               @click="DetailFn(item.id)">
               <van-row class="card_title">
@@ -84,67 +86,74 @@
           </van-list>
         </van-tab>
         <van-tab title="已处理">
-          <div
-            class="van-box"
-            v-for="(item, index) in tableData4"
-            :key="index"
-            @click="DetailFn(item.id)"
-          >
-            <van-row class="card_title">
-              <van-col span="8"
-                ><div class="van-ellipsis">{{ item.regionName }}</div></van-col
-              >
-              <van-col
-                offset="13"
-                class="card_status_0"
-                v-show="item.status == 1"
-                >待处理</van-col
-              >
-              <van-col
-                offset="13"
-                class="card_status_0"
-                v-show="item.status == 2"
-                >已超期</van-col
-              >
-              <van-col
-                offset="13"
-                class="card_status_0"
-                v-show="item.status == 3"
-                >待审核</van-col
-              >
-              <van-col
-                offset="13"
-                class="card_status_1"
-                v-show="item.status == 4"
-                >已处理</van-col
-              >
-            </van-row>
-            <van-row>
-              <van-col span="12"
-                ><div class="van-ellipsis">
-                  违规日期：{{ item.createTime }}
-                </div></van-col
-              >
-              <van-col span="12"
-                ><div class="van-ellipsis">
-                  违规类型：{{ item.punishName }}
-                </div></van-col
-              >
-            </van-row>
-            <van-row>
-              <van-col span="12">
-                违规来源：
-                <span v-show="item.sourceType == 1">巡查</span>
-                <span v-show="item.sourceType == 2">群众举报</span>
-                <span v-show="item.sourceType == 3">智能抓拍</span>
-              </van-col>
-              <van-col span="12">
-                <div class="van-ellipsis">
-                  处理结果：{{ item.handleResult }}
-                </div>
-              </van-col>
-            </van-row>
-          </div>
+          <van-list 
+            v-model="searchForm4.loading"
+            :finished="searchForm4.finished"
+            finished-text="没有更多了"
+            @load="LoadPage"
+            style="height:100vh;overflow-y: auto;">
+            <div
+              class="van-box"
+              v-for="(item, index) in tableData4"
+              :key="index"
+              @click="DetailFn(item.id)"
+            >
+              <van-row class="card_title">
+                <van-col span="8"
+                  ><div class="van-ellipsis">{{ item.regionName }}</div></van-col
+                >
+                <van-col
+                  offset="13"
+                  class="card_status_0"
+                  v-show="item.status == 1"
+                  >待处理</van-col
+                >
+                <van-col
+                  offset="13"
+                  class="card_status_0"
+                  v-show="item.status == 2"
+                  >已超期</van-col
+                >
+                <van-col
+                  offset="13"
+                  class="card_status_0"
+                  v-show="item.status == 3"
+                  >待审核</van-col
+                >
+                <van-col
+                  offset="13"
+                  class="card_status_1"
+                  v-show="item.status == 4"
+                  >已处理</van-col
+                >
+              </van-row>
+              <van-row>
+                <van-col span="12"
+                  ><div class="van-ellipsis">
+                    违规日期：{{ item.createTime }}
+                  </div></van-col
+                >
+                <van-col span="12"
+                  ><div class="van-ellipsis">
+                    违规类型：{{ item.punishName }}
+                  </div></van-col
+                >
+              </van-row>
+              <van-row>
+                <van-col span="12">
+                  违规来源：
+                  <span v-show="item.sourceType == 1">巡查</span>
+                  <span v-show="item.sourceType == 2">群众举报</span>
+                  <span v-show="item.sourceType == 3">智能抓拍</span>
+                </van-col>
+                <van-col span="12">
+                  <div class="van-ellipsis">
+                    处理结果：{{ item.handleResult }}
+                  </div>
+                </van-col>
+              </van-row>
+            </div>
+          </van-list>
         </van-tab>
       </van-tabs>
     </template>
@@ -153,7 +162,7 @@
 
 <script>
 import { ComplaintsList } from "@/api/inspectionapi";
-
+import _ from "lodash";
 import dataStatis from "@/components/dataStatis";
 export default {
   data() {
@@ -182,7 +191,8 @@ export default {
         finished: false,
       },
       active:0,
-      timeNum:0
+      timeNum:null,
+      ssTimeNum:null
     };
   },
   watch: {
@@ -197,21 +207,24 @@ export default {
       }
 
     
-    },
-
-    enterprise(e) {
-    
-      if (this.active == 0) {
-        this.DataList(this.searchForm1,this.tableData1);
-        this.searchForm1.enterpriseName = e;
-      } else {
-        this.DataList(this.searchForm4,this.tableData4);
-        this.searchForm4.enterpriseName = e;
-      }
-    },
+    }
   },
 
   methods: {
+   changeTxt: _.debounce(function (e, item) {
+        console.log(e);
+        if (this.active == 0) {
+          this.tableData1=[];
+          this.searchForm1.pageNum=0;
+          this.searchForm1.enterpriseName=e;
+        } else {
+          this.tableData4=[];
+          this.searchForm4.pageNum=0;
+          this.searchForm4.enterpriseName=e;
+        }
+        
+        this.LoadPage();
+     }, 100),
     onClickLeft() {
       this.$router.go(-1);
     },
@@ -235,6 +248,7 @@ export default {
     },
 
     LoadPage() {
+       console.log("底部");
       clearTimeout(this.timeNum);
       this.timeNum=setTimeout(()=>{
         if (this.active == 0) {
@@ -254,14 +268,18 @@ export default {
       ComplaintsList(searchForm).then((res) => {
         this.loadingBat = false;
         if (res.code !== 200) {
-           this.$dialog.alert({ message:res.msg, });
+          searchForm.finished = true;
         } else {
+         if(res.data.lastPage<searchForm.pageNum){
+            searchForm.pageNum=res.data.lastPage;
+            searchForm.finished = true;
+            return;
+          }
           this.condition = false;
-          this.loading = false;
-          
+          searchForm.loading=false;
           console.log("LIST:", tableData);
           if(res.data.list.length>0)tableData.push(...res.data.list);
-          else  this.finished = true;
+          else  searchForm.finished = true;
         }
       });
     },
