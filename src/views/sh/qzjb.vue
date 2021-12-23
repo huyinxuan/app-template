@@ -6,7 +6,7 @@
     </div>
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
-      <van-field v-model="data1.reportUserName" label="举报人：" />
+      <van-field v-model="data1.reportUserName" label="举报人：" disabled/>
       <van-field v-model="data1.num" label="联系电话：" />
       <van-cell is-link @click="show =true" :value="data1.punishName" title="事件类型：" ></van-cell>
       <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
@@ -51,6 +51,7 @@ export default {
   data() {
     return {
       data1:{
+        reportUserName:'',
         punishId:'',
         regionId:'',
       },
@@ -73,8 +74,9 @@ export default {
     selectMap
   },
   created(){
-    this.sjSelect(),
+     this.sjSelect(),
      this.sdSelect()
+     this.data1.reportUserName=JSON.parse(localStorage.getItem("userdata")).nickName
   },
   methods: {
      // 事件类型下拉查询

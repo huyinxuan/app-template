@@ -6,7 +6,7 @@
     </div>
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
-      <van-field v-model="data1.reportUserName" label="上传人员：" />
+      <van-field v-model="data1.reportUserName" label="上传人员："  disabled />
     
       <van-cell is-link @click="show =true" :value="data1.punishName" title="事件类型：" ></van-cell>
       <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
@@ -50,6 +50,7 @@ export default {
   data() {
     return {
       data1:{
+        reportUserName:'',
         punishId:'',
         regionId:'',
       },
@@ -73,9 +74,15 @@ export default {
   },
   created(){
     this.sjSelect();
-     this.sdSelect();
+    this.sdSelect();
+     this.fz();
   },
   methods: {
+    fz(){
+      this.data1.reportUserName=JSON.parse(localStorage.getItem("userdata")).nickName
+      console.log("name1"+JSON.parse(localStorage.getItem("userdata")).nickName)
+       console.log("name"+this.data1.reportUserName)
+    },
      // 事件类型下拉查询
      sjSelect(){
       punishDailyDropList().then(res => {
@@ -145,7 +152,6 @@ export default {
         }
       })
     }
-
   }
 };
 </script>

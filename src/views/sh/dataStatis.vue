@@ -18,7 +18,7 @@
           </van-col>
           <van-col span="15">
             <div class="title">审核证办理数</div>
-            <div class="num">25</div>
+            <div class="num">{{total}}</div>
           </van-col>
         </van-row>
       <div class="box-bar" ref="chart"></div>
@@ -34,6 +34,7 @@ export default {
     myChart: "",
     baseList: [],
     barList: [],
+    
     tabindex: {
       type: Number,
       default: 0,
@@ -43,6 +44,7 @@ export default {
     return {
      // chinaTil:{chanqianlaji:'拆迁垃圾',gongchengzhatu:'工程渣土',zhuangxiuzhuangshi:'装修装饰垃圾'},
       active:0,
+      total:'',
       option2: {
         tooltip: {
           trigger: "axis",
@@ -95,12 +97,14 @@ export default {
     onClick() {
       this.baseYearInit()
     },
-
+//localStorage.getItem("userdata")
     baseYearInit() {
+      //console.log("123 "+JSON.parse(localStorage.getItem("userdata")).nickName)
       statistics({ year: this.active == 0 ? this.$moment().get('year'): this.$moment().get('year')-1 }).then((res) => {
         if (res.code == 200) {
-          console.log(res.data)
-          this.initChat2(res.data);
+         // console.log(res.data)
+          this.total =res.data.total
+          this.initChat2(res.data.list);
         } else {
           this.$message.error(res.msg);
         }

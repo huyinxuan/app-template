@@ -5,7 +5,7 @@
     </div>
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
-      <van-field v-model="text" label="上传人员：" />
+      <van-field v-model="name" label="上传人员：" disabled/>
       <!-- <van-cell is-link title="加分企业：" @click="show2 = true" />
       <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />      -->
       
@@ -38,6 +38,7 @@ import {uploadImages} from "@/api/upload";
 export default {
   data() {
     return {
+      name:'',
      data1: {
        enterpriseId:'',
        name:'',
@@ -50,6 +51,7 @@ export default {
   },
 created(){
     this.onSelect()
+    this.name =JSON.parse(localStorage.getItem("userdata")).nickName
   },
   methods: {
 
