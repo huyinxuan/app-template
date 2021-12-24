@@ -100,8 +100,8 @@ export default {
                     this.point.lng=point.lng;
                     this.point.lat=point.lat;
                     //map.panTo(r.point);
-                    map.centerAndZoom(point, 15);
-                    map.panBy(0-window.document.body.offsetWidth/2-10,0);
+                    map.centerAndZoom(point, 21);
+                    map.panBy(0-window.document.body.offsetWidth/2,0);
                     let Icon_0 = new BMap.Icon(
                         "http://api0.map.bdimg.com/images/marker_red_sprite.png",
                         new BMap.Size(19, 27),
