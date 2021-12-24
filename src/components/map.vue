@@ -13,6 +13,7 @@
                 </van-cell-group>
             </div>
             <baidu-map  class="map" 
+            ref="map"
             @ready="mapReady" 
             :center="center" 
             :zoom="15"
@@ -71,7 +72,8 @@ export default {
         return {
            key:'',
            inp_time:0,
-           mapHeight:0
+           mapHeight:0,
+           mapHeight_:0
         };
     },
     created() {
@@ -88,6 +90,7 @@ export default {
             var geolocation = new BMap.Geolocation();
             geolocation.getCurrentPosition((r) => {
                 if (r.point) {
+                    map.clearOverlays();
                     var point = new BMap.Point( r.longitude, r.latitude);//用当前定位的经纬度查找省市区街道等信息
                     var gc = new BMap.Geocoder();
                     gc.getLocation(point, (rs)=>{
@@ -97,7 +100,21 @@ export default {
                     this.point.lng=point.lng;
                     this.point.lat=point.lat;
                     //map.panTo(r.point);
-                    map.centerAndZoom(point, 16);
+                    map.centerAndZoom(point, 15);
+                    map.panBy(0-window.document.body.offsetWidth/2-10,0);
+                    let Icon_0 = new BMap.Icon(
+                        "http://api0.map.bdimg.com/images/marker_red_sprite.png",
+                        new BMap.Size(19, 27),
+                        {
+                            anchor: new BMap.Size(18, 32),
+                            imageSize: new BMap.Size(36, 25),
+                        }
+                    );
+                    let myMarker = new BMap.Marker(
+                        new BMap.Point(this.point.lng, this.point.lat),
+                        { icon: Icon_0 }
+                    );
+                    map.addOverlay(myMarker);
                 }
             })
         },
@@ -115,6 +132,7 @@ export default {
             let maxHeight = window.document.body.offsetHeight;
             console.log(topHeight,searchHeight,toolsHeight);
             this.mapHeight = maxHeight-toolsHeight-searchHeight-topHeight+'px';
+            this.mapHeight_= maxHeight-toolsHeight-searchHeight-topHeight;
         },
         clickEvent(e) {
             console.log(e);
