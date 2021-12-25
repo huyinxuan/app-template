@@ -22,7 +22,7 @@
             v-model="searchForm1.loading"
             :finished="searchForm1.finished"
             finished-text="没有更多了"
-            @load="loadingBat"
+            @load="LoadPage"
             style="height:100vh;overflow-y: auto;">
             <div class="van-box" v-for="(item, index) in tableData1" :key="index"
               @click="DetailFn(item.id)">
@@ -187,11 +187,12 @@ export default {
     },
     //获取数据
     DataList(searchForm,tableData) {
+      var that=this;
       console.log("searchForm",searchForm);
       searchForm.pageNum+=1;
       if(!!!searchForm)return;
       ComplaintsList(searchForm).then((res) => {
-        this.loadingBat = false;
+        that.loadingBat = false;
         if (res.code !== 200) {
            this.$dialog.alert({ message:res.msg, });
         } else {

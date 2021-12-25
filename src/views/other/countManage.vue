@@ -39,7 +39,7 @@
           :key="index"
         >
           <van-col span="8">{{ item.createTime }}</van-col>
-          <van-col span="4">{{ item.nickName }}</van-col>
+          <van-col span="4"><div class="van-ellipsis">{{ item.nickName }}</div></van-col>
           <van-col span="8">{{ item.phonenumber }}</van-col>
           <van-col span="4" class="box-icon" @click="deleteUser(item.userId)">
             <van-icon name="close" /> 删除</van-col
