@@ -6,12 +6,16 @@
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit(data)">
       <van-field v-model="data.cardId" label="核准证编号：" required :rules="[{ required: true, message: '请输入正确内容' }]" />
+      
       <van-field v-model="data.projectName" label="工程名称：" required :rules="[{ required: true, message: '请输入正确内容' }]"/>
       <van-field v-model="data.projectAddress" label="工程地址：" required :rules="[{ required: true, message: '请输入正确内容' }]" />
+      <van-field v-model="data.construction" label="	施工单位:" required :rules="[{ required: true, message: '请输入正确内容' }]" />
+      <van-field v-model="data.property" label="建设单位" required :rules="[{ required: true, message: '请输入正确内容' }]" />
+      
       <!-- <van-field v-model="data.property" label="建设单位：" />
     用的工程渣土ID 带出这两个的值
       <van-field v-model="data.construction" label="施工单位：" /> -->
-      <van-field required is-link label="源头：" @click="show2 =true"  :value="data.sourceName" v-model="data.sourceName" :rules="[{ required: true, message: '请选择源头' }]" />
+      <van-field is-link label="源头：" @click="show2 =true"  :value="data.sourceName" v-model="data.sourceName" />
       <van-popup class="select_rows_box" v-model="show2" round position="bottom" :style="{ height: '30%' }" >
           <van-row class="select_row" v-for="item in actions" :key="item">
             <van-col span="24" @click="sd(item)">{{item.name}}</van-col>
