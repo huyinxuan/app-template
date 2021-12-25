@@ -7,6 +7,8 @@ export const login = (params) => { return loginreq("post", "/api/login", params)
 export const loginSms = (params) => { return loginreq("post", "/api/smslogin", params) };
 export const sendMsgCode = (params) => { return loginreq("post", "/api/sendMsgCode", params) };
 
+// 获取权限
+export const roleId = (params) => { return axios.get("/api/system/role/" + params + "?token=" + localStorage.getItem('logintoken')) };
 // 获取用户菜单
 export const menu = (params) => { return reget('get', "/api/sysMenu/menuTree").then(res => res.data) };
 // 退出接口
