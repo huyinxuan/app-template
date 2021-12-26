@@ -44,7 +44,7 @@
       <van-tab title="手机登录">
         <van-cell-group>
           <van-field
-            v-model="ruleFormPhone.username"
+            v-model="ruleFormPhone.phonenumber"
             required
             clearable
             label="用户名"
@@ -120,7 +120,7 @@ export default {
     getMsg: _.throttle(function () {
       let _this = this;
       console.log(this);
-      if (!/^1[34578]\d{9}$/.test(_this.ruleFormPhone.phonenumber)) {
+      if (!/^1[3456789]\d{9}$/.test(_this.ruleFormPhone.phonenumber)) {
         _this.$toast.fail("请输入正确的手机号");
       } else if (
         _this.ruleFormPhone.phonenumber == "" ||
@@ -134,7 +134,7 @@ export default {
               _this.$toast.success(res.msg);
             } else {
               _this.$toast.fail(res.msg);
-              _this.rulesPhone.phonenumber = "";
+              _this.ruleFormPhone.phonenumber = "";
             }
           }
         );

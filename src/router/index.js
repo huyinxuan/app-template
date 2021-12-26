@@ -27,6 +27,32 @@ import apanage from './apanage';
 
 // 启用路由
 Vue.use(Router);
+import axios from "axios";
+import configEnv from '_conf'
+
+/**
+ * 请求失败后的错误统一处理
+ * @param {number} code 请求失败的状态码
+ */
+// const handleError = (code) => {
+//   switch (code) {
+//     case 401:
+//       // do something ...
+//       // 这里要清除一些全局的loading哦，例如 vant: Toast.clear()
+//       router.push("/Login");
+//       break;
+
+//     default:
+//       break;
+//   }
+// };
+console.log(configEnv)
+// create an axios instance
+axios.create({
+  // withCredentials: true, // send cookies when cross-domain requests
+  baseURL: configEnv.baseApi, // .env中配置的api前缀
+  timeout: 5000, // request timeout
+});
 
 // 导出路由
 export default new Router({
