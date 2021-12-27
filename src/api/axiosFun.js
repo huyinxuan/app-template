@@ -25,9 +25,7 @@ axios.create({
 
 // 登录请求方法
 const loginreq = (method, url, params) => {
-    alert(url)
     url = 'http://101.200.43.114:8365'+ url
-    alert(url)
     return axios({
         method: method,
         url: url,
