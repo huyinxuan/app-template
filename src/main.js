@@ -30,7 +30,7 @@ if (process.env.VUE_APP_MODE == "mock") {
 // 注册自定义全局组件
 import components from "./utils/components";
 // 注册全局插件
-import plugins from "./utils/plugins";
+// import plugins from "./utils/plugins";
 
 import * as echarts from 'echarts';
 import moment from 'moment' //导入文件
@@ -51,7 +51,22 @@ Vue.prototype.$echarts = echarts;
 import { ImagePreview } from 'vant';
 Vue.use(ImagePreview);
 
-Vue.use(plugins).use(components);
+// Vue.use(plugins).use(components);
+vue.prototype.$setCookie = function (cname,cvalue,exdays){
+	var d = new Date();
+	d.setTime(d.getTime()+(exdays*24*60*60*1000));
+	var expires = "expires="+d.toGMTString();
+	document.cookie = cname+"="+cvalue+"; "+expires;
+}
+vue.prototype.$getCookie = function(cname){
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i<ca.length; i++) {
+		var c = ca[i].trim();
+		if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+	}
+	return "";
+}
 
 
 new Vue({
