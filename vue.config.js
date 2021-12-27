@@ -67,21 +67,21 @@ const config = {
         new WebpackCdnPlugin(configCdn),
       ],
     };
-    if (process.env.NODE_ENV === "production") {
-      // 为生产环境修改配置...
-      console.log("\n---生产环境---\n");
-      console.log(`1.gzip压缩(需要nginx开启gzip)`);
-      mergeConfig.plugins.push(
-        new CompressionPlugin({
-          // filename: "[path].gz[query]",
-          // algorithm: "gzip",
-          test: /\.js$|\.html$|\.css/,
-          threshold: 10240,
-          minRatio: 0.8,
-          deleteOriginalAssets: false,
-        })
-      );
-    }
+    // if (process.env.NODE_ENV === "production") {
+    //   // 为生产环境修改配置...
+    //   console.log("\n---生产环境---\n");
+    //   console.log(`1.gzip压缩(需要nginx开启gzip)`);
+    //   mergeConfig.plugins.push(
+    //     new CompressionPlugin({
+    //       // filename: "[path].gz[query]",
+    //       // algorithm: "gzip",
+    //       test: /\.js$|\.html$|\.css/,
+    //       threshold: 10240,
+    //       minRatio: 0.8,
+    //       deleteOriginalAssets: false,
+    //     })
+    //   );
+    // }
     return mergeConfig;
   },
   chainWebpack(config) {
