@@ -24,7 +24,7 @@ const configCdn = require("./config/cdn.js");
 
 // 判断是否是生产环境
 let isProd = process.env.NODE_ENV == "production" ? true : false;
-
+console.log(configEnv.publicPath)
 const config = {
   // eslint检测 默认是开启的
   lintOnSave: false,

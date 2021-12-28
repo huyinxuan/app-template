@@ -78,7 +78,7 @@
                 </van-col>
                 <van-col span="12"
                   ><div class="van-ellipsis">
-                    处理结果：{{ item.handleResult }}
+                    处理结果：{{ item.handleResult==null?'暂无':item.handleResult }}
                   </div></van-col
                 >
               </van-row>

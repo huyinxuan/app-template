@@ -144,6 +144,7 @@ export default {
       login(this.loginForm).then((res) => {
         if (res.code == 200) {
           localStorage.setItem("logintoken", res.data.token);
+          sessionStorage.setItem("logintoken", res.data.token)
             // 缓存用户个人信息
             console.log(res)
             localStorage.setItem("userdata", JSON.stringify(res.data));
