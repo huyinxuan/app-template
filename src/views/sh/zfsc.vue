@@ -47,7 +47,7 @@ export default {
      },
      actionjf:[],
      show: false,
-     title:"执法上传",
+     title:"企业加分",
      uploader:[],
     };
   },
@@ -104,14 +104,6 @@ created(){
         return;
       }
       if(this.uploader.length>0)this.data1.picAfter=this.uploader[0].url;
-
-        insertComplaints(this.data1).then(res => {
-              if (res.code == 200) {
-                this.$router.go(-1)
-              }else{
-                this.$toast.fail(res.msg);
-              }
-          });
         companyreward(this.data1).then(res => {
             this.loading = false;
             if (res.code == 200) {
