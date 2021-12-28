@@ -199,7 +199,8 @@ export default {
         if (res.code !== 200) {
           this.$toast.fail(res.msg);
         } else {
-             this.$toast.success('成功');
+          this.$toast.success('成功提交');
+          this.$router.go(-1);
         }
       });
     },
