@@ -107,8 +107,8 @@ created(){
         companyreward(this.data1).then(res => {
             this.loading = false;
             if (res.code == 200) {
-             this.$toast.success(res.msg);
-              this.$router.go(-1)
+              this.$toast.success(res.msg);
+              this.$router.go(-1);
             }else{
               this.$toast.fail(res.msg);
             }
