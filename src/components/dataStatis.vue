@@ -31,7 +31,6 @@ export default {
   props: {
     myChart: "",
     baseList: [],
-    barList: [],
     tabindex: {
       type: Number,
       default: 0,
@@ -39,6 +38,7 @@ export default {
   },
   data() {
     return {
+      barList: [],
       chinaTil:{chanqianlaji:'拆迁垃圾',gongchengzhatu:'工程渣土',zhuangxiuzhuangshi:'装修装饰垃圾'},
       active:0,
       titleOne:
@@ -148,13 +148,19 @@ export default {
       baseYear({ year: this.active == 0 ? this.$moment().get('year'): this.$moment().get('year')-1 }).then((res) => {
         if (res.code == 200) {
           // this.baseList = res.data
-          this.initChat2(res.data.zhuzhuangtu);
-          let blist = []
-          for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
-            const element = Object.keys(res.data.bingzhuangtu)[index];
-            blist.push({name:element,value: res.data.bingzhuangtu[element]})
-          }
-          this.barList = blist;
+          this.initChat2(res.data.list);
+          this.barList = [
+            {
+              name:'gongchengzhatu',
+              value: res.data.gczt
+            },{
+              name:'zhuangxiuzhuangshi',
+              value: res.data.zxzs
+            },{
+              name:'chanqianlaji',
+              value: res.data.cqlj
+            }
+          ];
         } else {
             this.$toast.fail(res.msg);
         }
@@ -206,7 +212,7 @@ export default {
       let newData = []; // 横坐标
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
-        newData.push(element.month);
+        newData.push(element.month || element.X);
       }
       this.option2.xAxis[0].data = newData;
       // let initData = ['chanqianlaji','gongchengzhatu','zhuangxiuzhuangshi']
@@ -215,9 +221,9 @@ export default {
       let data3 = [];
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
-        data1.push(element.chanqianlaji);
-        data2.push(element.gongchengzhatu);
-        data3.push(element.zhuangxiuzhuangshi);
+        data1.push(element.chanqianlaji || element.cqlj);
+        data2.push(element.gongchengzhatu || element.gczt);
+        data3.push(element.zhuangxiuzhuangshi || element.zxzs);
       }
       this.option2.series[0].data = data1;
       this.option2.series[1].data = data2;
