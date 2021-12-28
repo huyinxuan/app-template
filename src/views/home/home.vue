@@ -38,14 +38,14 @@ export default {
           name: "数据统计",
           bgColor: "#aad562",
           titColor: "#9cc45a",
-          icon: "u14.png",
+          icon: "home-u14.png",
           link: "/dataStatis",
         },
         {
           name: "巡查上报",
           id:52,
           bgColor: "#f7c65f",
-          icon: "u15.png",
+          icon: "home-u15.png",
           titColor: "#f6bb42",
           link: "/xcsb",
         },
@@ -53,7 +53,7 @@ export default {
           id:53,
           name: "群众举报",
           bgColor: "#f7c65f",
-          icon: "u16.png",
+          icon: "home-u16.png",
           titColor: "#f6bb42",
           link: "/qzjb",
         },  
@@ -62,14 +62,14 @@ export default {
           name: "违规事件",
           bgColor: "#5bbcdb",
           titColor: "#39b3d7",
-          icon: "u14.png",
+          icon: "home-u14.png",
           link: "/weigui",
         },
         {
           id:56,
           name: "审核管理",
           bgColor: "#f0a175",
-          icon: "u35.png",
+          icon: "home-u35.png",
           titColor: "#f28e56",
           link: "/examine",
         },
@@ -77,7 +77,7 @@ export default {
           id:57,
           name: "企业加分",
           bgColor: "#5bc0de",
-          icon: "u23.png",
+          icon: "home-u23.png",
           titColor: "#39b3d7",
           link: "/zfsc",
         },
@@ -85,7 +85,7 @@ export default {
           id:60,
           name: "核准证管理",
           bgColor: "#5bbcdb",
-          icon: "u21.png",
+          icon: "home-u21.png",
           titColor: "#39b3d7",
           link: "/hezhun",
         },
@@ -93,7 +93,7 @@ export default {
           id:58,
           name: "违法处置",
           bgColor: "#ec6f5a",
-          icon: "u27.png",
+          icon: "home-u27.png",
           titColor: "#e9573f",
           link: "/violation",
         },
@@ -101,7 +101,7 @@ export default {
           id:59,
           name: "账号管理",
           bgColor: "#649ae1",
-          icon: "u30.png",
+          icon: "home-u30.png",
           titColor: "#4a89dc",
           link: "/accoutManage"
         },
@@ -109,7 +109,7 @@ export default {
           id:55,
           name: "历史数据",
           bgColor: "#5bc0de",
-          icon: "u22.png",
+          icon: "home-u22.png",
           titColor: "#39b3d7",
           link: "/history"
         },
@@ -119,6 +119,7 @@ export default {
   },
   mounted(){
     this.loading = true
+    alert(sessionStorage.getItem('logintoken'))
     setTimeout(() => {
         try {
         this.ids = JSON.parse(localStorage.getItem('menuId'))
