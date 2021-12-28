@@ -19,8 +19,7 @@
       <van-field is-link @click="openMap" :value="point.address" required :rules="[{ required: true, message: '请选择地址' }]" label="违规地点：" />
 
       <van-field is-link label="属地街道：" 
-      required :rules="[{ required: true, message: '请选择属地街道' }]" 
-      @click="show1 =true"  :value="data1.regionName" />
+      required :rules="[{ required: true, message: '请选择属地街道' }]" @click="show1 =true"  :value="data1.regionName" />
       <van-popup class="select_rows_box" v-model="show1" round position="bottom" :style="{ height: '30%' }" >
           <van-row class="select_row" v-for="item in actions" :key="item">
             <van-col span="24" @click="sd(item)">{{item.name}}</van-col>
@@ -148,7 +147,7 @@ export default {
     onSubmit(){
       this.data1.status=1,  //待处理
       this.data1.sourceType=1, //巡查
-      this.data1.handlePlace = this.point.address;
+      this.data1.address = this.point.address;
       this.data1.longitudeLatitude= this.point.lng+','+this.point.lat;
       if(this.uploader.length>0)this.data1.picAfter=this.uploader[0].url;
       insertComplaints(this.data1).then(res => {

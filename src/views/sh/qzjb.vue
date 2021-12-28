@@ -120,7 +120,6 @@ export default {
      sdSelect(){
       regionListAll().then(res => {
             if (res.code == 200) {
-              this.$toast.success(res.msg);
               this.actions = res.data;
             } else {
               this.$toast.fail(res.msg);
@@ -144,7 +143,7 @@ export default {
       
       this.data1.status=1,  //待处理
       this.data1.sourceType=2, //群众举报
-      this.data1.handlePlace = this.point.address;
+      this.data1.address = this.point.address;
       this.data1.longitudeLatitude= this.point.lng+','+this.point.lat;
       this.data1.contents= this.data1.contents+"联系人电话："+this.data1.num
       if(this.uploader.length>0)this.data1.pic = this.uploader[0].url;

@@ -154,7 +154,7 @@
             </van-row>
 
             <van-row class="cl_conDrow" type="flex" justify="space-between">
-              <van-col class="cl_conName" span="6" offset="2">垃圾类型</van-col>
+              <van-col class="cl_conName" span="6" offset="2">违规类型</van-col>
               <van-col class="cl_conValue" span="16" offset="">{{
                 entity.punishName
               }}</van-col>
