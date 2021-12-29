@@ -148,19 +148,13 @@ export default {
       baseYear({ year: this.active == 0 ? this.$moment().get('year'): this.$moment().get('year')-1 }).then((res) => {
         if (res.code == 200) {
           // this.baseList = res.data
-          this.initChat2(res.data.list);
-          this.barList = [
-            {
-              name:'gongchengzhatu',
-              value: res.data.gczt
-            },{
-              name:'zhuangxiuzhuangshi',
-              value: res.data.zxzs
-            },{
-              name:'chanqianlaji',
-              value: res.data.cqlj
+          this.initChat2(res.data.zhuzhuangtu);
+          let blist = []
+            for (let index = 0; index < Object.keys(res.data.bingzhuangtu).length; index++) {
+              const element = Object.keys(res.data.bingzhuangtu)[index];
+              blist.push({name:element,value: res.data.bingzhuangtu[element]})
             }
-          ];
+            this.barList = blist;
         } else {
             this.$toast.fail(res.msg);
         }
@@ -256,6 +250,7 @@ export default {
           this.titleTwo = '去年'
         }
         this.baseInit();
+        this.tabindex == 0 ? this.baseMonthInit() :( this.tabindex == 1 ? this.baseJiDuInit() : this.baseYearInit())
 
       }
     }

@@ -170,7 +170,7 @@ export default {
             // 缓存用户个人信息
             localStorage.setItem("userdata", JSON.stringify(res.data));
             this.$store.commit("login", "true");
-            this.getRole(res.data.roleId);
+            this.getRole(res.data.roleId,res.data.token);
             this.$router.push({ path: "/allLogin" });
           }, 1000);
         } else {
@@ -181,9 +181,9 @@ export default {
       });
     },
     getRole(id,token) {
-      roleId(id,token).then((res) => {
-        if (res.data.code == 200) {
-          localStorage.setItem("menuId", JSON.stringify(res.data.data.menuIds));
+      roleId({roleId: id}).then((res) => {
+        if (res.code == 200) {
+          localStorage.setItem("menuId", JSON.stringify(res.data.menuIds));
             this.$router.push({ path: "/home" });
         } else {
           this.$toast.fail(res.data.msg);

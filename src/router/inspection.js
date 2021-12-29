@@ -27,7 +27,7 @@ export default [
         name: '违法处置详情',
         component: violationDetails,
         meta: {
-            index:34,
+            index:56,
             requireAuth: true
         }
     }, 
@@ -36,7 +36,7 @@ export default [
         name: '新增账号页面',
         component: countManageAdd,
         meta: {
-            index:34,
+            index:49,
             requireAuth: true
         }
     },
@@ -45,7 +45,7 @@ export default [
         name: '审核管理',
         component: examine,
         meta: {
-            index:34,
+            index:14,
             requireAuth: true
         }
     },
@@ -54,7 +54,7 @@ export default [
         name: '历史详情',
         component: historyDetails,
         meta: {
-            index:34,
+            index:50,
             requireAuth: true
         }
     }
@@ -64,7 +64,7 @@ export default [
         name: '违法处置',
         component: violation,
         meta: {
-            index:34,
+            index:24,
             requireAuth: true
         }
     }  ,
@@ -82,7 +82,7 @@ export default [
         name: '申诉',
         component: vioProsecution,
         meta: {
-            index:34,
+            index:18,
             requireAuth: true
         }
     }

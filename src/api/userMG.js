@@ -8,7 +8,7 @@ export const loginSms = (params) => { return loginreq("post", "/api/smslogin", p
 export const sendMsgCode = (params) => { return loginreq("post", "/api/sendMsgCode", params) };
 
 // 获取权限
-export const roleId = (params,token) => { return axios.get("http://101.200.43.114:8365/api/system/role/" + params + "?token=" + token) };
+export const roleId = (params,token) => { return delt('get',"/api/system/role" , params) };
 // 获取用户菜单
 export const menu = (params) => { return reget('get', "/api/sysMenu/menuTree").then(res => res.data) };
 // 退出接口

@@ -12,13 +12,13 @@
       <template v-else>
         <van-tabs v-model="active" animated>
           <van-tab title="月">
-            <dataStatis :tabindex="active"></dataStatis>
+            <dataStatisD v-if="active==0" :tabindex="active"></dataStatisD>
           </van-tab>
           <van-tab title="季">
-            <dataStatis :tabindex="active"></dataStatis>
+            <dataStatisM  v-if="active==1"  :tabindex="active"></dataStatisM>
           </van-tab>
           <van-tab title="年">
-            <dataStatis :tabindex="active"></dataStatis>
+            <dataStatisy  v-if="active==2"  :tabindex="active"></dataStatisy>
           </van-tab>
         </van-tabs>
       </template>
@@ -26,7 +26,9 @@
 </template>
 
 <script>
-import dataStatis from '@/components/dataStatis'
+import dataStatisD from '@/components/dataStatis'
+import dataStatisM from '@/components/dataStatis'
+import dataStatisy from '@/components/dataStatis'
 export default {
   data() {
     return {
@@ -45,7 +47,9 @@ export default {
     }, 650);
   },
   components:{
-    dataStatis
+    dataStatisD,
+    dataStatisy,
+    dataStatisM
   }
 }
 </script>
