@@ -81,6 +81,7 @@ export default {
              this.$toast.success(res.msg);
         } else {
             this.$dialog.alert({ message: '成功', });
+            this.onClickLeft();
         }
       });
     },

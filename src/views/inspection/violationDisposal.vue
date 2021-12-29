@@ -107,13 +107,15 @@ export default {
         operateType: 2, //1申诉 2执法处置 3审核拒绝 4审核通过
         enterpriseId: null, //企业Id
         enterpriseName: null, //企业/个人名称
+        disposeType: "", //处置类型 1 企业 2 个人
         handleResult: "", //处理结果
         platePhone: "", //被处理对象联系人
       },
     };
   },
   created() {
-    var UserInfo=localStorage.getItem("userdata");
+   
+    var UserInfo = JSON.parse(localStorage.getItem("userdata"));
     this.entity.reportUserId=UserInfo.userId;//用户Id
     this.entity.reportUserName=UserInfo.nickName;//操作用户Id
     this.entity.id = this.$route.query.id;
@@ -173,7 +175,7 @@ export default {
     //触发企业下拉列表
     enterpriseChange(item) {
       this.entity.enterpriseName = item.name;
-      this.entity.enterpriseId = item.id;
+      this.entity.enterpriseId = item.values;
 
       console.log("enterpriseName:", item);
       console.log("enterpriseName:", this.entity.enterpriseName);
@@ -189,7 +191,14 @@ export default {
         this.$toast.fail("请选择企业！");
         return;
       }
+      if(this.Type=="企业"){
+        this.entity.disposeType=1;
+      }else{
+         this.entity.disposeType=2;
+      }
       console.log("提交的数据：", this.entity);
+    
+    
       let arr = new Array();
       this.fileList.forEach(file => {
         arr.push(file.url);

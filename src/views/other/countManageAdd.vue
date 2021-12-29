@@ -83,7 +83,7 @@ export default {
       show2: false, //企业或个人下拉状态
 
       title: "新增账号",
-
+      id:0,//管辖Id
       checked: true, //禁用、启用
 
       detailsForm: {},
@@ -152,9 +152,11 @@ export default {
         this.$toast.fail("请选择管辖归属！");
         return;
       }
+      this.entity.manageBelonging=this.id;
       insetWgy(this.entity).then((res) => {
         if (res.code == 200) {
           this.$toast.success("添加完成");
+          this.onClickLeft();
         } else {
           this.$toast.fail(res.msg);
         }
@@ -164,6 +166,7 @@ export default {
     //编辑区域下拉
     Regionchange: function (e) {
       this.entity.manageBelonging = e.name;
+      this.id=e.id;
       console.log("选择", e);
       console.log("选择1", this.entity.manageBelonging);
       this.show2 = false;
