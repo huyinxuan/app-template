@@ -57,6 +57,7 @@ export const enterpriseDropList = (params) => { return reget("get", "/api/suree/
 export const selectRegionList = (params) => { return reget("get", "/api/region/selectRegionList", params) };
 
 
+
 //违规处理 详情
 export const selectComplaintRecordById = (params) => { return reget("get","/api/complaintRecord/selectComplaintRecordById", params) };
 //违规处理 编辑
@@ -65,6 +66,9 @@ export const updateComplaintRecord = (params) => { return reput("put", "/api/com
 export const deleteComplaintRecord = (params) => { return delt("delete",  "/api/complaintRecord/deleteComplaintRecord", params) };
 //违规处理 新增
 export const insertComplaintRecord = (params) => { return reput("post", "/api/complaintRecord/insertComplaintRecord", params) };
+
+//违规处理 驳回、转交
+export const updateDeliverStatus = (params) => { return reput("put", "/api/complaints/updateDeliverStatus", params) };
 
 //执法局_严管示范街数据统计（查询核准证列表）
 //export const selectApprovalCardListPage = (params) => { return reget("get", "/api/approvalCard/selectApprovalCardListPage", params) };
