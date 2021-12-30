@@ -1,5 +1,3 @@
-
-
 import Router from 'vue-router';
 // 登录
 import login from '@/views/index';
@@ -20,7 +18,7 @@ import details from '@/views/sh/details';
 import sptjdataStatis from '@/views/sh/sptjdataStatis';
 import qzjb from '@/views/sh/qzjb';
 import dataStatisjjl from '@/views/sh/dataStatisjjl';
-
+import dataStatisjjl_pm from '@/views/sh/dataStatisjjl_pm';
 import inspection from './inspection';
 import apanage from './apanage';
 
@@ -31,8 +29,7 @@ Vue.use(Router);
 
 // 导出路由
 export default new Router({
-    routes: [
-        {
+    routes: [{
             path: '/',
             name: '',
             component: login,
@@ -47,7 +44,7 @@ export default new Router({
             component: login,
             hidden: true,
             meta: {
-                index: 1 ,
+                index: 1,
                 requireAuth: false
             }
         }, {
@@ -55,7 +52,7 @@ export default new Router({
             name: '首页',
             component: home,
             meta: {
-                index: 2 ,
+                index: 2,
                 requireAuth: false
             }
         }, {
@@ -63,7 +60,7 @@ export default new Router({
             name: '首页',
             component: dataStatis,
             meta: {
-                index: 3 ,
+                index: 3,
                 requireAuth: false
             }
         },
@@ -78,7 +75,7 @@ export default new Router({
                 index: 4,
                 requireAuth: true
             }
-        },{
+        }, {
             path: '/hzbj',
             name: '核准证编辑',
             component: hzbj,
@@ -87,7 +84,7 @@ export default new Router({
                 index: 5,
                 requireAuth: true
             }
-        },{
+        }, {
             path: '/xcsb',
             name: '巡查上报',
             component: xcsb,
@@ -96,7 +93,7 @@ export default new Router({
                 index: 6,
                 requireAuth: true
             }
-        },{
+        }, {
             path: '/zfsc',
             name: '执法上传',
             component: zfsc,
@@ -105,7 +102,7 @@ export default new Router({
                 index: 7,
                 requireAuth: true
             }
-        },{
+        }, {
             path: '/details',
             name: '核准证详情',
             component: details,
@@ -136,6 +133,16 @@ export default new Router({
             }
         },
         {
+            path: '/dataStatisjjl_pm',
+            name: '数据统计-执法排名',
+            component: dataStatisjjl_pm,
+            hidden: true,
+            meta: {
+                index: 10,
+                requireAuth: true
+            }
+        },
+        {
             path: '/sptjdataStatis',
             name: '审批局数据统计',
             component: sptjdataStatis,
@@ -144,7 +151,7 @@ export default new Router({
                 index: 11,
                 requireAuth: true
             }
-        },{
+        }, {
             path: '/qzjb',
             name: '群众举报',
             component: qzjb,
