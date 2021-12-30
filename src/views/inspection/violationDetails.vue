@@ -80,7 +80,7 @@
               <div class="card_box">
                 <van-row>
                   <van-col span="3" style="text-align: center">
-                    <van-icon class="card_icon" name="eye-o" size="35" />
+                   <img height="28" src="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAuCAQAAAAITmgMAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQflDB4QISa9395SAAACtUlEQVRIx6WWXZWrMBRGd1ljAAtUwkFCK6EjgUqgEqYSBglFQiMhR8LEQiT0PkDDCRSms+73BCHslfOf3YNcO/PsSyS9hDoAzPcP+ni5ihdOnKiytUiPo3+1f7c8jRe+OLCmwEX6XzH6Rctv6jlLXMVoyd14Y0uBT9GXmD9AACLHCZQwLyARhzJsrRAOucstaMLcOGVbrnR1Zj/4hjZDKcfBRyNGW75yF84RCZWH4CqXhNEKT5k+dfUZwJc0CEJFRHH0dYAH2vBtQEdxT8w3zQLS0hr0oEt9fczPrlLD7oFW/Fhr6wjegq0cnxJnnjyKKyD74bwJgQP3YR+T7xoowHA7UfCNNZEzR5wBiX6BRK5p5aTlzgs+LewlaMnP6JPAZ60A/nmG1/vgXJgiVAlAM36MHOtnls5zuwWJptarwqRT/7R09FIAL/7mH1lOATRaAlNNyYfBBNBqfA91D5nBuQRnMYXJjQgJ2gFwg1UMpsLLYrJbnPFCBF/NSnFDxcq6PdlbmJRGWo2/A7T+9EYXNJjJwmpw82j7baMfbxpVYYO4LQdqMq4wiS6zpFpXEMUmZSiSGc/acm9gOrN/cZpSG6i7X0GBDrQyp3FFZsZQCBfiJmaYUVMcg2iRmSHaQq2cNyGDe20zGZvoT0q1sa79gduihQ6QDrTEmz/2EoeATy2o5O5LqB370ZGTevZ1N060KcOvEqcB4234Ursq04iLuOFi4vOxGNlbjHDPav1aX3khf+A7q7XP4XYxTc18+oDS0duh5080swIZh11+FXh1JdEU/GWFdZIiml9M2kW7XJeBLK5JswvBugK1vSiZCtfybQhU3FVeYPTEz9sQAMFr8uUz4OvjdltOjgmj64Pkd52lexr1h3a5UJn55v80YMJ/UkaMe7uVzzU2vWekykW9vCOHG0bwP6GiIoIjYBWPAAAAAElFTkSuQmCC"/>
                   </van-col>
                   <van-col span="21" class="card_type"
                     >摄像机<span class="card_address">{{
@@ -165,7 +165,7 @@
     </div>
 
     <!-- 违法处置显示块 -->
-    <van-tabbar v-show="type == 1" class="cl_MapCk" placeholder fixed>
+    <van-tabbar v-show="entity.status == 1" class="cl_MapCk" placeholder fixed>
       <van-tabbar-item icon="chat-o" @click="ContentsUpdateFn()"
         >事件申诉</van-tabbar-item
       >
@@ -175,7 +175,7 @@
     </van-tabbar>
 
     <!-- 待审核显示块 -->
-    <van-tabbar v-show="type == 2" class="cl_MapCk" placeholder fixed>
+    <van-tabbar v-show="entity.status == 2" class="cl_MapCk" placeholder fixed>
       <van-tabbar-item icon="chat-o" @click="approveFn(4)"
         >审核通过</van-tabbar-item
       >
@@ -185,7 +185,7 @@
     </van-tabbar>
 
     <!-- 待申诉显示块 -->
-    <van-tabbar v-show="type == 3" class="cl_MapCk" placeholder fixed>
+    <van-tabbar v-show="entity.status == 3" class="cl_MapCk" placeholder fixed>
       <van-tabbar-item icon="chat-o" @click="approveFn(4)"
         >通过</van-tabbar-item
       >
@@ -500,10 +500,6 @@ export default {
 .card_box .picList {
   margin-top: 1vw;
   font-family: "微软雅黑", sans-serif;
-}
-.card_box img {
-  margin-right: 15px;
-  border-radius: 10px;
 }
 .card_time {
   margin-top: 6px;

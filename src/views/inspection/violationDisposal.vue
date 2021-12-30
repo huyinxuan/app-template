@@ -65,7 +65,6 @@
           block
           type="info"
           native-type="submit"
-
           >提交</van-button
         >
       </div>
@@ -187,6 +186,7 @@ export default {
 
     //提交
     submitForm() {
+      
       if(this.entity.enterpriseName==null){
         this.$toast.fail("请选择企业！");
         return;
