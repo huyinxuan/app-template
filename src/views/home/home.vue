@@ -119,7 +119,6 @@ export default {
   },
   mounted(){
     this.loading = true
-    alert(localStorage.getItem('logintoken'))
     setTimeout(() => {
         try {
         this.ids = JSON.parse(localStorage.getItem('menuId'))
