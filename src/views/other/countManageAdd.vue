@@ -83,7 +83,7 @@ export default {
       show2: false, //企业或个人下拉状态
 
       title: "新增账号",
-      id:0,//管辖Id
+      id: 0, //管辖Id
       checked: true, //禁用、启用
 
       detailsForm: {},
@@ -123,36 +123,36 @@ export default {
     },
   },
   methods: {
-    isPhone (val) {
+    isPhone(val) {
       if (val === "") {
-          return false;
+        return false;
       } else {
-         if (!/^1[3456789]\d{9}$/.test(val)) {
-            return false;
+        if (!/^1[3456789]\d{9}$/.test(val)) {
+          return false;
         } else {
-            return true;
+          return true;
         }
       }
     },
-    isNum(val){
-        if (val === "") {
-            return false;
+    isNum(val) {
+      if (val === "") {
+        return false;
+      } else {
+        if (/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/.test(val) == false) {
+          return false;
         } else {
-          if ((/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/).test(val) == false) {
-              return false;
-          } else {
-              return true;
-          }
+          return true;
         }
+      }
     },
 
     //提交
     submitForm() {
-      if(this.entity.manageBelonging==null){
+      if (this.entity.manageBelonging == null) {
         this.$toast.fail("请选择管辖归属！");
         return;
       }
-      this.entity.manageBelonging=this.id;
+      this.entity.manageBelonging = this.id;
       insetWgy(this.entity).then((res) => {
         if (res.code == 200) {
           this.$toast.success("添加完成");
@@ -166,7 +166,7 @@ export default {
     //编辑区域下拉
     Regionchange: function (e) {
       this.entity.manageBelonging = e.name;
-      this.id=e.id;
+      this.id = e.id;
       console.log("选择", e);
       console.log("选择1", this.entity.manageBelonging);
       this.show2 = false;
@@ -177,7 +177,7 @@ export default {
       var that = this;
       selectRegionList(this.detailsForm).then((res) => {
         if (res.code !== 200) {
-           this.$toast.fail(res.msg);
+          this.$toast.fail(res.msg);
         } else {
           that.selectRegionList_ar = res.data;
         }
