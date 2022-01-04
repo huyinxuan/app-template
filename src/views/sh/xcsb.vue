@@ -149,7 +149,7 @@ export default {
       this.data1.sourceType=1, //巡查
       this.data1.address = this.point.address;
       this.data1.longitudeLatitude= this.point.lng+','+this.point.lat;
-      if(this.uploader.length>0)this.data1.picAfter=this.uploader[0].url;
+      if(this.uploader.length>0)this.data1.pic=this.uploader[0].url;
       insertComplaints(this.data1).then(res => {
             if (res.code == 200) {
               this.$router.go(-1);
