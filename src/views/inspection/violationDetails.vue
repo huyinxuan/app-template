@@ -49,7 +49,7 @@
         </div>
         <van-tabs v-model="active" animated>
           <van-tab title="处理记录" style="min-height: 40vh">
-            <div v-for="item in entity.complaintRecordVos">
+            <div v-for="(item,index) in entity.complaintRecordVos" :key="index">
               <van-row class="card_time_line" v-show="false">
                 <van-col offset="1" span="1">
                   <svg
@@ -93,7 +93,7 @@
                   <van-col span="21" class="card_text">
                     {{ item.contents }}<br />
                     <div class="picList">
-                      <span v-for="Im in item.pic">
+                      <span v-for="(Im,index) in item.pic" :key="index">
                         <img height="100px" :src="Im" />
                       </span>
                     </div>

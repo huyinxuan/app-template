@@ -10,7 +10,7 @@
       <van-field v-model="data1.num" label="联系电话：" required :rules="[{ validator:isPhone, message: '请正确输入联系电话' }]" />
       <van-field is-link @click="show =true" :value="data1.punishName" label="事件类型：" required :rules="[{ required: true, message: '请选择事件类型' }]"></van-field>
       <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
-          <van-row class="select_row" v-for="item in actionsj" :key="item">
+          <van-row class="select_row" v-for="(item,index) in actionsj" :key="index">
             <van-col span="24" @click="xz(item)">{{item.reason}}</van-col>
           </van-row>
       </van-popup>
@@ -19,7 +19,7 @@
 
       <van-field is-link label="属地街道：" @click="show1 =true"  :value="data1.regionName" required :rules="[{ required: true, message: '请选择属地街道' }]" />
       <van-popup class="select_rows_box" v-model="show1" round position="bottom" :style="{ height: '30%' }" >
-          <van-row class="select_row" v-for="item in actions" :key="item">
+          <van-row class="select_row" v-for="(item,index) in actions" :key="index">
             <van-col span="24" @click="sd(item)">{{item.name}}</van-col>
           </van-row>
       </van-popup>

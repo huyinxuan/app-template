@@ -12,7 +12,7 @@
       <van-field is-link @click="show =true"  :rules="[{ required: true, message: '请选择企业' }]" required :value="data1.name" label="加分企业：" ></van-field>
       <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
 
-          <van-row class="select_row" v-for="item in actionjf" :key="item">
+          <van-row class="select_row" v-for="(item,index) in actionjf" :key="index">
             <van-col span="24" @click="xz(item)">{{item.name}}</van-col>
           </van-row>
       </van-popup>

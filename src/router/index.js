@@ -1,3 +1,4 @@
+import Vue from "vue";
 import Router from 'vue-router';
 // 登录
 import login from '@/views/index';
