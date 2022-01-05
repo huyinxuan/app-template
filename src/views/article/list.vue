@@ -17,7 +17,7 @@
         finished-text="没有更多了"
         @load="_onLoad"
       >
-        <van-cell v-for="item in list" :key="item.id" :title="item.title" />
+        <van-cell v-for="(item,index) in list" :key="index" :title="item.title" />
       </van-list>
     </van-pull-refresh>
   </div>

@@ -87,6 +87,7 @@ import { login, loginSms, sendMsgCode ,roleId} from "@/api/userMG";
 export default {
   data() {
     return {
+      active: '0',
       loginForm: {
         username: "",
         password: "",

@@ -13,14 +13,14 @@
       <van-field v-model="data.construction" label="施工单位：" /> -->
       <van-field required is-link label="源头：" @click="show2 =true"  :value="data.sourceName" v-model="data.sourceName" :rules="[{ required: true, message: '请选择源头' }]" />
       <van-popup class="select_rows_box" v-model="show2" round position="bottom" :style="{ height: '30%' }" >
-          <van-row class="select_row" v-for="item in actions" :key="item">
+          <van-row class="select_row" v-for="(item,index) in actions" :key="index">
             <van-col span="24" @click="sd(item)">{{item.name}}</van-col>
           </van-row>
       </van-popup>
  <!-- <van-field v-model="data.transportName" label="运输单位：" />  查询企业列表-->
       <van-field required is-link label="运输单位：" @click="show3 =true"  :value="data.transportName" v-model="data.transportName" :rules="[{ required: true, message: '请选择运输单位' }]" />
       <van-popup class="select_rows_box" v-model="show3" round position="bottom" :style="{ height: '30%' }" >
-          <van-row class="select_row" v-for="item in actionys" :key="item">
+          <van-row class="select_row" v-for="(item,index) in actionys" :key="index">
             <van-col span="24" @click="ys(item)">{{item.name}}</van-col>
           </van-row>
       </van-popup>

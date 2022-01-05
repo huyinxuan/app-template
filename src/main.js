@@ -4,7 +4,7 @@ import router from './router';
 import store from './vuex/store';
 
 import "@/assets/css/common.scss";
-
+import Vant from'vant';
 // 初始化样式
 import "@/assets/css/reset.css";
 
@@ -68,6 +68,7 @@ Vue.prototype.$getCookie = function(cname){
 	return "";
 }
 
+Vue.use(Vant);
 
 new Vue({
     router,

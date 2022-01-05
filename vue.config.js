@@ -20,7 +20,7 @@ const utils = {
 const configEnv = require("./config");
 
 // CDN配置
-const configCdn = require("./config/cdn.js");
+// const configCdn = require("./config/cdn.js");
 
 // 判断是否是生产环境
 let isProd = process.env.NODE_ENV == "production" ? true : false;
@@ -29,7 +29,8 @@ const config = {
   // eslint检测 默认是开启的
   lintOnSave: false,
   // 资源全局路径前缀
-  publicPath: configEnv.publicPath,
+  publicPath: process.env.NODE_ENV === 'production' ? './.' : '/',
+  // publicPath:'./.',
   //静态资源目录(js,css,img,fonts)这些文件都可以写里面
   assetsDir: "assets",
   // 打包时不生成.map文件
@@ -60,30 +61,30 @@ const config = {
       },
     },
   },
-  configureWebpack() {
-    const mergeConfig = {
-      plugins: [
-        // CDN导入, 如果不需要cdn加速，注释下面代码就可以
-        new WebpackCdnPlugin(configCdn),
-      ],
-    };
-    // if (process.env.NODE_ENV === "production") {
-    //   // 为生产环境修改配置...
-    //   console.log("\n---生产环境---\n");
-    //   console.log(`1.gzip压缩(需要nginx开启gzip)`);
-    //   mergeConfig.plugins.push(
-    //     new CompressionPlugin({
-    //       // filename: "[path].gz[query]",
-    //       // algorithm: "gzip",
-    //       test: /\.js$|\.html$|\.css/,
-    //       threshold: 10240,
-    //       minRatio: 0.8,
-    //       deleteOriginalAssets: false,
-    //     })
-    //   );
-    // }
-    return mergeConfig;
-  },
+  // configureWebpack() {
+  //   const mergeConfig = {
+  //     plugins: [
+  //       // CDN导入, 如果不需要cdn加速，注释下面代码就可以
+  //       new WebpackCdnPlugin(configCdn),
+  //     ],
+  //   };
+  //   // if (process.env.NODE_ENV === "production") {
+  //   //   // 为生产环境修改配置...
+  //   //   console.log("\n---生产环境---\n");
+  //   //   console.log(`1.gzip压缩(需要nginx开启gzip)`);
+  //   //   mergeConfig.plugins.push(
+  //   //     new CompressionPlugin({
+  //   //       // filename: "[path].gz[query]",
+  //   //       // algorithm: "gzip",
+  //   //       test: /\.js$|\.html$|\.css/,
+  //   //       threshold: 10240,
+  //   //       minRatio: 0.8,
+  //   //       deleteOriginalAssets: false,
+  //   //     })
+  //   //   );
+  //   // }
+  //   return mergeConfig;
+  // },
   chainWebpack(config) {
     // 移除资源预加载(路由懒加载才能正常使用)
     config.plugins.delete("preload"); // TODO: need test

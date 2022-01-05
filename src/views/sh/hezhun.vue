@@ -87,7 +87,6 @@ import { Dialog } from 'vant';
 
 
 // 弹出框
-Vue.use(Dialog);
 
 export default {
   data() {

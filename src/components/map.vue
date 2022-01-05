@@ -38,7 +38,7 @@
 
 <script>
 export default {
-    name:"map",
+    name:"sel-map",
     model:{
         prop:'point',
         event: 'ok'

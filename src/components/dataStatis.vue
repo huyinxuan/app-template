@@ -29,8 +29,6 @@
 import { baseInfo, baseYear, baseJiDu, baseMonth } from "@/api/basisMG.js";
 export default {
   props: {
-    myChart: "",
-    baseList: [],
     tabindex: {
       type: Number,
       default: 0,
@@ -38,6 +36,8 @@ export default {
   },
   data() {
     return {
+    myChart: "",
+    baseList: [],
       barList: [],
       chinaTil:{chanqianlaji:'拆迁垃圾',gongchengzhatu:'工程渣土',zhuangxiuzhuangshi:'装修装饰垃圾'},
       active:0,
