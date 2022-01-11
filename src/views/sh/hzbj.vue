@@ -154,7 +154,7 @@ export default {
             //this.uploader = []
             //this.loadingBat = false;
             if (res.code == 200) {
-              this.$toast.success(res.msg);
+              // this.$toast.success(res.msg);
               this.data = res.data;
               this.uploader.push({url:res.data.fileUrl,isImage: true})
               // this.uploader = res.data
