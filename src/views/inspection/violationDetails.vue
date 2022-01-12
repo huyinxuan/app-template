@@ -139,10 +139,10 @@
             />
           </van-tab>
           <van-tab title="信息详情">
+            
             <van-row class="cl_conTitle" type="flex" justify="space-between">
               <van-col span="6" offset="2">基本信息</van-col>
             </van-row>
-
             <van-row class="cl_conDrow" type="flex" justify="space-between">
               <van-col class="cl_conName" span="5" offset="2">违规地点</van-col>
               <van-col class="cl_conValue" span="14" offset="">{{
@@ -158,7 +158,7 @@
             </van-row>
 
             <van-row class="cl_conDrow" type="flex" justify="space-between">
-              <van-col class="cl_conName" span="5" offset="2">违规日期</van-col>
+              <van-col class="cl_conName" span="5" offset="2">违规时间</van-col>
               <van-col class="cl_conValue" span="14" offset="">{{
                 entity.createTime
               }}</van-col>
@@ -174,11 +174,57 @@
             </van-row>
 
             <van-row class="cl_conDrow" type="flex" justify="space-between">
-              <van-col class="cl_conName" span="6" offset="2">违规类型</van-col>
+              <van-col class="cl_conName" span="6" offset="2">违规类别</van-col>
               <van-col class="cl_conValue" span="16" offset="">{{
                 entity.punishName
               }}</van-col>
             </van-row>
+<!-- 
+             <van-row class="cl_conDrow" type="flex" justify="space-between">
+              <van-col class="cl_conName" span="6" offset="2">处理状态</van-col>
+              <van-col class="cl_conValue" span="16" offset="">{{
+                entity.punishName
+              }}</van-col>
+            </van-row>
+
+                <van-row class="cl_conDrow" type="flex" justify="space-between">
+              <van-col class="cl_conName" span="6" offset="2">处理结果</van-col>
+              <van-col class="cl_conValue" span="16" offset="">{{
+                entity.punishName
+              }}</van-col>
+            </van-row> -->
+
+
+            
+            <!-- <van-row class="cl_conTitle" type="flex" justify="space-between">
+              <van-col span="6" offset="2">涉事企业\个人</van-col>
+            </van-row>
+            <van-row class="cl_conDrow" type="flex" justify="space-between">
+              <van-col class="cl_conName" span="5" offset="2">企业/个人</van-col>
+              <van-col class="cl_conValue" span="14" offset="">{{
+                entity.address
+              }}</van-col>
+            </van-row>
+             <van-row class="cl_conDrow" type="flex" justify="space-between">
+              <van-col class="cl_conName" span="5" offset="2">所属区域</van-col>
+              <van-col class="cl_conValue" span="14" offset="">{{
+                entity.address
+              }}</van-col>
+            </van-row>
+
+                
+            <van-row class="cl_conTitle" type="flex" justify="space-between">
+              <van-col span="6" offset="2">处理信息</van-col>
+            </van-row>
+            <van-row class="cl_conDrow" type="flex" justify="space-between">
+              <van-col class="cl_conName" span="5" offset="2">违规地点</van-col>
+              <van-col class="cl_conValue" span="14" offset="">{{
+                entity.address
+              }}</van-col>
+            </van-row> -->
+
+
+
           </van-tab>
         </van-tabs>
       </template>
@@ -186,7 +232,7 @@
 
     <!-- 违法处置显示块 -->
     <van-tabbar
-      v-show="entity.status == 1 || entity.status == 2"
+      v-show="(entity.status == 1 || entity.status == 2)&& type == 1"
       class="cl_MapCk"
       placeholder
       fixed
@@ -200,7 +246,7 @@
     </van-tabbar>
 
     <!-- 待审核显示块 -->
-    <van-tabbar v-show="entity.status == 3" class="cl_MapCk" placeholder fixed>
+    <van-tabbar v-show="entity.status == 3&& type == 2" class="cl_MapCk" placeholder fixed>
       <van-tabbar-item icon="chat-o" @click="approveFn(4)"
         >审核通过</van-tabbar-item
       >
@@ -210,7 +256,7 @@
     </van-tabbar>
 
     <!-- 待申诉显示块 -->
-    <van-tabbar v-show="entity.status == 3" class="cl_MapCk" placeholder fixed>
+    <van-tabbar v-show="entity.status == 3&& type == 1" class="cl_MapCk" placeholder fixed>
       <van-tabbar-item icon="chat-o" @click="approveFn(4)"
         >通过</van-tabbar-item
       >
@@ -249,7 +295,7 @@ export default {
       userId: 0, //用户Id
       nickName: "", //操作用户Id
       condition: true,
-      type: 0,
+      type: 0, //1.违规事件 2.审核管理  5.违规事件  6.历史记录
       show:false,
       createTime: "", //违规日期
       punishName: "", //违规类型
@@ -489,8 +535,11 @@ export default {
 }
 
 .cl_conTitle {
-  margin-top: 20px;
+  margin-top: 50px;
   margin-bottom: 20px;
+  font-family: '微软雅黑 Bold', '微软雅黑', sans-serif;
+  font-weight: 700;
+  color: #666666;
 }
 
 .cl_conDLine {

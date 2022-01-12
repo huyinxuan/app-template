@@ -250,14 +250,14 @@ export default {
         
         this.$router.push({
           path: "/violationDetails",
-          query: { id: Id, type: 3 },
+          query: { id: Id, type: 1 },
         });
       
       } else {
       
       this.$router.push({
           path: "/violationDetails",
-          query: { id: Id, type: 4 },
+          query: { id: Id, type: 1 },
         });
       
       }
