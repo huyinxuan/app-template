@@ -8,7 +8,7 @@
     <van-form @submit="onSubmit">
       <van-field v-model="data1.reportUserName" label="上传人员："  disabled />
     
-      <van-field is-link @click="show =true" :value="data1.punishName" label="事件类型："
+      <van-field is-link @click="show =true" :value="data1.punishName"  placeholder="请选择事件类型" label="事件类型："
       required :rules="[{ required: true, message: '请选择事件类型' }]" ></van-field>
       <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
           <van-row class="select_row" v-for="(item,index) in actionsj" :key="index">
@@ -16,9 +16,10 @@
           </van-row>
       </van-popup>
 
-      <van-field is-link @click="openMap" :value="point.address" required :rules="[{ required: true, message: '请选择地址' }]" label="违规地点：" />
+      <van-field is-link @click="openMap" :value="point.address" placeholder="请选择违规地点"  required :rules="[{ required: true, message: '请选择违规地点' }]" label="违规地点：" />
 
       <van-field is-link label="属地街道：" 
+      placeholder="请选择属地街道"
       required :rules="[{ required: true, message: '请选择属地街道' }]" @click="show1 =true"  :value="data1.regionName" />
       <van-popup class="select_rows_box" v-model="show1" round position="bottom" :style="{ height: '30%' }" >
           <van-row class="select_row" v-for="(item,index) in actions" :key="index">
