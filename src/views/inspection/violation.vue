@@ -35,31 +35,31 @@
               @click="DetailFn(item.id, item.status)"
             >
               <van-row class="card_title">
-                <van-col span="8"
+                <van-col span="18"
                   ><div class="van-ellipsis">
-                    {{ item.regionName }}
+                    {{ item.address }}
                   </div></van-col
                 >
                 <van-col
-                  offset="13"
+                  offset="2"
                   class="card_status_0"
                   v-show="item.status == 1"
                   >待处理</van-col
                 >
                 <van-col
-                  offset="13"
+                  offset="2"
                   class="card_status_0"
                   v-show="item.status == 2"
                   >已超期</van-col
                 >
                 <van-col
-                  offset="13"
+                  offset="2"
                   class="card_status_2"
                   v-show="item.status == 3"
                   >申诉中</van-col
                 >
                 <van-col
-                  offset="13"
+                  offset="2"
                   class="card_status_1"
                   v-show="item.status == 4"
                   >已处理</van-col
@@ -108,31 +108,32 @@
               @click="DetailFn(item.id, item.status)"
             >
               <van-row class="card_title">
-                <van-col span="8"
+                <van-col span="18"
                   ><div class="van-ellipsis">
-                    {{ item.regionName }}
+                    <!-- {{ item.regionName }} -->
+                      {{ item.address }}
                   </div></van-col
                 >
                 <van-col
-                  offset="13"
+                  offset="2"
                   class="card_status_0"
                   v-show="item.status == 1"
                   >待处理</van-col
                 >
                 <van-col
-                  offset="13"
+                  offset="2"
                   class="card_status_0"
                   v-show="item.status == 2"
                   >已超期</van-col
                 >
                 <van-col
-                  offset="13"
+                  offset="2"
                   class="card_status_0"
                   v-show="item.status == 3"
                   >申诉中</van-col
                 >
                 <van-col
-                  offset="13"
+                  offset="2"
                   class="card_status_1"
                   v-show="item.status == 4"
                   >已处理</van-col

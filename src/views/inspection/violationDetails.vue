@@ -139,7 +139,6 @@
             />
           </van-tab>
           <van-tab title="信息详情">
-            
             <van-row class="cl_conTitle" type="flex" justify="space-between">
               <van-col span="6" offset="2">基本信息</van-col>
             </van-row>
@@ -179,52 +178,122 @@
                 entity.punishName
               }}</van-col>
             </van-row>
-<!-- 
-             <van-row class="cl_conDrow" type="flex" justify="space-between">
+
+            <van-row class="cl_conDrow" type="flex" justify="space-between">
               <van-col class="cl_conName" span="6" offset="2">处理状态</van-col>
-              <van-col class="cl_conValue" span="16" offset="">{{
-                entity.punishName
-              }}</van-col>
+              <van-col class="cl_conValue" span="16" offset="">
+                <span v-show="entity.status == 1">待处理</span>
+                <span v-show="entity.status == 2">已超期</span>
+                <span v-show="entity.status == 3">待审核</span>
+                <span v-show="entity.status == 4">已处理</span>
+              </van-col>
             </van-row>
 
-                <van-row class="cl_conDrow" type="flex" justify="space-between">
+            <van-row class="cl_conDrow" type="flex" justify="space-between">
               <van-col class="cl_conName" span="6" offset="2">处理结果</van-col>
               <van-col class="cl_conValue" span="16" offset="">{{
-                entity.punishName
-              }}</van-col>
-            </van-row> -->
-
-
-            
-            <!-- <van-row class="cl_conTitle" type="flex" justify="space-between">
-              <van-col span="6" offset="2">涉事企业\个人</van-col>
-            </van-row>
-            <van-row class="cl_conDrow" type="flex" justify="space-between">
-              <van-col class="cl_conName" span="5" offset="2">企业/个人</van-col>
-              <van-col class="cl_conValue" span="14" offset="">{{
-                entity.address
-              }}</van-col>
-            </van-row>
-             <van-row class="cl_conDrow" type="flex" justify="space-between">
-              <van-col class="cl_conName" span="5" offset="2">所属区域</van-col>
-              <van-col class="cl_conValue" span="14" offset="">{{
-                entity.address
+                entity.handleResult
               }}</van-col>
             </van-row>
 
-                
-            <van-row class="cl_conTitle" type="flex" justify="space-between">
-              <van-col span="6" offset="2">处理信息</van-col>
-            </van-row>
-            <van-row class="cl_conDrow" type="flex" justify="space-between">
-              <van-col class="cl_conName" span="5" offset="2">违规地点</van-col>
-              <van-col class="cl_conValue" span="14" offset="">{{
-                entity.address
-              }}</van-col>
-            </van-row> -->
+            <span v-show="blockState">
+              <van-row class="cl_conTitle" type="flex" justify="space-between">
+                <van-col span="6" offset="2">涉事企业\个人</van-col>
+              </van-row>
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >企业/个人</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset="">{{
+                  entity.enterpriseName
+                }}</van-col>
+              </van-row>
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >所属区域</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset="">{{
+                  entity.regionName
+                }}</van-col>
+              </van-row>
 
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >企业法人</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset=""></van-col>
+              </van-row>
 
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >联系方式</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset="">{{
+                  entity.platePhone
+                }}</van-col>
+              </van-row>
 
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >涉事车牌号</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset="">{{
+                  entity.plateNumber
+                }}</van-col>
+              </van-row>
+
+              <van-row class="cl_conTitle" type="flex" justify="space-between">
+                <van-col span="6" offset="2">处理信息</van-col>
+              </van-row>
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >违规地点</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset="">{{
+                  entity.address
+                }}</van-col>
+              </van-row>
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >处理人员</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset="">{{
+                  entity.reportUserName
+                }}</van-col>
+              </van-row>
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >所属中队</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset="">{{
+                  entity.regionName
+                }}</van-col>
+              </van-row>
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >职务名称</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset=""></van-col>
+              </van-row>
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >联系方式</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset="">{{
+                  entity.platePhone
+                }}</van-col>
+              </van-row>
+              <van-row class="cl_conDrow" type="flex" justify="space-between">
+                <van-col class="cl_conName" span="5" offset="2"
+                  >处理时间</van-col
+                >
+                <van-col class="cl_conValue" span="14" offset="">{{
+                  entity.complaintRecordVos[
+                    entity.complaintRecordVos.length - 1
+                  ].createTime
+                }}</van-col>
+              </van-row>
+            </span>
           </van-tab>
         </van-tabs>
       </template>
@@ -232,7 +301,7 @@
 
     <!-- 违法处置显示块 -->
     <van-tabbar
-      v-show="(entity.status == 1 || entity.status == 2)&& type == 1"
+      v-show="(entity.status == 1 || entity.status == 2) && type == 1"
       class="cl_MapCk"
       placeholder
       fixed
@@ -246,7 +315,12 @@
     </van-tabbar>
 
     <!-- 待审核显示块 -->
-    <van-tabbar v-show="entity.status == 3&& type == 2" class="cl_MapCk" placeholder fixed>
+    <van-tabbar
+      v-show="entity.status == 3 && type == 2"
+      class="cl_MapCk"
+      placeholder
+      fixed
+    >
       <van-tabbar-item icon="chat-o" @click="approveFn(4)"
         >审核通过</van-tabbar-item
       >
@@ -256,11 +330,16 @@
     </van-tabbar>
 
     <!-- 待申诉显示块 -->
-    <van-tabbar v-show="entity.status == 3&& type == 1" class="cl_MapCk" placeholder fixed>
+    <van-tabbar
+      v-show="entity.status == 3 && type == 1"
+      class="cl_MapCk"
+      placeholder
+      fixed
+    >
       <van-tabbar-item icon="chat-o" @click="approveFn(4)"
         >通过</van-tabbar-item
       >
-      <van-tabbar-item icon="edit" @click="show=true"
+      <van-tabbar-item icon="edit" @click="show = true"
         ><span> 转交</span></van-tabbar-item
       >
 
@@ -268,13 +347,19 @@
         ><span> 驳回</span></van-tabbar-item
       >
     </van-tabbar>
-     
-     <!-- 转交区域选择 -->
-      <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
-          <van-row class="select_row" v-for="(item,index) in actions" :key="index">
-            <van-col span="24" @click="clickFn(item)">{{item.name}}</van-col>
-          </van-row>
-      </van-popup>
+
+    <!-- 转交区域选择 -->
+    <van-popup
+      class="select_rows_box"
+      v-model="show"
+      round
+      position="bottom"
+      :style="{ height: '30%' }"
+    >
+      <van-row class="select_row" v-for="(item, index) in actions" :key="index">
+        <van-col span="24" @click="clickFn(item)">{{ item.name }}</van-col>
+      </van-row>
+    </van-popup>
   </div>
 </template>
 
@@ -282,7 +367,7 @@
 import {
   ComplaintsById,
   updateComplaintsStatus,
-  updateDeliverStatus
+  updateDeliverStatus,
 } from "@/api/inspectionapi";
 
 import { regionListAll } from "@/api/payMG";
@@ -295,15 +380,16 @@ export default {
       userId: 0, //用户Id
       nickName: "", //操作用户Id
       condition: true,
-      type: 0, //1.违规事件 2.审核管理  5.违规事件  6.历史记录
-      show:false,
+      type: 0, //1.违法处置 2.审核管理  5.违规事件  6.历史记录
+      show: false,
       createTime: "", //违规日期
       punishName: "", //违规类型
+      blockState: true,
       point: {
         lng: -1,
         lat: -1,
       },
-      actions: [],//街道列表
+      actions: [], //街道列表
       searchForm: {
         id: 1,
       },
@@ -358,23 +444,23 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
-    
-     // 属地街道下拉查询
-     sdSelect(){
-      regionListAll().then(res => {
-            if (res.code == 200) {
-              this.actions = res.data;
-            } else {
-              this.$toast.fail(res.msg);
-            }
+
+    // 属地街道下拉查询
+    sdSelect() {
+      regionListAll().then((res) => {
+        if (res.code == 200) {
+          this.actions = res.data;
+        } else {
+          this.$toast.fail(res.msg);
+        }
       });
-     },
-    
+    },
+
     //点击
-    clickFn(e){
-        this.RdExamineEntity.regionId = e.id;
-        this.RdExamineEntity.regionName = e.name;
-        this.approveFn(6);
+    clickFn(e) {
+      this.RdExamineEntity.regionId = e.id;
+      this.RdExamineEntity.regionName = e.name;
+      this.approveFn(6);
     },
 
     //跳转违法处置申诉
@@ -400,7 +486,7 @@ export default {
             this.$toast.fail(res.msg);
           } else {
             this.$toast.success("成功");
-             this.DataList(this.searchForm);
+            this.DataList(this.searchForm);
             //this.onClickLeft();
           }
         });
@@ -424,11 +510,11 @@ export default {
 
       this.RdExamineEntity.id = entity1.id;
       this.RdExamineEntity.operateType = entity1.operateType;
-      if(this.RdExamineEntity.operateType==5){
-       this.RdExamineEntity.regionId = this.entity.regionId;
-       this.RdExamineEntity.regionName = this.entity.regionName;
+      if (this.RdExamineEntity.operateType == 5) {
+        this.RdExamineEntity.regionId = this.entity.regionId;
+        this.RdExamineEntity.regionName = this.entity.regionName;
       }
-   
+
       console.log("RdExamineEntity:", this.RdExamineEntity);
 
       updateDeliverStatus(this.RdExamineEntity).then((res) => {
@@ -436,7 +522,7 @@ export default {
           this.$toast.fail(res.msg);
         } else {
           this.$toast.success("成功");
-          this.show=false;
+          this.show = false;
           this.DataList(this.searchForm);
           // this.onClickLeft();
         }
@@ -482,6 +568,17 @@ export default {
           }
           than.condition = false;
           console.log("返回参数res:", res.data);
+          
+          //违法处置页面进入 并且是未处置则隐藏
+          if (res.data.status == 1 && this.type == 1) {
+            this.blockState = false;
+          }
+           
+          //事件查询页面进入 并且是未处置则隐藏
+          if (res.data.status == 1 && this.type == 5) {
+            this.blockState = false;
+          }
+
           than.entity = res.data;
         }
       });
@@ -504,7 +601,7 @@ export default {
   },
 
   components: {
-    dataStatis
+    dataStatis,
   },
 };
 </script>
@@ -515,29 +612,29 @@ export default {
   color: #999999;
 }
 
-.select_rows_box{
+.select_rows_box {
   padding-bottom: 25px;
 }
 
-.select_row{
+.select_row {
   text-align: center;
   padding: 3.33333vw;
   border-bottom: 1px solid #f3f2f2;
   width: 95%;
   margin: 0 auto;
 }
-.select_row:last-child{
+.select_row:last-child {
   border: 0;
 }
-.select_row .van-col{
-  font-size:30px;
-  color:#666666;
+.select_row .van-col {
+  font-size: 30px;
+  color: #666666;
 }
 
 .cl_conTitle {
   margin-top: 50px;
   margin-bottom: 20px;
-  font-family: '微软雅黑 Bold', '微软雅黑', sans-serif;
+  font-family: "微软雅黑 Bold", "微软雅黑", sans-serif;
   font-weight: 700;
   color: #666666;
 }
