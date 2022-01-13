@@ -8,7 +8,12 @@
         src="https://img.yzcdn.cn/vant/cat.jpeg"
         style="margin: 10px 0px"
       />
+      
     </van-row>
+     <van-row type="flex" justify="center">
+        <p class="font-til">东营区建筑垃圾综合</p>
+     </van-row>
+      <van-row type="flex" justify="center"><p class="font-til">信息管理平台</p></van-row>
     <van-tabs v-model="active">
       <van-tab title="账号登录"> 
         <van-cell-group>
@@ -198,5 +203,15 @@ export default {
 <style lang="scss" scoped>
 .page {
   padding: 10px;
+  .font-til{
+    font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 36px;
+    color: #333333;
+    &:last-child{
+      margin:10px 0 20px 0;
+    }
+  }
 }
 </style>
