@@ -7,17 +7,19 @@
     <!-- 输入任意文本 -->
     <van-form @submit="onSubmit">
       <van-field v-model="data1.reportUserName" label="举报人："  disabled/>
-      <van-field v-model="data1.num" label="联系电话：" required :rules="[{ validator:isPhone, message: '请正确输入联系电话' }]" />
-      <van-field is-link @click="show =true" :value="data1.punishName" label="事件类型：" required :rules="[{ required: true, message: '请选择事件类型' }]"></van-field>
+      
+      <van-field v-model="data1.num" label="联系电话：" placeholder="请输入联系电话" required :rules="[{ validator:isPhone, message: ' ' }]" />
+      
+      <van-field is-link @click="show =true" :value="data1.punishName" placeholder="请选择事件类型" label="事件类型：" required :rules="[{ required: true, message: ' ' }]"></van-field>
       <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
           <van-row class="select_row" v-for="(item,index) in actionsj" :key="index">
             <van-col span="24" @click="xz(item)">{{item.reason}}</van-col>
           </van-row>
       </van-popup>
 
-      <van-field is-link @click="openMap" :value="point.address" label="违规地点：" required :rules="[{ required: true, message: '请填写违规地点' }]" />
+      <van-field is-link @click="openMap" :value="point.address" label="违规地点：" placeholder="请输入违规地点"  required :rules="[{ required: true, message: ' ' }]" />
 
-      <van-field is-link label="属地街道：" @click="show1 =true"  :value="data1.regionName" required :rules="[{ required: true, message: '请选择属地街道' }]" />
+      <van-field is-link label="属地街道：" @click="show1 =true" placeholder="请选择属地街道"  :value="data1.regionName" required :rules="[{ required: true, message: ' ' }]" />
       <van-popup class="select_rows_box" v-model="show1" round position="bottom" :style="{ height: '30%' }" >
           <van-row class="select_row" v-for="(item,index) in actions" :key="index">
             <van-col span="24" @click="sd(item)">{{item.name}}</van-col>
@@ -28,7 +30,7 @@
           <van-uploader v-model="uploader" :after-read="afterRead" multiple :max-count="1" />
         </template>
       </van-field>
-      <van-field v-model="data1.contents" rows="3" autosize label="问题说明" type="textarea"  placeholder="请输入问题说明" show-word-limit />
+      <van-field v-model="data1.contents" rows="3" autosize label="问题说明"  type="textarea"  placeholder="请输入问题说明" show-word-limit />
 
       <div style="margin: 16px;">
         <van-button round block type="info" native-type="submit">提交</van-button>

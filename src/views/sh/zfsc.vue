@@ -9,7 +9,7 @@
       <!-- <van-cell is-link title="加分企业：" @click="show2 = true" />
       <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />      -->
       
-      <van-field is-link @click="show =true"  :rules="[{ required: true, message: '请选择企业' }]" required :value="data1.name" label="加分企业：" ></van-field>
+      <van-field is-link @click="show =true" placeholder="请选择企业"  :rules="[{ required: true, message: ' ' }]" required :value="data1.name" label="加分企业：" ></van-field>
       <van-popup class="select_rows_box" v-model="show" round position="bottom" :style="{ height: '30%' }" >
 
           <van-row class="select_row" v-for="(item,index) in actionjf" :key="index">
@@ -18,9 +18,9 @@
       </van-popup>
 
       <van-field required
-        :rules="[{ required: true, message: '请输入内容' }]" v-model="data1.rewardDetail" label="加分内容：" />
+        :rules="[{ required: true, message: ' ' }]" placeholder="请输入内容" v-model="data1.rewardDetail" label="加分内容：" />
       <van-field required
-        :rules="[{ validator:isNum, message: '请输入一个数字' }]" v-model="data1.rewardScore" label="加分分数：" />
+        :rules="[{ validator:isNum, message: ' ' }]" placeholder="请输入一个数字"  v-model="data1.rewardScore" label="加分分数：" />
       <van-field name="uploader" label="上传照片：">
         <template #input>
           <van-uploader  :after-read="afterRead" v-model="uploader"  multiple :max-count="1" />
