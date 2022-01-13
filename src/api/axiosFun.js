@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+const appUrl = 'http://101.200.43.114:8365'
 /**
  * 请求失败后的错误统一处理
  * @param {number} code 请求失败的状态码
@@ -19,13 +19,13 @@ import axios from 'axios';
 // create an axios instance
 axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
-  baseURL: 'http://101.200.43.114:8365', // .env中配置的api前缀
+  baseURL: appUrl, // .env中配置的api前缀
   timeout: 5000, // request timeout
 });
 
 // 登录请求方法
 const loginreq = (method, url, params) => {
-    url = 'http://101.200.43.114:8365'+ url
+    url = appUrl+ url
     return axios({
         method: method,
         url: url,
@@ -51,7 +51,7 @@ const loginreq = (method, url, params) => {
 };
 // 通用查询公用方法
 const req = (method, url, params) => {
-    url = 'http://101.200.43.114:8365'+url
+    url = appUrl+url
     return axios({
         method: method,
         url: url,
@@ -78,7 +78,7 @@ const req = (method, url, params) => {
 };
 // 通用修改公用方法 json传参
 const reput = (method, url, params) => {
-    url = 'http://101.200.43.114:8365'+url
+    url = appUrl+url
     return axios({
         method: method,
         url: url,
@@ -92,7 +92,7 @@ const reput = (method, url, params) => {
 
 // 参数通过 ? query String  parament 拼接在ulr
 const reget = (method, url, params) => {
-    url = 'http://101.200.43.114:8365'+url
+    url = appUrl+url
     return axios({
         method: method,
         url: url,
@@ -119,7 +119,7 @@ const reget = (method, url, params) => {
 };
 // 参数通过 ? query String  parament 拼接在ulr 不使用登录令牌
 const reget_n = (method, url, params) => {
-    url = 'http://101.200.43.114:8365'+url
+    url = appUrl+url
     let headrs = {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: localStorage.getItem('logintoken')
@@ -148,7 +148,7 @@ const reget_n = (method, url, params) => {
 };
 // 通用修改公用方法 json传参 不使用登录令牌
 const reput_n = (method, url, params) => {
-    url = 'http://101.200.43.114:8365'+url
+    url = appUrl+url
     let headrs = {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: localStorage.getItem('logintoken')
@@ -164,7 +164,7 @@ const reput_n = (method, url, params) => {
 };
 // 参数通过 / 拼接在url、
 const delt = (method, url, data) => {
-    url = 'http://101.200.43.114:8365'+ url
+    url = appUrl+ url
     if (Object.keys(data).length) {
         for (let key in data) {
             url += `/${data[key]}`;
