@@ -17,16 +17,40 @@ const appUrl = 'http://101.200.43.114:8365'
 //   }
 // };
 // create an axios instance
-axios.create({
+const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   baseURL: appUrl, // .env中配置的api前缀
   timeout: 5000, // request timeout
 });
+import router from '../router';
+import {  Toast } from 'vant';
+// 接口请求成功的时候，会进入第一个参数函数，接口请求后台报错的时候，会进入第二个参数函数
+service.interceptors.response.use(data => {
+	// 参数data为后台返回的数据，接口请求成功，把data返回出去，并把加载动画关闭
+    // let loadinginstace = Loading.service({});
+    // loadinginstace.close()
+    return data
+},error => {
+	// 调用接口后台报错，把加载动画关闭，并把加载动画关闭
+    // let loadinginstace = Loading.service({});
+    // loadinginstace.close()
+    // 参数error为报错信息，这里要注意，打印出来的error是一段错误信息，不是一个对象，但是error.response.status却是后台返回的报错的错误码
+    console.log(error)
+    console.log(error.response.status)
+    if(error.response.status == 500){
+        Toast.fail('token失效');
+        router.push('/login')
+        return Promise.resolve(error.response);
+    }
+    // Message.error({
+    //      message: 'error'
+    // })
+})
 
 // 登录请求方法
 const loginreq = (method, url, params) => {
     url = appUrl+ url
-    return axios({
+    return service({
         method: method,
         url: url,
         headers: {
@@ -52,7 +76,7 @@ const loginreq = (method, url, params) => {
 // 通用查询公用方法
 const req = (method, url, params) => {
     url = appUrl+url
-    return axios({
+    return service({
         method: method,
         url: url,
         headers: {
@@ -79,7 +103,7 @@ const req = (method, url, params) => {
 // 通用修改公用方法 json传参
 const reput = (method, url, params) => {
     url = appUrl+url
-    return axios({
+    return service({
         method: method,
         url: url,
         headers: {
@@ -93,7 +117,7 @@ const reput = (method, url, params) => {
 // 参数通过 ? query String  parament 拼接在ulr
 const reget = (method, url, params) => {
     url = appUrl+url
-    return axios({
+    return service({
         method: method,
         url: url,
         headers: {
@@ -125,7 +149,7 @@ const reget_n = (method, url, params) => {
         Authorization: localStorage.getItem('logintoken')
     };
     if (headrs.Authorization == null) delete headrs.Authorization;
-    return axios({
+    return service({
         method: method,
         url: url,
         headers: headrs,
@@ -155,7 +179,7 @@ const reput_n = (method, url, params) => {
     };
     if (headrs.Authorization == null) delete headrs.Authorization;
 
-    return axios({
+    return service({
         method: method,
         url: url,
         headers: headrs,
@@ -170,7 +194,7 @@ const delt = (method, url, data) => {
             url += `/${data[key]}`;
         }
     }
-    return axios({
+    return service({
         method: method,
         url: url,
         headers: {

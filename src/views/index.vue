@@ -83,6 +83,14 @@
         >
       </van-tab>
     </van-tabs>
+    <van-button
+          class="vnt-qz"
+          color="linear-gradient(to right, #4bb0ff, #6149f6)"
+          size="large"
+          @click="loginOhter"
+          :loading="loading"
+          >群众登录</van-button
+        >
   </div>
 </template>
 
@@ -112,6 +120,13 @@ export default {
     console.log(this.$store.state);
   },
   methods: {
+    loginOhter(){
+      this.$router.push({ path: "/home" });
+      this.$store.commit("login", "true");
+      localStorage.setItem("menuId", JSON.stringify([53, 55]));
+      localStorage.setItem("userdata", JSON.stringify({"userId":999,"nickName":"群众","userName":"群众","deptId":999,"roleId":999,"phonenumber":"15974178528","roleName":"群众","status":"0","userType":"1","delFlag":"0"}));
+      
+    },
     isPhone(val) {
       if (val === "") {
         return false;
@@ -212,6 +227,9 @@ export default {
     &:last-child{
       margin:10px 0 20px 0;
     }
+  }
+  .vnt-qz{
+    margin-top: 40px;
   }
 }
 </style>

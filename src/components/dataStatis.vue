@@ -187,6 +187,12 @@ export default {
         year: this.$moment().year(),
         jidu: this.active == 0 ?  this.$moment().quarter() : this.$moment().quarter() -1
       }
+      if(jidu.jidu == 0){
+        jidu = {
+          year: this.$moment().year() - 1,
+           jidu: 4
+        }
+      }
       baseJiDu(jidu).then((res) => {
         if (res.code == 200) {
           // this.baseList = res.data
