@@ -47,11 +47,13 @@ export default {
         this.tabindex == 0 ? "上月" : this.tabindex == 1 ? "上季" : "去年",
       option2: {
         tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-          },
-        },
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow',
+              },
+                formatter:'{b}<br/>{a0}: {c0} 万m³<br />{a1}: {c1} 万m³<br />{a2}: {c2} 万m³<br />'  
+
+            },
         legend: {
           icon: "circle",
            data: ['拆迁垃圾','工程渣土','装修装饰']
@@ -68,11 +70,12 @@ export default {
             data: [],
           },
         ],
-        yAxis: [
-          {
-            type: "value",
-          },
-        ],
+        yAxis: {
+                type: 'value',
+                axisLabel: {
+                  formatter:'{value} 万m³'
+                }
+            },
         series: [
           {
             name: "拆迁垃圾",

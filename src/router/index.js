@@ -17,6 +17,9 @@ import details from '@/views/sh/details';
 // import zfcz from '@/views/sh/zfcz';
 // import sjss from '@/views/sh/sjss';
 import sptjdataStatis from '@/views/sh/sptjdataStatis';
+
+
+import spjBlsStatis from '@/views/sh/sptjdataStatis'
 import qzjb from '@/views/sh/qzjb';
 import dataStatisjjl from '@/views/sh/dataStatisjjl';
 import dataStatisjjl_pm from '@/views/sh/dataStatisjjl_pm';
@@ -125,7 +128,7 @@ export default new Router({
         // },
         {
             path: '/dataStatisjjl',
-            name: '数据统计-解决率',
+            name: '数据统计-解决率',   
             component: dataStatisjjl,
             hidden: true,
             meta: {
@@ -145,14 +148,24 @@ export default new Router({
         },
         {
             path: '/sptjdataStatis',
-            name: '审批局数据统计',
+            name: '审批局数据统计1',
             component: sptjdataStatis,
             hidden: true,
             meta: {
                 index: 11,
                 requireAuth: true
             }
-        }, {
+        },{
+            path: '/spjdataStatis',
+            name: '审批局数据统计',   //审批局数据统计 2020-1-14
+            component: spjBlsStatis,
+            hidden: true,
+            meta: {
+                index: 11,
+                requireAuth: true
+            }
+        },
+         {
             path: '/qzjb',
             name: '群众举报',
             component: qzjb,

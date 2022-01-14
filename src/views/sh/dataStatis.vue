@@ -31,7 +31,6 @@ import { statistics } from "@/api/inspectionapi.js";
 
 export default {
   props: {
-    myChart: "",
     baseList: [],
     barList: [],
     
@@ -42,6 +41,7 @@ export default {
   },
   data() {
     return {
+    myChart: "",
      // chinaTil:{chanqianlaji:'拆迁垃圾',gongchengzhatu:'工程渣土',zhuangxiuzhuangshi:'装修装饰垃圾'},
       active:0,
       total:'',
@@ -114,7 +114,7 @@ export default {
       let newData = []; // 横坐标
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
-        newData.push(element.month);
+        newData.push(element.month + '月');
       }
        this.option2.xAxis[0].data = newData;
       let data1 = [];
