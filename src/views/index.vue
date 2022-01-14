@@ -5,7 +5,7 @@
         round
         width="30vw"
         height="30vw"
-        src="https://img.yzcdn.cn/vant/cat.jpeg"
+        :src="require('../assets/images/login.png')"
         style="margin: 10px 0px"
       />
       
