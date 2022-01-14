@@ -27,7 +27,7 @@
       </van-popup>
       <van-field name="uploader" label="照片：">
         <template #input>
-          <van-uploader v-model="uploader" :after-read="afterRead" multiple :max-count="1" />
+          <van-uploader v-model="uploader" :after-read="afterRead" multiple  />
         </template>
       </van-field>
       <van-field v-model="data1.contents" rows="3" autosize label="问题说明"  type="textarea"  placeholder="请输入问题说明" show-word-limit />
@@ -56,6 +56,7 @@ export default {
         reportUserName:'',
         punishId:'',
         regionId:'',
+        pic:''
       },
       show1: false,
       title:"群众举报",
@@ -148,7 +149,17 @@ export default {
       this.data1.address = this.point.address;
       this.data1.longitudeLatitude= this.point.lng+','+this.point.lat;
       this.data1.contents= this.data1.contents+"联系人电话："+this.data1.num
-      if(this.uploader.length>0)this.data1.pic = this.uploader[0].url;
+      // if(this.uploader.length>0)this.data1.pic = this.uploader[0].url;
+      if(this.uploader.length>0){
+        for(var i=0 ;i<this.uploader.length ;i++){
+            //console.log("uploader"+i+" "+this.uploader[i].url)
+            if(i == (this.uploader.length-1)){
+              this.data1.pic += this.uploader[i].url;
+            }else{
+                this.data1.pic += this.uploader[i].url+",";
+            }
+        }
+      }
       console.log(this.data1);
      // console.log(this.data1.contents)
       insertComplaints(this.data1).then(res => {

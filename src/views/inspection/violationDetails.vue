@@ -179,7 +179,7 @@
               }}</van-col>
             </van-row>
 
-            <van-row class="cl_conDrow" type="flex" justify="space-between">
+            <van-row v-show="blockState" class="cl_conDrow" type="flex" justify="space-between">
               <van-col class="cl_conName" span="6" offset="2">处理状态</van-col>
               <van-col class="cl_conValue" span="16" offset="">
                 <span v-show="entity.status == 1">待处理</span>
@@ -189,7 +189,7 @@
               </van-col>
             </van-row>
 
-            <van-row class="cl_conDrow" type="flex" justify="space-between">
+            <van-row v-show="blockState" class="cl_conDrow" type="flex" justify="space-between">
               <van-col class="cl_conName" span="6" offset="2">处理结果</van-col>
               <van-col class="cl_conValue" span="16" offset="">{{
                 entity.handleResult
@@ -245,14 +245,7 @@
               <van-row class="cl_conTitle" type="flex" justify="space-between">
                 <van-col span="6" offset="2">处理信息</van-col>
               </van-row>
-              <van-row class="cl_conDrow" type="flex" justify="space-between">
-                <van-col class="cl_conName" span="5" offset="2"
-                  >违规地点</van-col
-                >
-                <van-col class="cl_conValue" span="14" offset="">{{
-                  entity.address
-                }}</van-col>
-              </van-row>
+        
               <van-row class="cl_conDrow" type="flex" justify="space-between">
                 <van-col class="cl_conName" span="5" offset="2"
                   >处理人员</van-col
@@ -788,6 +781,7 @@ export default {
 .card_text {
   color: #1d1d1d;
   width: 75.5%;
+  word-wrap: break-word;
 }
 .card_content {
   margin-top: -30px;

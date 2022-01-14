@@ -28,7 +28,7 @@
       </van-popup>
       <van-field name="uploader" label="照片：">
         <template #input>
-          <van-uploader  :after-read="afterRead" v-model="uploader" multiple :max-count="1" />
+          <van-uploader  :after-read="afterRead" v-model="uploader" multiple />
         </template>
       </van-field>
 
@@ -56,6 +56,7 @@ export default {
         reportUserName:'',
         punishId:'',
         regionId:'',
+        pic:''
       },
       show1: false,
       title:"巡查上报",
@@ -150,7 +151,18 @@ export default {
       this.data1.sourceType=1, //巡查
       this.data1.address = this.point.address;
       this.data1.longitudeLatitude= this.point.lng+','+this.point.lat;
-      if(this.uploader.length>0)this.data1.pic=this.uploader[0].url;
+      if(this.uploader.length>0){
+        for(var i=0 ;i<this.uploader.length ;i++){
+            console.log("uploader"+i+" "+this.uploader[i].url)
+            debugger
+            if(i == (this.uploader.length-1)){
+              this.data1.pic += this.uploader[i].url;
+            }else{
+                this.data1.pic += this.uploader[i].url+",";
+            }
+        }
+      }
+      console.log("pic: "+this.data1.pic) 
       insertComplaints(this.data1).then(res => {
             if (res.code == 200) {
               this.$router.go(-1);

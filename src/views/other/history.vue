@@ -15,7 +15,7 @@
         v-model="enterprise"
         shape="round"
         background="#f2f2f2"
-        placeholder="受理企业/个人"
+        placeholder="手机号查询"
         @input="changeTxt"
       />
           <van-list 
@@ -141,11 +141,11 @@ export default {
         if (this.active == 0) {
           this.tableData1=[];
           this.searchForm1.pageNum=0;
-          this.searchForm1.enterpriseName=e;
+          this.searchForm1.platePhone=e;
         } else {
           this.tableData4=[];
           this.searchForm4.pageNum=0;
-          this.searchForm4.enterpriseName=e;
+          this.searchForm4.platePhone=e;
         }
         
         this.LoadPage();
