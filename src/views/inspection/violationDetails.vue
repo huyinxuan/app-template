@@ -2,7 +2,7 @@
   <!-- 违法处置详情页面 -->
   <div class="main">
     <van-nav-bar
-      :title="entity.regionName"
+      :title="entity.address"
       left-arrow
       border
       fixed
@@ -695,6 +695,7 @@ export default {
 
 .home {
   background-color: #f7f7f7;
+  margin-bottom: 150px;
 }
 .van-loading {
   text-align: center;
@@ -786,6 +787,7 @@ export default {
 }
 .card_text {
   color: #1d1d1d;
+  width: 75.5%;
 }
 .card_content {
   margin-top: -30px;
