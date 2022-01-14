@@ -2,7 +2,8 @@
 node_modules
 #记得解除忽略dist目录
 /dist
-/dist/*  
+/dist/*
+dist/  
 
 # local env files
 .env.local
