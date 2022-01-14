@@ -23,7 +23,7 @@
         :rules="[{ validator:isNum, message: ' ' }]" placeholder="请输入一个数字"  v-model="data1.rewardScore" label="加分分数：" />
       <van-field name="uploader" label="上传照片：">
         <template #input>
-          <van-uploader  :after-read="afterRead" v-model="uploader"  multiple :max-count="1" />
+          <van-uploader  :after-read="afterRead" v-model="uploader"  multiple />
         </template>
       </van-field>
 
@@ -44,6 +44,7 @@ export default {
      data1: {
        enterpriseId:'',
        name:null,
+       picAfter:''
      },
      actionjf:[],
      show: false,
@@ -103,7 +104,18 @@ created(){
         this.$toast.fail("请选择企业！");
         return;
       }
-      if(this.uploader.length>0)this.data1.picAfter=this.uploader[0].url;
+      // if(this.uploader.length>0)this.data1.picAfter=this.uploader[0].url;
+if(this.uploader.length>0){
+        for(var i=0 ;i<this.uploader.length ;i++){
+            //console.log("uploader"+i+" "+this.uploader[i].url)
+            if(i == (this.uploader.length-1)){
+              this.data1.picAfter += this.uploader[i].url;
+            }else{
+                this.data1.picAfter += this.uploader[i].url+",";
+            }
+        }
+      }
+
         companyreward(this.data1).then(res => {
             this.loading = false;
             if (res.code == 200) {
