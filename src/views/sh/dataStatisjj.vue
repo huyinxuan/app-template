@@ -40,7 +40,10 @@ export default {
       type: Number,
       default: 0,
     },
-    type:1
+    type:{
+      type: Number,
+      default: 1
+    }
   },
   data() {
     return {

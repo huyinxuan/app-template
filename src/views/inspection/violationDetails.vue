@@ -114,7 +114,7 @@
                     {{ item.contents }}<br />
                     <div class="picList">
                       <span v-for="(Im, index) in item.pic" :key="index">
-                        <img height="100px" :src="Im" />
+                        <img class="img-cls"  :src="Im" />
                       </span>
                     </div>
                   </van-col>
@@ -727,6 +727,9 @@ export default {
 .cl_conValue {
   text-align: right;
   margin-right: 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   color: #666666;
 }
 .cl_row {
@@ -781,7 +784,10 @@ export default {
 .card_text {
   color: #1d1d1d;
   width: 75.5%;
-  word-wrap: break-word;
+  // word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
 }
 .card_content {
   margin-top: -30px;
@@ -833,5 +839,9 @@ export default {
   .van-tabbar-item {
     color: #999999;
   }
+}
+.img-cls{
+  width: 200px;
+  height: auto;
 }
 </style>

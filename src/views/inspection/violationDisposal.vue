@@ -18,7 +18,7 @@
 
 
       <van-cell is-link title="处理企业/个人" @click="show2 = true" :value="Type"/>
-      <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />
+      <van-action-sheet v-model="show2" :actions="actions"  @select="onSelect" />
 
       <van-cell
         is-link
@@ -40,8 +40,8 @@
       />
 
       <!-- <van-field v-model="entity.platePhone" required :rules="[{  validator:isPhone, message: '请填写正确手机号' }]" label="联系方式：" /> -->
-      <van-field v-model="entity.platePhone" required  :rules="[{ validator:isPhone, message: '请填写正确手机号' }]" label="联系方式：" />
-      <van-field v-model="entity.plateNumber" required :rules="[{ validator:isVehicleNumber, message: '请输入正确的车牌号' }]" label="涉事车牌号：" />
+      <van-field v-model="entity.platePhone" required placeholder="请输入联系方式"  :rules="[{ validator:isPhone, message: '请填写正确手机号' }]" label="联系方式：" />
+      <van-field v-model="entity.plateNumber" required placeholder="请输入车牌号"  :rules="[{ validator:isVehicleNumber, message: '请输入正确的车牌号' }]" label="涉事车牌号：" />
 
       <van-field name="uploader" label="上传照片：">
         <template #input>
@@ -59,7 +59,7 @@
         show-word-limit
       />
 
-      <div style="margin: 16px">
+      <div class="submit-btn">
         <van-button
           round
           block
@@ -105,7 +105,7 @@ export default {
         reportUserName:"",//执法/举报人名称
         operateType: 2, //1申诉 2执法处置 3审核拒绝 4审核通过
         enterpriseId: null, //企业Id
-        enterpriseName: null, //企业/个人名称
+        enterpriseName: '请选择', //企业/个人名称
         disposeType: "", //处置类型 1 企业 2 个人
         handleResult: "", //处理结果
         platePhone: "", //被处理对象联系人
@@ -274,5 +274,8 @@ export default {
 }
 .van-cell__title{
   width: 5em;
+}
+.submit-btn{
+  margin: 16px;
 }
 </style>
