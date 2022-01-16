@@ -11,13 +11,22 @@
     />
     <van-loading v-if="condition" size="24px">加载中...</van-loading>
     <template v-else>
-      <van-search
+      <!-- <van-search
         v-model="enterprise"
         shape="round"
         background="#f2f2f2"
         placeholder="受理企业/个人"
         @input="changeTxt"
+      /> -->
+
+      <van-cell
+        is-link
+        title="违规来源"
+        @click="show2 = true"
+        :value="sourceTypeName"
       />
+      <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />
+
       <van-tabs v-model="active" animated>
         <van-tab title="待处理">
           <van-list
@@ -111,7 +120,7 @@
                 <van-col span="18"
                   ><div class="van-ellipsis">
                     <!-- {{ item.regionName }} -->
-                      {{ item.address }}
+                    {{ item.address }}
                   </div></van-col
                 >
                 <van-col
@@ -179,6 +188,16 @@ import dataStatis from "@/components/dataStatis";
 export default {
   data() {
     return {
+      show2: false, //违规来源
+      sourceType: "",
+      sourceTypeName: "全部来源",
+      actions: [
+        { name: "全部来源", values:""},
+        { name: "巡查", values: 1 },
+        { name: "群众举报", values: 2 },
+        { name: "智能抓拍", values: 3 },
+      ],
+
       enterprise: "",
       active: 0,
       condition: true,
@@ -189,6 +208,7 @@ export default {
         status: "", //1待处理，2已超期，3待审核，4已处理
         pageNum: 0,
         pageSize: 10,
+        sourceType: "", //问题来源：1巡查 ，2群众举报 3 智能抓拍
         enterpriseName: "",
         loading: false,
         finished: false,
@@ -196,6 +216,7 @@ export default {
       //查询变量
       searchForm4: {
         status: 4, //1待处理，2已超期，3待审核，4已处理
+        sourceType: "", //问题来源：1巡查 ，2群众举报 3 智能抓拍
         pageNum: 0,
         pageSize: 10,
         enterpriseName: "",
@@ -212,6 +233,7 @@ export default {
       this.active = e;
       if (e == 0) {
         this.searchForm1.status = "";
+        this.tableData1 = [];
         this.DataList(this.searchForm1, this.tableData1);
       } else {
         this.DataList(this.searchForm4, this.tableData4);
@@ -220,6 +242,42 @@ export default {
   },
 
   methods: {
+    //违规来源
+    onSelect(item) {
+      // 默认情况下点击选项时不会自动收起
+      // 可以通过 close-on-click-action 属性开启自动收起
+      if (this.Type != item.name) {
+        // this.entity.enterpriseName = null;
+        // this.entity.enterpriseId = null;
+      }
+      this.show2 = false;
+      this.sourceType = item.values;
+      this.sourceTypeName = item.name;
+
+      console.log("选择的项item:", item);
+      console.log("选择的项:", item.name);
+      console.log("this.sourceType:", this.sourceType);
+
+      if (this.active == 0) {
+        this.searchForm1.sourceType = this.sourceType;
+        this.searchForm4.sourceType = this.sourceType;
+        this.searchForm1.pageNum=1;
+        this.tableData1 = [];
+        this.tableData4 = [];
+        this.searchForm1.pageNum = 0;
+        this.DataList(this.searchForm1, this.tableData1);
+      } else {
+        this.tableData4.pageNum=1;
+        this.searchForm1.sourceType = this.sourceType;
+        this.searchForm4.sourceType = this.sourceType;
+        this.tableData4 = [];
+        this.tableData1 = [];
+        this.searchForm4.pageNum = 0;
+        this.DataList(this.searchForm4, this.tableData4);
+      }
+    },
+    
+
     changeTxt: _.debounce(function (e, item) {
       console.log(e);
       if (this.active == 0) {
@@ -241,26 +299,20 @@ export default {
     //详情跳转
     DetailFn(Id, status) {
       if (status == 1) {
-        
         this.$router.push({
           path: "/violationDetails",
           query: { id: Id, type: 1 },
         });
-
       } else if (status == 3) {
-        
         this.$router.push({
           path: "/violationDetails",
           query: { id: Id, type: 1 },
         });
-      
       } else {
-      
-      this.$router.push({
+        this.$router.push({
           path: "/violationDetails",
           query: { id: Id, type: 1 },
         });
-      
       }
     },
 
@@ -348,7 +400,7 @@ export default {
   font-size: 32px;
 }
 .card_status_0 {
-  color: #D9001B;
+  color: #d9001b;
   font-size: 20px;
 }
 

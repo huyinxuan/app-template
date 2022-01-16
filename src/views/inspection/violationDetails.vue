@@ -453,7 +453,7 @@ export default {
     clickFn(e) {
       this.RdExamineEntity.regionId = e.id;
       this.RdExamineEntity.regionName = e.name;
-      this.approveFn(6);
+      this.approveFn(5);
     },
 
     //跳转违法处置申诉
@@ -500,6 +500,7 @@ export default {
       //     return;
       //   }
       // }
+      console.log("提交的值：",entity1);
 
       this.RdExamineEntity.id = entity1.id;
       this.RdExamineEntity.operateType = entity1.operateType;

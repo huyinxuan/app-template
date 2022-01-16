@@ -11,13 +11,22 @@
     />
     <van-loading v-if="condition" size="24px">加载中...</van-loading>
     <template v-else>
-      <van-search
+     
+      <!-- <van-search
         v-model="enterprise"
         shape="round"
         background="#f2f2f2"
         placeholder="受理企业/个人"
         @input="changeTxt"
+      /> -->
+       <van-cell
+        is-link
+        title="违规来源"
+        @click="show2 = true"
+        :value="sourceTypeName"
       />
+      <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />
+
           <van-list 
             v-model="searchForm1.loading"
             :finished="searchForm1.finished"
@@ -93,6 +102,17 @@ import dataStatis from "@/components/dataStatis";
 export default {
   data() {
     return {
+      show2: false, //违规来源
+      sourceType: "",//违规来源Id
+      sourceTypeName: "全部来源",//违规来源名称
+      actions: [
+        { name: "全部来源", values:""},
+        { name: "巡查", values: 1 },
+        { name: "群众举报", values: 2 },
+        { name: "智能抓拍", values: 3 },
+      ],
+
+
       enterprise: "",
       active: 0,
       loadingBat:false,
@@ -105,12 +125,14 @@ export default {
         pageNum: 0,
         pageSize: 10,
         enterpriseName: "",
+        sourceType: "", //问题来源：1巡查 ，2群众举报 3 智能抓拍
         loading: false,
         finished: false,
       },
       //查询变量
       searchForm4: {
         status: 3, //1待处理，2已超期，3待审核，4已处理
+        sourceType: "", //问题来源：1巡查 ，2群众举报 3 智能抓拍
         pageNum: 0,
         pageSize: 10,
         enterpriseName: "",
@@ -137,6 +159,37 @@ export default {
   },
 
   methods: {
+    //违规来源
+    onSelect(item) {
+  
+      this.show2 = false;
+      this.sourceType = item.values;
+      this.sourceTypeName = item.name;
+
+      console.log("选择的项item:", item);
+      console.log("选择的项:", item.name);
+      console.log("this.sourceType:", this.sourceType);
+
+      if (this.active == 0) {
+        this.searchForm1.sourceType = this.sourceType;
+        this.searchForm4.sourceType = this.sourceType;
+        this.searchForm1.pageNum=1;
+        this.tableData1 = [];
+        this.tableData4 = [];
+        this.searchForm1.pageNum = 0;
+        this.DataList(this.searchForm1, this.tableData1);
+      } else {
+        this.tableData4.pageNum=1;
+        this.searchForm1.sourceType = this.sourceType;
+        this.searchForm4.sourceType = this.sourceType;
+        this.tableData4 = [];
+        this.tableData1 = [];
+        this.searchForm4.pageNum = 0;
+        this.DataList(this.searchForm4, this.tableData4);
+      }
+    },
+
+
    changeTxt: _.debounce(function (e, item) {
         console.log(e);
         if (this.active == 0) {

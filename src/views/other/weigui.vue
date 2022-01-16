@@ -1,5 +1,5 @@
 <template>
-<!-- 事件查询页面 -->
+  <!-- 事件查询页面 -->
   <div class="home">
     <van-nav-bar
       title="事件查询"
@@ -11,23 +11,37 @@
     />
     <van-loading v-if="condition" size="24px">加载中...</van-loading>
     <template v-else>
-      <van-search
+      <!-- <van-search
         v-model="enterprise"
         shape="round"
         background="#f2f2f2"
         placeholder="受理企业/个人"
         @input="changeTxt"
+      /> -->
+      <van-cell
+        is-link
+        title="违规来源"
+        @click="show2 = true"
+        :value="sourceTypeName"
       />
+      <van-action-sheet v-model="show2" :actions="actions" @select="onSelect" />
+
       <van-tabs v-model="active" animated>
         <van-tab title="待处理">
-          <van-list 
+          <van-list
             v-model="searchForm1.loading"
             :finished="searchForm1.finished"
             finished-text="没有更多了"
             @load="LoadPage"
-            style="height:100vh;overflow-y: auto;">
-            <div class="van-box" v-for="(item, index) in tableData1" v-if="item.status!=4" :key="index"
-              @click="DetailFn(item.id)">
+            style="height: 100vh; overflow-y: auto"
+          >
+            <div
+              class="van-box"
+              v-for="(item, index) in tableData1"
+              v-if="item.status != 4"
+              :key="index"
+              @click="DetailFn(item.id)"
+            >
               <van-row class="card_title">
                 <van-col span="18"
                   ><div class="van-ellipsis">{{ item.address }}</div></van-col
@@ -78,7 +92,9 @@
                 </van-col>
                 <van-col span="12"
                   ><div class="van-ellipsis">
-                    处理结果：{{ item.handleResult==null?'暂无':item.handleResult }}
+                    处理结果：{{
+                      item.handleResult == null ? "暂无" : item.handleResult
+                    }}
                   </div></van-col
                 >
               </van-row>
@@ -86,12 +102,13 @@
           </van-list>
         </van-tab>
         <van-tab title="已处理">
-          <van-list 
+          <van-list
             v-model="searchForm4.loading"
             :finished="searchForm4.finished"
             finished-text="没有更多了"
             @load="LoadPage"
-            style="height:100vh;overflow-y: auto;">
+            style="height: 100vh; overflow-y: auto"
+          >
             <div
               class="van-box"
               v-for="(item, index) in tableData4"
@@ -167,14 +184,25 @@ import dataStatis from "@/components/dataStatis";
 export default {
   data() {
     return {
+      show2: false, //违规来源
+      sourceType: "", //违规来源Id
+      sourceTypeName: "全部来源", //违规来源名称
+      actions: [
+        { name: "全部来源", values: "" },
+        { name: "巡查", values: 1 },
+        { name: "群众举报", values: 2 },
+        { name: "智能抓拍", values: 3 },
+      ],
+
       enterprise: "",
       active: 0,
       condition: true,
-      tableData1:new Array(),
-      tableData4:new Array(),
+      tableData1: new Array(),
+      tableData4: new Array(),
       //查询变量
       searchForm1: {
-        status:"", //1待处理，2已超期，3待审核，4已处理
+        status: "", //1待处理，2已超期，3待审核，4已处理
+        sourceType: "", //问题来源：1巡查 ，2群众举报 3 智能抓拍
         pageNum: 0,
         pageSize: 10,
         enterpriseName: "",
@@ -184,102 +212,132 @@ export default {
       //查询变量
       searchForm4: {
         status: 4, //1待处理，2已超期，3待审核，4已处理
+        sourceType: "", //问题来源：1巡查 ，2群众举报 3 智能抓拍
         pageNum: 0,
         pageSize: 10,
         enterpriseName: "",
         loading: false,
         finished: false,
       },
-      active:0,
-      timeNum:null,
-      ssTimeNum:null
+
+      timeNum: null,
+      ssTimeNum: null,
     };
   },
   watch: {
     active(e) {
       //0.待处理  1.已处理
-      this.active=e;
+      this.active = e;
       if (e == 0) {
-        this.searchForm1.status="";
-        this.DataList(this.searchForm1,this.tableData1);
+        this.searchForm1.status = "";
+        this.DataList(this.searchForm1, this.tableData1);
       } else {
-        this.DataList(this.searchForm4,this.tableData4);
+        this.DataList(this.searchForm4, this.tableData4);
       }
-
-    
-    }
+    },
   },
 
   methods: {
-   changeTxt: _.debounce(function (e, item) {
-        console.log(e);
-        if (this.active == 0) {
-          this.tableData1=[];
-          this.searchForm1.pageNum=0;
-          this.searchForm1.enterpriseName=e;
-        } else {
-          this.tableData4=[];
-          this.searchForm4.pageNum=0;
-          this.searchForm4.enterpriseName=e;
-        }
-        
-        this.LoadPage();
-     }, 100),
+    //违规来源
+    onSelect(item) {
+      this.show2 = false;
+      this.sourceType = item.values;
+      this.sourceTypeName = item.name;
+
+      console.log("选择的项item:", item);
+      console.log("选择的项:", item.name);
+      console.log("this.sourceType:", this.sourceType);
+
+      if (this.active == 0) {
+        this.searchForm1.sourceType = this.sourceType;
+        this.searchForm4.sourceType = this.sourceType;
+        this.searchForm1.pageNum = 1;
+        this.tableData1 = [];
+        this.tableData4 = [];
+        this.searchForm1.pageNum = 0;
+        this.DataList(this.searchForm1, this.tableData1);
+      } else {
+        this.tableData4.pageNum = 1;
+        this.searchForm1.sourceType = this.sourceType;
+        this.searchForm4.sourceType = this.sourceType;
+        this.tableData4 = [];
+        this.tableData1 = [];
+        this.searchForm4.pageNum = 0;
+        this.DataList(this.searchForm4, this.tableData4);
+      }
+    },
+
+    changeTxt: _.debounce(function (e, item) {
+      console.log(e);
+      if (this.active == 0) {
+        this.tableData1 = [];
+        this.searchForm1.pageNum = 0;
+        this.searchForm1.enterpriseName = e;
+      } else {
+        this.tableData4 = [];
+        this.searchForm4.pageNum = 0;
+        this.searchForm4.enterpriseName = e;
+      }
+
+      this.LoadPage();
+    }, 100),
     onClickLeft() {
       this.$router.go(-1);
     },
 
     //详情跳转
     DetailFn(Id) {
-      this.$router.push({ path: "/violationDetails",query:{id:Id,type:5} });
+      this.$router.push({
+        path: "/violationDetails",
+        query: { id: Id, type: 5 },
+      });
     },
 
     //查询
     search() {
       if (this.active == 0) {
-        this.tableData4=[];
-        this.searchForm1.pageNum=0;
-        this.DataList(this.searchForm1,this.tableData1);
+        this.tableData4 = [];
+        this.searchForm1.pageNum = 0;
+        this.DataList(this.searchForm1, this.tableData1);
       } else {
-        this.tableData1=[];
-        this.searchForm4.pageNum=0;
-        this.DataList(this.searchForm4,this.tableData4);
+        this.tableData1 = [];
+        this.searchForm4.pageNum = 0;
+        this.DataList(this.searchForm4, this.tableData4);
       }
     },
 
     LoadPage() {
-       console.log("底部");
+      console.log("底部");
       clearTimeout(this.timeNum);
-      this.timeNum=setTimeout(()=>{
+      this.timeNum = setTimeout(() => {
         if (this.active == 0) {
-          this.DataList(this.searchForm1,this.tableData1);
+          this.DataList(this.searchForm1, this.tableData1);
         } else {
-          this.DataList(this.searchForm4,this.tableData4);
+          this.DataList(this.searchForm4, this.tableData4);
         }
-      },200)
-    
+      }, 200);
     },
     //获取数据
-    DataList(searchForm,tableData) {
-      console.log("searchForm",searchForm);
-      searchForm.pageNum+=1;
-      if(!!!searchForm)return;
+    DataList(searchForm, tableData) {
+      console.log("searchForm", searchForm);
+      searchForm.pageNum += 1;
+      if (!!!searchForm) return;
       this.loadingBat = true;
       ComplaintsList(searchForm).then((res) => {
         this.loadingBat = false;
         if (res.code !== 200) {
           searchForm.finished = true;
         } else {
-         if(res.data.lastPage<searchForm.pageNum){
-            searchForm.pageNum=res.data.lastPage;
+          if (res.data.lastPage < searchForm.pageNum) {
+            searchForm.pageNum = res.data.lastPage;
             searchForm.finished = true;
             return;
           }
           this.condition = false;
-          searchForm.loading=false;
+          searchForm.loading = false;
           console.log("LIST:", tableData);
-          if(res.data.list.length>0)tableData.push(...res.data.list);
-          else  searchForm.finished = true;
+          if (res.data.list.length > 0) tableData.push(...res.data.list);
+          else searchForm.finished = true;
         }
       });
     },
