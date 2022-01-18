@@ -21,7 +21,7 @@
               </div>
             </van-grid-item>
             <van-grid-item>
-              <div class="title" @click="ContentsUpdateFn()">处理状态</div>
+              <div class="title">处理状态</div>
               <div class="text">
                 <span v-show="entity.status == 1">待处理</span>
                 <span v-show="entity.status == 2">已超期</span>
@@ -31,7 +31,7 @@
               </div>
             </van-grid-item>
             <van-grid-item>
-              <div class="title" @click="UpdateFn()">违规类别</div>
+              <div class="title">违规类别</div>
               <div class="cl_type van-ellipsis text">
                 {{ entity.punishName }}
               </div>
@@ -564,15 +564,10 @@ export default {
           console.log("返回参数res:", res.data);
           
           //违法处置页面进入 并且是未处置则隐藏
-          if (res.data.status == 1 && this.type == 1) {
+          if (res.data.status != 4) {
             this.blockState = false;
           }
-           
-          //事件查询页面进入 并且是未处置则隐藏
-          if (res.data.status == 1 && this.type == 5) {
-            this.blockState = false;
-          }
-
+        
           than.entity = res.data;
         }
       });
