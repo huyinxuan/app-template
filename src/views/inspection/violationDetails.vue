@@ -377,7 +377,7 @@ export default {
       show: false,
       createTime: "", //违规日期
       punishName: "", //违规类型
-      blockState: true,
+      blockState: false,
       point: {
         lng: -1,
         lat: -1,
@@ -564,8 +564,8 @@ export default {
           console.log("返回参数res:", res.data);
           
           //违法处置页面进入 并且是未处置则隐藏
-          if (res.data.status != 4) {
-            this.blockState = false;
+          if (res.data.status == 4) {
+            this.blockState = true;
           }
         
           than.entity = res.data;
