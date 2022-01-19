@@ -38,7 +38,7 @@
           v-for="(item, index) in tableData"
           :key="index"
         >
-          <van-col span="8">{{ item.createTime }}</van-col>
+          <van-col span="8">{{ $moment(item.createTime).format('yyyy-MM-DD') }}</van-col>
           <van-col span="4"><div class="van-ellipsis">{{ item.nickName }}</div></van-col>
           <van-col span="8">{{ item.phonenumber }}</van-col>
           <van-col span="4" class="box-icon" @click="deleteUser(item.userId)">
@@ -46,7 +46,7 @@
           >
         </van-row>
       </van-list>
-      <van-tabbar border v-model="active" @change="onChange" placeholder fixed>
+      <van-tabbar border v-model="active" placeholder fixed>
         <van-tabbar-item @click="ManageAddFn()">
           <span class="addPhone">添加手机号</span>
         </van-tabbar-item>
@@ -72,6 +72,8 @@ import { wgyglList, delWgy } from "@/api/userMG";
 export default {
   data() {
     return {
+      username:'',
+      tel:'',
       active: 0,
       Name: "", //名称
       condition: true,
@@ -96,6 +98,9 @@ export default {
         this.searchForm.nickName = e;
         this.getData(this.searchForm);
      }, 100),
+     sureSubmit(){
+       
+     },
     
     //删除账号
     deleteUser(id) {

@@ -168,6 +168,12 @@ export default {
         year: this.$moment().year(),
         month: this.active == 0 ?  this.$moment().format('MM') : this.$moment().format('MM') -1
       }
+      if(jidu.month == 0){
+        jidu = {
+          year: this.$moment().year() - 1,
+           month: 12
+        }
+      }
       baseMonth(jidu).then(
         (res) => {
           if (res.code == 200) {
