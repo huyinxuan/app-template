@@ -136,9 +136,9 @@ export default {
   },
   methods: { 
     dataUrl(){
-      if(JSON.parse(localStorage.getItem('userdata')).roleId == 19 ){  // 执法局的roleid
+      if(JSON.parse(localStorage.getItem('userdata')).roleId == 7 ){  // 执法局的roleid
         return '/dataStatisjjl_pm'
-      }else if(JSON.parse(localStorage.getItem('userdata')).roleId == 10 ){  // 审批局roleid
+      }else if(JSON.parse(localStorage.getItem('userdata')).roleId == 2 ){  // 审批局roleid
         return '/spjdataStatis'
       }else{
         return  '/dataStatis'
