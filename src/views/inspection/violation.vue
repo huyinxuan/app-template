@@ -189,8 +189,8 @@ export default {
   data() {
     return {
       show2: false, //违规来源
-      sourceType: "",
-      sourceTypeName: "全部来源",
+      sourceType: "",//违规来源Id
+      sourceTypeName: "全部来源",//违规来源名称
       actions: [
         { name: "全部来源", values:""},
         { name: "巡查", values: 1 },
@@ -244,12 +244,7 @@ export default {
   methods: {
     //违规来源
     onSelect(item) {
-      // 默认情况下点击选项时不会自动收起
-      // 可以通过 close-on-click-action 属性开启自动收起
-      if (this.Type != item.name) {
-        // this.entity.enterpriseName = null;
-        // this.entity.enterpriseId = null;
-      }
+  
       this.show2 = false;
       this.sourceType = item.values;
       this.sourceTypeName = item.name;
@@ -276,7 +271,7 @@ export default {
         this.DataList(this.searchForm4, this.tableData4);
       }
     },
-    
+
 
     changeTxt: _.debounce(function (e, item) {
       console.log(e);
