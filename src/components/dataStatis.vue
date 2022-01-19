@@ -230,9 +230,9 @@ export default {
       let data3 = [];
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
-        data1.push(element.chanqianlaji || element.cqlj);
-        data2.push(element.gongchengzhatu || element.gczt);
-        data3.push(element.zhuangxiuzhuangshi || element.zxzs);
+        data1.push(element.chanqianlaji || 0);
+        data2.push(element.gongchengzhatu || 0);
+        data3.push(element.zhuangxiuzhuangshi || 0);
       }
       this.option2.series[0].data = data1;
       this.option2.series[1].data = data2;

@@ -3,6 +3,9 @@ import { loginreq, req, reput, reget,  delt } from './axiosFun';
 
 // 登录接口
 export const login = (params) => { return loginreq("post", "/api/login", params) };
+// 群众登录接口
+export const touristLogin = () => { return loginreq("get", "/api/touristLogin") };
+
 // 登录接口
 export const loginSms = (params) => { return loginreq("post", "/api/smslogin", params) };
 export const sendMsgCode = (params) => { return loginreq("post", "/api/sendMsgCode", params) };

@@ -96,7 +96,7 @@
 
 <script>
 import _ from "lodash";
-import { login, loginSms, sendMsgCode ,roleId} from "@/api/userMG";
+import { login, loginSms, touristLogin, sendMsgCode ,roleId} from "@/api/userMG";
 export default {
   data() {
     return {
@@ -120,11 +120,18 @@ export default {
     console.log(this.$store.state);
   },
   methods: {
-    loginOhter(){
-      this.$router.push({ path: "/home" });
-      this.$store.commit("login", "true");
-      localStorage.setItem("menuId", JSON.stringify([53, 55]));
-      localStorage.setItem("userdata", JSON.stringify({"userId":999,"nickName":"群众","userName":"群众","deptId":999,"roleId":999,"phonenumber":"15974178528","roleName":"群众","status":"0","userType":"1","delFlag":"0"}));
+     async loginOhter(){
+       let tour =  await touristLogin()
+       if(tour.code == 200){
+        this.$router.push({ path: "/home" });
+        this.$store.commit("login", "true");
+        localStorage.setItem("logintoken", tour.data.token);
+        localStorage.setItem("menuId", JSON.stringify([53, 55]));
+        localStorage.setItem("userdata", JSON.stringify(tour.data));
+      }else{
+        this.$toast.fail(tour.msg);
+      }
+      
       
     },
     isPhone(val) {
