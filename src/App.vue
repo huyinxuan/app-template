@@ -4,6 +4,12 @@
       <router-view>
       </router-view>
     </transition>
+    <van-tabbar route v-model="active" active-color="#ee0a24" inactive-color="#000">
+        <van-tabbar-item to="/home1" icon="home-o">首页</van-tabbar-item>
+        <van-tabbar-item icon="search">指引</van-tabbar-item>
+        <van-tabbar-item icon="chat-o">告警</van-tabbar-item>
+        <van-tabbar-item icon="user-o">我的</van-tabbar-item>
+      </van-tabbar>
   </div>
 </template>
 
@@ -12,6 +18,7 @@ export default {
   data() {
     return {
       transitionName: "",
+      active:0,
     };
   },
   name: "App",

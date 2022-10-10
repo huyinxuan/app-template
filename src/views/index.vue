@@ -11,9 +11,9 @@
       
     </van-row>
      <van-row type="flex" justify="center">
-        <p class="font-til">东营区建筑垃圾综合</p>
+        <p class="font-til">特种作业流程管理</p>
      </van-row>
-      <van-row type="flex" justify="center"><p class="font-til">信息管理平台</p></van-row>
+      <van-row type="flex" justify="center"><p class="font-til">深燃南山平台</p></van-row>
     <van-tabs v-model="active">
       <van-tab title="账号登录"> 
         <van-cell-group>
@@ -83,14 +83,14 @@
         >
       </van-tab>
     </van-tabs>
-    <van-button
+    <!-- <van-button
           class="vnt-qz"
           color="linear-gradient(to right, #4bb0ff, #6149f6)"
           size="large"
           @click="loginOhter"
           :loading="loading"
           >群众登录</van-button
-        >
+        > -->
   </div>
 </template>
 
@@ -169,23 +169,26 @@ export default {
       }
     }, 2000),
     loginOn() {
-      login(this.loginForm).then((res) => {
-        if (res.code == 200) {
-          localStorage.setItem("logintoken", res.data.token);
-          // sessionStorage.setItem("logintoken", res.data.token)
-            // 缓存用户个人信息
-            console.log(res)
-            localStorage.setItem("userdata", JSON.stringify(res.data));
-            this.$store.commit("login", "true");
-            this.getRole(res.data.roleId,res.data.token);
-        } else {
-          this.$toast.fail(res.msg);
-          this.logining = false;
-          // this.isSlider = false;
-          // this.$refs.slider.init();
-          return false;
-        }
-      });
+
+      this.$store.commit("login", "true");
+      this.$router.push({ path: "/home1" });
+      // login(this.loginForm).then((res) => {
+      //   if (res.code == 200) {
+      //     localStorage.setItem("logintoken", res.data.token);
+      //     // sessionStorage.setItem("logintoken", res.data.token)
+      //       // 缓存用户个人信息
+      //       console.log(res)
+      //       localStorage.setItem("userdata", JSON.stringify(res.data));
+      //       this.$store.commit("login", "true");
+      //       this.getRole(res.data.roleId,res.data.token);
+      //   } else {
+      //     this.$toast.fail(res.msg);
+      //     this.logining = false;
+      //     // this.isSlider = false;
+      //     // this.$refs.slider.init();
+      //     return false;
+      //   }
+      // });
     },
     loginMsg() {
       loginSms(this.ruleFormPhone).then((res) => {

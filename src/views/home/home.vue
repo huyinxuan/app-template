@@ -118,24 +118,26 @@ export default {
     };
   },
   mounted(){
-    this.loading = true
-    setTimeout(() => {
-        try {
-        this.ids = JSON.parse(localStorage.getItem('menuId'))
-        this.idTree =  this.menuTree.filter(this.checkAdult)
-        console.log(this.idTree)
-        this.loading = false
-      } catch (error) {
-        console.log(error)
-        this.loading = false
-        this.$toast('暂无权限')
-        this.$router.replace('/login')
-      }
-    }, 600);
+    this.loading = false
+    this.idTree =  this.menuTree
+    // setTimeout(() => {
+    //     try {
+    //     this.ids = JSON.parse(localStorage.getItem('menuId'))
+    //     this.idTree =  this.menuTree.filter(this.checkAdult)
+    //     console.log(this.idTree)
+    //     this.loading = false
+    //   } catch (error) {
+    //     console.log(error)
+    //     this.loading = false
+    //     this.$toast('暂无权限')
+    //     this.$router.replace('/login')
+    //   }
+    // }, 600);
     
   },
   methods: { 
     dataUrl(){
+      return  '/dataStatis'
       if(JSON.parse(localStorage.getItem('userdata')).roleId == 7 ){  // 执法局的roleid
         return '/dataStatisjjl_pm'
       }else if(JSON.parse(localStorage.getItem('userdata')).roleId == 2 ){  // 审批局roleid
