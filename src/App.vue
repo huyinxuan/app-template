@@ -4,11 +4,11 @@
       <router-view>
       </router-view>
     </transition>
-    <van-tabbar route v-model="active" active-color="#ee0a24" inactive-color="#000">
-        <van-tabbar-item to="/home1" icon="home-o">首页</van-tabbar-item>
-        <van-tabbar-item icon="search">指引</van-tabbar-item>
-        <van-tabbar-item icon="chat-o">告警</van-tabbar-item>
-        <van-tabbar-item icon="user-o">我的</van-tabbar-item>
+    <van-tabbar v-if="$route.path !== '/'" @change="onChange" v-model="active" active-color="#ee0a24" inactive-color="#000">
+        <van-tabbar-item name="home1" icon="home-o">首页</van-tabbar-item>
+        <van-tabbar-item name="work" icon="search">指引</van-tabbar-item>
+        <van-tabbar-item name="alarm" icon="chat-o">告警</van-tabbar-item>
+        <van-tabbar-item name="my" icon="user-o">我的</van-tabbar-item>
       </van-tabbar>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       transitionName: "",
-      active:0,
+      active:'home1',
     };
   },
   name: "App",
@@ -33,6 +33,18 @@ export default {
       } else {
         this.transitionName = "slide-right";
       }
+      if(to.path.indexOf('work')>-1){
+        this.active = 'work'
+        this.$forceUpdate()
+      }
+    },
+  },
+  created(){
+    console.log(this.$route)
+  },
+  methods: {
+    onChange(index) {
+      this.$router.push({ path: `/${index}` })
     },
   },
 };
