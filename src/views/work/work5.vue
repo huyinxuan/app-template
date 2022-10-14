@@ -4,9 +4,7 @@
         <van-nav-bar title="动火作业-燃气置换" left-arrow 
         @click-left="onClickLeft" fixed/>
         <div class="home-box">
-            <van-tabs v-model="active" animated swipeable>
-                <van-tab title="放散点1">         
-                    <div class="content">
+            <div class="content">
                         <van-steps direction="vertical" :active="0">
                             <van-step>
                                 <div style="display:flex">
@@ -58,23 +56,6 @@
                             </van-step>
                         </van-steps>
                     </div>
-                </van-tab>
-                <van-tab title="放散点2">
-                    <div class="content">
-                        22
-                    </div>
-                </van-tab>
-                <van-tab title="放散点3">
-                    <div class="content">
-                        33
-                    </div>
-                </van-tab>
-                <van-tab title="放散点4">
-                    <div class="content">
-                        44
-                    </div>
-                </van-tab>
-            </van-tabs>
             <van-divider>燃气浓度</van-divider>
             <van-field
                 v-model="sms"

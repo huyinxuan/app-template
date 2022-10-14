@@ -1,7 +1,9 @@
 <template>
     <div class="home">
         <van-nav-bar title="作业列表" fixed/>
+
         <div class="home-box">
+            <van-search v-model="value" placeholder="请输入搜索关键词"   @search="onSearch" shape="round"/>
             <van-list
             ref="list"
                 v-model="loading"
@@ -10,11 +12,11 @@
                 @load="onLoad"
                 >
                 <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
-                <van-cell center v-for="item in list" :key="item" :title="item" @click="getWork(item)">
-                    <template #label>动火作业</template>
+                <van-cell center v-for="item in list" :key="item" :title="'2022年9月26日18：00-2022年9月27日6：00'" @click="getWork(item)">
+                    <template #label>深圳市老旧中压钢质燃气管道更新改造工程标段30</template>
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                     <template #right-icon>
-                        <van-tag type="danger">作业中</van-tag>
+                        <van-tag :type="item>3?'danger':'success'">{{item>3?'作业中':'已开票'}} </van-tag>
                     </template>
                 </van-cell>
             </van-list>
@@ -28,6 +30,7 @@
 export default {
     data(){
         return {
+            value:'',
             list: [],
             loading: false,
             finished: false,
@@ -56,7 +59,8 @@ export default {
         },
         getWork(item){
             this.$router.push({ path: "/work" });
-        }
+        },
+        onSearch(){},
     }
 }
 </script>

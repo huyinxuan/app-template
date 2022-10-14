@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <van-nav-bar title="动火作业" left-arrow
+        <van-nav-bar title="建南路管网维修动火作业" left-arrow
   @click-left="onClickLeft" fixed/>
         <div class="home-box">
             <div class="content">
@@ -14,29 +14,29 @@
                 </van-row>
                 <van-row class="t8">
                     <van-col span="6">作业地点：</van-col>
-                    <van-col class="blues" span="18">南山区xxx街道xxx路xxx号</van-col>
+                    <van-col class="blues" span="18">南山区华明路</van-col>
                 </van-row>
                 <van-row class="t8" justify="space-between">
                     <van-col span="6">作业督导：</van-col>
-                    <van-col class="blues" span="6">xxx</van-col>
+                    <van-col class="blues" span="6">赖曙光</van-col>
                     <van-col span="6">现场督导：</van-col>
-                    <van-col class="blues" span="6">xxx</van-col>
+                    <van-col class="blues" span="6">廖昱森</van-col>
                 </van-row>
                 <van-row class="t8" justify="space-between">
                     <van-col span="6">现场指挥：</van-col>
-                    <van-col class="blues" span="6">xxx</van-col>
+                    <van-col class="blues" span="6">杨  帆</van-col>
                     <van-col span="6">作业队长：</van-col>
-                    <van-col class="blues" span="6">xxx</van-col>
+                    <van-col class="blues" span="6">唐  洪</van-col>
                 </van-row>
                 <van-row class="t8" justify="space-between">
                     <van-col span="6">现场监护：</van-col>
-                    <van-col class="blues" span="6">xxx</van-col>
-                    <van-col span="6">施工队：</van-col>
-                    <van-col class="blues" span="6">xxx</van-col>
+                    <van-col class="blues" span="6">杨宝玲</van-col>
+                    <van-col span="6">项目工程师</van-col>
+                    <van-col class="blues" span="6">黄依强</van-col>
                 </van-row>
                 <van-row class="t8">
                     <van-col span="24">作业内容：</van-col>
-                    <div class="blues lh48">是的撒大所大所大所打生打死大多萨达所大所大大所实打实大多实打实大实打实的是的撒大所大所大所打生打死大多萨达所大所大大所实打实大多实打实大实打实的是的撒大所大所大所打生打死大多萨达所大所大大所实打实大多实打实大实打实的是的撒大所大所大所打生打死大多萨达所大所大大所实打实大多实打实大实打实的</div>
+                    <div class="blues lh48">根据瓶改管工作部作业任务书，现组织综合施工队进行 深圳市老旧中压钢质燃气管道更新改造工程标段30--建南路（华明路-雅仕荔景苑）、华明路（建南路-蔚蓝三路） 更新改造作业，该工程位于南山区华明路。施工管道内介质为天然气,作业含新建PED110管段约16米及接驳点8处,1处PED160接D325,3处PED160接D108,1处PED160接PED63,2处PED63接PED63,1处PED110接D89,封堵点7处,断开封堵1处,1处D108,作业完成后,封堵点之间原管段取消废除、纳入废弃图层；本次作业采用关闭阀门停气的方式进行能源隔离,有影响用户；（详见图纸）</div>
                 </van-row>
                 <van-row class="t8" align="center" justify="center">
                     <van-col span="24"  style="text-align:center"><van-button size="small" round type="info">查看文档</van-button></van-col>
@@ -62,7 +62,7 @@
                     <h3>动火作业</h3>
                 </van-step>
                 <van-step>
-                    <h3>焊口检查</h3>
+                    <h3>质量检查</h3>
                 </van-step>
                 <van-step>
                     <h3>恢复供气</h3>
